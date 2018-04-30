@@ -30,14 +30,13 @@ local ESP3DBox = CreateClientConVar( "esp3dbox_enabled", 0, false, false )
 local ESP2DBox = CreateClientConVar( "esp2dbox_enabled", 0, false, false )
 local ESPBone = CreateClientConVar( "espbone_enabled", 0, false, false )
 --Charms
-local NPCChams = CreateClientConVar( "nchams_enabled", 0, false, false )
-local PChams = CreateClientConVar( "pchams_enabled", 0, false, false )
+local NPCGlow = CreateClientConVar( "nglow_enabled", 0, false, false )
+local PGlow = CreateClientConVar( "pglow_enabled", 0, false, false )
 --Friends
 local HideAimFriends = CreateClientConVar( "hideaimf_enabled", 0, false, false )
 local HideWallFriends = CreateClientConVar( "hidewallf_enabled", 0, false, false )
 
 
-Toggle=false
 TWeapons = {
 	"weapon_ttt_sipistol",
 	"weapon_ttt_push",
@@ -48,7 +47,7 @@ TWeapons = {
 	"weapon_ttt_knife",
 	"weapon_ttt_phammer"
 }
-ChamFriends = {}
+GlowFriends = {}
 
 
 --HOOKS
@@ -67,34 +66,31 @@ end
 
 
 hook.Add( "Think", "PanelToggle", function()
-	if (LocalPlayer():KeyPressed(IN_SCORE)) then
+	if input.IsKeyDown(KEY_INSERT) then
 			MainPanel:ToggleVisible()
 	end
 end)
 
 hook.Add( "Think", "Bhop", function()
-	if BHop:GetInt()==1 then
-		if (LocalPlayer():KeyPressed(IN_ALT2)) and (Toggle==false) then
-			Toggle=true
-		elseif (LocalPlayer():KeyPressed(IN_ALT2)) and (Toggle==true) then
-			Toggle=false
-			RunConsoleCommand( "-jump" )
+	if BHop:GetInt()==1 then	
+		if not LocalPlayer():KeyDown(IN_ALT2) and Jumping then
+			RunConsoleCommand("-jump")
+			Jumping = false
 		end
-		
-		if LocalPlayer():Alive()==true and Toggle==true and LocalPlayer():IsOnGround()==true then
-			if !Jumping then
-				RunConsoleCommand( "+jump" )
-				Jumping=true
+
+		if LocalPlayer():Alive() and LocalPlayer():KeyDown(IN_ALT2) then
+			if !Jumping and LocalPlayer():IsOnGround() then
+				RunConsoleCommand("+jump")
+				Jumping = true
 			else
-				RunConsoleCommand( "-jump" )
-				Jumping=false
+				RunConsoleCommand("-jump")
+				Jumping = false
 			end
 		end
 
-	elseif (Jumping==true) or (Toggle==true) then
+	elseif Jumping then
 		RunConsoleCommand("-jump")
-		Jumping=false
-		Toggle=false
+		Jumping = false
 	end
 end)
 
@@ -141,11 +137,11 @@ end
 
 function Wallhack()
 	if PWallhack:GetInt()==1 then
-		convar=PWallhack:GetInt()
+		convar = 1
 		targets=player.GetAll()
 	end
 	if NPCWallhack:GetInt()==1 then
-		convar=NPCWallhack:GetInt()
+		convar = 1
 		targets=ents.GetAll()
 	end
 
@@ -307,14 +303,14 @@ hook.Add( "HUDPaint", "NPCWallhack", function()
 	end
 end)
 
---Chams
+--Glow
 hook.Add( "PreDrawHalos", "AddHalos", function()
 	if NPCWallhack:GetInt()==1 or PWallhack:GetInt()==1 then
 		entities= {}
 		visibleentities = {}
 		local i=1
 		local i2=1
-		if NPCChams:GetInt()==1 then
+		if NPCGlow:GetInt()==1 then
 			for k,v in pairs(ents.GetAll()) do
 				if v:IsNPC() and v:IsValid() and v:IsLineOfSightClear(LocalPlayer())==false then
 					entities[i]=v
@@ -325,7 +321,7 @@ hook.Add( "PreDrawHalos", "AddHalos", function()
 				end
 			end
 		end	
-		if PChams:GetInt()==1 then
+		if PGlow:GetInt()==1 then
 			for k,v in pairs(player.GetAll()) do
 				if v:IsValid() and IsFriend(v,"Wall")==false and v:IsLineOfSightClear(LocalPlayer())==false then
 					entities[i]=v
@@ -335,11 +331,11 @@ hook.Add( "PreDrawHalos", "AddHalos", function()
 					i2=i2+1
 				end
 			end	
-			ChamFriends = friends
+			GlowFriends = friends
 		end
-		halo.Add( entities, chamcolor, 0, 0, 1,true,true )
-		halo.Add( visibleentities, cham2color, 0, 0, 1,true,true )
-		halo.Add( ChamFriends, friendcolor, 0, 0, 1,true,true )
+		halo.Add(entities, glowcolor, 0, 0, 1, true, true)
+		halo.Add(visibleentities, glow2color, 0, 0, 1, true, true)
+		halo.Add(GlowFriends, friendcolor, 0, 0, 1, true, true)
 	end
 end)
 

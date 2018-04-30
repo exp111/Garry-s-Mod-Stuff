@@ -30,8 +30,8 @@ local ESP3DBox = CreateClientConVar( "esp3dbox_enabled", 0, false, false )
 local ESP2DBox = CreateClientConVar( "esp2dbox_enabled", 0, false, false )
 local ESPBone = CreateClientConVar( "espbone_enabled", 0, false, false )
 --Charms
-local NPCChams = CreateClientConVar( "nchams_enabled", 0, false, false )
-local PChams = CreateClientConVar( "pchams_enabled", 0, false, false )
+local NPCGlow = CreateClientConVar( "nglow_enabled", 0, false, false )
+local PGlow = CreateClientConVar( "pglow_enabled", 0, false, false )
 --Friends
 local HideAimFriends = CreateClientConVar( "hideaimf_enabled", 0, false, false )
 local HideWallFriends = CreateClientConVar( "hidewallf_enabled", 0, false, false )
@@ -57,16 +57,16 @@ local crosscr = CreateClientConVar( "crosscolorr", 0, true, false )
 local crosscg = CreateClientConVar( "crosscolorg", 255, true, false )
 local crosscb = CreateClientConVar( "crosscolorb", 0, true, false )
 local crossca = CreateClientConVar( "crosscolora", 255, true, false )
---Chams
-local chamcr = CreateClientConVar( "chamcolorr", 255, true, false )
-local chamcg = CreateClientConVar( "chamcolorg", 0, true, false )
-local chamcb = CreateClientConVar( "chamcolorb", 0, true, false )
-local chamca = CreateClientConVar( "chamcolora", 255, true, false )
---Chams (visible)
-local cham2cr = CreateClientConVar( "cham2colorr", 255, true, false )
-local cham2cg = CreateClientConVar( "cham2colorg", 165, true, false )
-local cham2cb = CreateClientConVar( "cham2colorb", 0, true, false )
-local cham2ca = CreateClientConVar( "cham2colora", 255, true, false )
+--Glow
+local glowcr = CreateClientConVar( "glowcolorr", 255, true, false )
+local glowcg = CreateClientConVar( "glowcolorg", 0, true, false )
+local glowcb = CreateClientConVar( "glowcolorb", 0, true, false )
+local glowca = CreateClientConVar( "glowcolora", 255, true, false )
+--Glow (visible)
+local glow2cr = CreateClientConVar( "glow2colorr", 255, true, false )
+local glow2cg = CreateClientConVar( "glow2colorg", 165, true, false )
+local glow2cb = CreateClientConVar( "glow2colorb", 0, true, false )
+local glow2ca = CreateClientConVar( "glow2colora", 255, true, false )
 --Friends
 local friendcr = CreateClientConVar( "friendcolorr", 0, true, false )
 local friendcg = CreateClientConVar( "friendcolorg", 255, true, false )
@@ -84,10 +84,10 @@ textcolor=Color(textcr:GetInt(),textcg:GetInt(),textcb:GetInt(),textca:GetInt())
 boxcolor=Color(boxcr:GetInt(),boxcg:GetInt(),boxcb:GetInt(),boxca:GetInt())
 bonecolor=Color(bonecr:GetInt(),bonecg:GetInt(),bonecb:GetInt(),boneca:GetInt())
 crosscolor=Color(crosscr:GetInt(),crosscg:GetInt(),crosscb:GetInt(),crossca:GetInt())
-chamcolor=Color(chamcr:GetInt(),chamcg:GetInt(),chamcb:GetInt(),chamca:GetInt())
-cham2color=Color(cham2cr:GetInt(),cham2cg:GetInt(),cham2cb:GetInt(),cham2ca:GetInt())
+glowcolor=Color(glowcr:GetInt(), glowcg:GetInt(), glowcb:GetInt(), glowca:GetInt())
+glow2color=Color(glow2cr:GetInt(), glow2cg:GetInt(), glow2cb:GetInt(), glow2ca:GetInt())
 friendcolor=Color(friendcr:GetInt(),friendcg:GetInt(),friendcb:GetInt(),friendca:GetInt())
-c4color=Color(c4cr:GetInt(),c4cg:GetInt(),c4cb:GetInt(),c4ca:GetInt())
+c4color=Color(c4cr:GetInt(), c4cg:GetInt(), c4cb:GetInt(), c4ca:GetInt())
 
 --Other Vars
 crosssize = 50
@@ -366,29 +366,29 @@ espbonebox:SetPos( 5, 175)
 espbonebox:SetDark(true)
 espbonebox:SizeToContents()
 
-local ChamsLabel = vgui.Create( "DLabel", wallhackpanel )
-ChamsLabel:SetPos( 5, 200 )
-ChamsLabel:SetText( "Enable Chams?" )
-ChamsLabel:SetDark(true)
-ChamsLabel:SizeToContents()
+local GlowLabel = vgui.Create( "DLabel", wallhackpanel )
+GlowLabel:SetPos( 5, 200 )
+GlowLabel:SetText( "Enable Glow?" )
+GlowLabel:SetDark(true)
+GlowLabel:SizeToContents()
 
-local ChamsBox = vgui.Create( "DComboBox" , wallhackpanel)
-ChamsBox:SetPos( 200, 200 )
-ChamsBox:SetSize( 100, 20 )
-ChamsBox:SetValue( "Off" )
-if NPCChams:GetInt()==0 and PChams:GetInt()==0 then ChamsBox:SetValue( "Off" )
-elseif NPCChams:GetInt()==1 and PChams:GetInt()==0 then ChamsBox:SetValue( "NPC" )
-elseif PChams:GetInt()==1 and NPCChams:GetInt()==0 then ChamsBox:SetValue( "Player" )
-elseif NPCChams:GetInt()==1 and PChams:GetInt()==1 then ChamsBox:SetValue( "Both" ) end
-ChamsBox:AddChoice( "Off" )
-ChamsBox:AddChoice( "Player" )
-ChamsBox:AddChoice( "NPC" )
-ChamsBox:AddChoice( "Both" )
-ChamsBox.OnSelect = function( panel, index, value )
-	if value=="Off" then LocalPlayer():ConCommand("nchams_enabled 0; pchams_enabled 0") end
-	if value=="Player" then LocalPlayer():ConCommand("nchams_enabled 0; pchams_enabled 1") end
-	if value=="NPC" then LocalPlayer():ConCommand("nchams_enabled 1; pchams_enabled 0") end
-	if value=="Both" then LocalPlayer():ConCommand("nchams_enabled 1; pchams_enabled 1") end
+local GlowBox = vgui.Create( "DComboBox" , wallhackpanel)
+GlowBox:SetPos( 200, 200 )
+GlowBox:SetSize( 100, 20 )
+GlowBox:SetValue( "Off" )
+if NPCGlow:GetInt()==0 and PGlow:GetInt()==0 then GlowBox:SetValue( "Off" )
+elseif NPCGlow:GetInt()==1 and PGlow:GetInt()==0 then GlowBox:SetValue( "NPC" )
+elseif PGlow:GetInt()==1 and NPCGlow:GetInt()==0 then GlowBox:SetValue( "Player" )
+elseif NPCGlow:GetInt()==1 and PGlow:GetInt()==1 then GlowBox:SetValue( "Both" ) end
+GlowBox:AddChoice( "Off" )
+GlowBox:AddChoice( "Player" )
+GlowBox:AddChoice( "NPC" )
+GlowBox:AddChoice( "Both" )
+GlowBox.OnSelect = function( panel, index, value )
+	if value=="Off" then LocalPlayer():ConCommand("nglow_enabled 0; pglow_enabled 0") end
+	if value=="Player" then LocalPlayer():ConCommand("nglow_enabled 0; pglow_enabled 1") end
+	if value=="NPC" then LocalPlayer():ConCommand("nglow_enabled 1; pglow_enabled 0") end
+	if value=="Both" then LocalPlayer():ConCommand("nglow_enabled 1; pglow_enabled 1") end
 end
 
 
@@ -433,13 +433,6 @@ tfinderbox:SetPos( 5, 135 )
 tfinderbox:SetDark(true)
 tfinderbox:SizeToContents()
 
-local c4finderbox = vgui.Create( "DCheckBoxLabel", otherpanel ) --other
-c4finderbox:SetConVar( "c4finder_enabled" )
-c4finderbox:SetText( "Enable C4 Finder?" )
-c4finderbox:SetPos( 5, 160 )
-c4finderbox:SetDark(true)
-c4finderbox:SizeToContents()
-
 --Color Things #justcolorthings
 ChosenColor = nil
 
@@ -459,8 +452,8 @@ DComboBox:AddChoice( "ESPText" )
 DComboBox:AddChoice( "ESPBox" )
 DComboBox:AddChoice( "ESPBone" )
 DComboBox:AddChoice( "Crosshair" )
-DComboBox:AddChoice( "Chams" )
-DComboBox:AddChoice( "Chams (Visible)" )
+DComboBox:AddChoice( "Glow" )
+DComboBox:AddChoice( "Glow (Visible)" )
 DComboBox:AddChoice( "Friends" )
 DComboBox:AddChoice( "C4" )
 
@@ -483,8 +476,8 @@ ConfirmColor.DoClick = function()
 	if choice=="ESPBox" then boxcolor=ChosenColor ColorRefresh(boxcolor,"boxcolor") end
 	if choice=="ESPBone" then bonecolor=ChosenColor ColorRefresh(bonecolor,"bonecolor") end
 	if choice=="Crosshair" then crosscolor=ChosenColor ColorRefresh(crosscolor,"crosscolor") end
-	if choice=="Chams" then chamcolor=ChosenColor ColorRefresh(chamcolor,"chamcolor") end
-	if choice=="Chams (Visible)" then cham2color=ChosenColor ColorRefresh(cham2color,"cham2color") end
+	if choice=="Glow" then glowcolor=ChosenColor ColorRefresh(glowcolor,"glowcolor") end
+	if choice=="Glow (Visible)" then glow2color=ChosenColor ColorRefresh(glow2color,"glow2color") end
 	if choice=="Friends" then friendcolor=ChosenColor ColorRefresh(friendcolor,"friendcolor") end
 	if choice=="C4" then c4color=ChosenColor ColorRefresh(c4color,"c4color") end
 end
