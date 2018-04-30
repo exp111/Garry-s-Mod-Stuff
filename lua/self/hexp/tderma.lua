@@ -4,6 +4,7 @@
 local BHop = CreateClientConVar( "bhop_enabled", 0, false, false )
 local TriggerBot = CreateClientConVar( "tbot_enabled", 0, false, false )
 local Crosshair = CreateClientConVar( "cross_enabled", 0, false, false )
+local NoRecoil = CreateClientConVar( "norecoil_enabled", 0, false, false )
 --TTT Shit
 local TraitorFinder = CreateClientConVar( "tfinder_enabled", 0, false, false )
 local ModelSearcher = CreateClientConVar( "modelsearcher_enabled", 0, false, false )
@@ -435,6 +436,13 @@ tfinderbox:SetPos( 5, 135 )
 tfinderbox:SetDark(true)
 tfinderbox:SizeToContents()
 
+local norecoilbox = vgui.Create( "DCheckBoxLabel", otherpanel ) --Other
+norecoilbox:SetConVar( "norecoil_enabled" )
+norecoilbox:SetText( "Enable NoRecoil" )
+norecoilbox:SetPos( 5, 150 )
+norecoilbox:SetDark(true)
+norecoilbox:SizeToContents()
+
 --Color Things #justcolorthings
 ChosenColor = nil
 
@@ -507,12 +515,6 @@ function PlayerWeaponsView:DoDoubleClick( lineID, line )
 	end
 end
 
-local refresh2button = vgui.Create("DButton", weaponpanel)
-	refresh2button:SetText("Refresh")
-	refresh2button:SetPos(180,345)
-	refresh2button:SetSize(100,30)
-	refresh2button.DoClick = Refresh
-
 --Friends
 local FriendsView = vgui.Create( "DListView" ,  friendspanel )
 FriendsView:SetPos(5, 30)
@@ -575,6 +577,12 @@ local refreshbutton = vgui.Create("DButton", friendspanel)
 	refreshbutton:SetPos(180,345)
 	refreshbutton:SetSize(100,30)
 	refreshbutton.DoClick = Refresh
+
+local refresh2button = vgui.Create("DButton", weaponpanel)
+	refresh2button:SetText("Refresh")
+	refresh2button:SetPos(180,345)
+	refresh2button:SetSize(100,30)
+	refresh2button.DoClick = Refresh
 
 local hideaimbox = vgui.Create( "DCheckBoxLabel", friendspanel ) --other
 hideaimbox:SetConVar( "hideaimf_enabled" )

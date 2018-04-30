@@ -4,6 +4,7 @@ include("tderma.lua")
 local BHop = CreateClientConVar( "bhop_enabled", 0, false, false )
 local TriggerBot = CreateClientConVar( "tbot_enabled", 0, false, false )
 local Crosshair = CreateClientConVar( "cross_enabled", 0, false, false )
+local NoRecoil = CreateClientConVar( "norecoil_enabled", 0, false, false )
 --TTT Shit
 local TraitorFinder = CreateClientConVar( "tfinder_enabled", 0, false, false )
 local ModelSearcher = CreateClientConVar( "modelsearcher_enabled", 0, false, false )
@@ -29,25 +30,15 @@ local ESPWeapon = CreateClientConVar( "espweapon_enabled", 0, false, false )
 local ESP3DBox = CreateClientConVar( "esp3dbox_enabled", 0, false, false )
 local ESP2DBox = CreateClientConVar( "esp2dbox_enabled", 0, false, false )
 local ESPBone = CreateClientConVar( "espbone_enabled", 0, false, false )
---Charms
+--Glow
 local NPCGlow = CreateClientConVar( "nglow_enabled", 0, false, false )
 local PGlow = CreateClientConVar( "pglow_enabled", 0, false, false )
 --Friends
 local HideAimFriends = CreateClientConVar( "hideaimf_enabled", 0, false, false )
 local HideWallFriends = CreateClientConVar( "hidewallf_enabled", 0, false, false )
 
-
-TWeapons = {
-	"weapon_ttt_sipistol",
-	"weapon_ttt_push",
-	"weapon_ttt_radio",
-	"weapon_ttt_flaregun",
-	"weapon_ttt_decoy",
-	"weapon_ttt_c4",
-	"weapon_ttt_knife",
-	"weapon_ttt_phammer"
-}
 GlowFriends = {}
+lastOpened = 0
 
 
 --HELPER?
@@ -65,8 +56,9 @@ end
 
 --HOOKS
 hook.Add( "Think", "PanelToggle", function()
-	if input.IsKeyDown(KEY_INSERT) then
+	if input.IsKeyDown(KEY_INSERT) and (os.time - lastOpened > 1) then
 			MainPanel:ToggleVisible()
+			lastOpened = os.time(nil)
 	end
 end)
 
@@ -112,6 +104,13 @@ hook.Add( "Think", "Trigger", function()
 		end
 end)
 
+hook.Add("Think", "NoRecoil", function()
+	if NoRecoil:GetBool() then
+		if LocalPlayer() and LocalPlayer():GetActiveWeapon() and LocalPlayer():GetActiveWeapon().Primary then
+			LocalPlayer():GetActiveWeapon().Primary.Recoil = 0
+		end
+	end
+end)
 
 
 --WALLHACKS
@@ -521,7 +520,8 @@ hook.Add("Think","TraitorFinder",function()
                         end
                 end
         end
-		LocalPlayer():ConCommand("tfinder_enabled 0")
+		--LocalPlayer():ConCommand("tfinder_enabled 0")
+		Sleep(100)
 	end
 end)
 
