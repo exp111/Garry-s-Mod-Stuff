@@ -50,9 +50,9 @@ TWeapons = {
 GlowFriends = {}
 
 
---HOOKS
+--HELPER?
 function IsFriend(EntityName,Type)
-	if HideAimFriends:GetInt()==1 and Type=="Aim" or HideWallFriends:GetInt()==1 and Type=="Wall" then
+	if HideAimFriends:GetBool() and Type=="Aim" or HideWallFriends:GetBool() and Type=="Wall" then
 		if table.HasValue( friends, EntityName)==false then
 			return false
 		elseif table.HasValue( friends, EntityName)==false then
@@ -63,8 +63,7 @@ function IsFriend(EntityName,Type)
 	end
 end
 
-
-
+--HOOKS
 hook.Add( "Think", "PanelToggle", function()
 	if input.IsKeyDown(KEY_INSERT) then
 			MainPanel:ToggleVisible()
@@ -72,7 +71,7 @@ hook.Add( "Think", "PanelToggle", function()
 end)
 
 hook.Add( "Think", "Bhop", function()
-	if BHop:GetInt()==1 then	
+	if BHop:GetBool() then	
 		if not LocalPlayer():KeyDown(IN_ALT2) and Jumping then
 			RunConsoleCommand("-jump")
 			Jumping = false
@@ -95,27 +94,21 @@ hook.Add( "Think", "Bhop", function()
 end)
 
 hook.Add( "Think", "Trigger", function()
-		if TriggerBot:GetInt()==1 then
-			if LocalPlayer():Alive()==true and (LocalPlayer():GetActiveWeapon()) and  LocalPlayer():GetActiveWeapon():Clip1()>0 then
-				if LocalPlayer():GetEyeTrace().Entity:IsNPC()==true or IsFriend(LocalPlayer():GetEyeTrace().Entity,"Aim")==false and LocalPlayer():GetEyeTrace().Entity:Nick()==nil then
-					if !Shooting then
-						RunConsoleCommand( "+attack" )
-						Shooting=true
-					else
-						RunConsoleCommand( "-attack" )
-						Shooting=false
-					end
-				elseif Shooting then
-					RunConsoleCommand("-attack")
-					Shooting=false	
-				end	
-			elseif Shooting then
-				RunConsoleCommand("-attack")
-				Shooting=false	
-			end
-		elseif Shooting then
+		if Shooting then
 			RunConsoleCommand("-attack")
 			Shooting=false	
+		end
+
+		if TriggerBot:GetBool() then
+			if LocalPlayer():Alive()==true and (LocalPlayer():GetActiveWeapon()) and  LocalPlayer():GetActiveWeapon():Clip1() > 0 then
+				local ent = LocalPlayer():GetEyeTrace().Entity
+				if ent:IsNPC() or IsFriend(ent,"Aim")==false and ent:IsValid() and ent:Team() != TEAM_SPECTATOR and ent.Alive() then
+					if not Shooting then
+						RunConsoleCommand( "+attack" )
+						Shooting=true
+					end
+				end
+			end
 		end
 end)
 
@@ -130,22 +123,24 @@ function GetName(target)
 		local name=target:GetClass()
 		return name
 	elseif ModelSearcher:GetInt()==1 then
-		local name=target:GetClass()
+		local name=target:GetModel()
 		return name
 	end
 end
 
 function Wallhack()
-	if PWallhack:GetInt()==1 then
-		convar = 1
-		targets=player.GetAll()
-	end
-	if NPCWallhack:GetInt()==1 then
-		convar = 1
-		targets=ents.GetAll()
+	if PWallhack:GetBool() or NPCWallhack:GetBool() then
+		convar = true
+		targets = {}
+		if PWallhack:GetBool() then
+			table.Add(targets, player.GetAll())
+		end
+		if NPCWallhack:GetBool() then
+			table.Add(targets, ents.GetAll())
+		end
 	end
 
-	if convar==1 then
+	if convar then
 		for k,v in pairs(targets) do
 			if v!=LocalPlayer() and v:IsPlayer() and v:GetPos():ToScreen().visible==true and v:Health()>0 or v:IsNPC() and v:IsValid() and v:GetPos():ToScreen().visible==true and v:Health()>0 then
 			if IsFriend(v,"Wall")==false then
@@ -252,7 +247,7 @@ function Wallhack()
 				end
 
 					--DRAW BONE
-				if ESPBone:GetInt()==1 and v:LookupBone(selectedbone)!=nil then
+				if ESPBone:GetBool() and v:LookupBone(selectedbone)!=nil then
 					local function connect(bone1,bone2)
 						surface.SetDrawColor(bonecolor)
 						local pos1=v:GetBonePosition(v:LookupBone(bone1)):ToScreen()
@@ -291,26 +286,19 @@ function Wallhack()
 end
 
 hook.Add( "HUDPaint", "Wallhack", function() 
-	if PWallhack:GetInt()==1 then
-		Wallhack()
-	end
-end)
-
-
-hook.Add( "HUDPaint", "NPCWallhack", function()
-	if NPCWallhack:GetInt()==1 then
+	if PWallhack:GetBool() or NPCWallhack:GetBool() then
 		Wallhack()
 	end
 end)
 
 --Glow
 hook.Add( "PreDrawHalos", "AddHalos", function()
-	if NPCWallhack:GetInt()==1 or PWallhack:GetInt()==1 then
+	if NPCWallhack:GetBool() or PWallhack:GetBool() then
 		entities= {}
 		visibleentities = {}
 		local i=1
 		local i2=1
-		if NPCGlow:GetInt()==1 then
+		if NPCGlow:GetBool() then
 			for k,v in pairs(ents.GetAll()) do
 				if v:IsNPC() and v:IsValid() and v:IsLineOfSightClear(LocalPlayer())==false then
 					entities[i]=v
@@ -321,13 +309,13 @@ hook.Add( "PreDrawHalos", "AddHalos", function()
 				end
 			end
 		end	
-		if PGlow:GetInt()==1 then
+		if PGlow:GetBool() then
 			for k,v in pairs(player.GetAll()) do
 				if v:IsValid() and IsFriend(v,"Wall")==false and v:IsLineOfSightClear(LocalPlayer())==false then
-					entities[i]=v
+					entities[i] = v
 					i=i+1
 				elseif v:IsValid() and IsFriend(v,"Wall")==false and v:IsLineOfSightClear(LocalPlayer())==true then
-					visibleentities[i2]=v
+					visibleentities[i2] = v
 					i2=i2+1
 				end
 			end	
@@ -386,7 +374,7 @@ function GetTargets(type)
 		end
 		if paimhelper:GetInt()==1 then
 			for k,v in pairs(player.GetAll()) do
-				if v:IsPlayer() and v!=LocalPlayer() then
+				if v:IsPlayer() and v != LocalPlayer() and v:Team() != TEAM_SPECTATOR then
 					if table.HasValue(targets,v)==false and IsFriend(v,"Aim")==false then
 						targets[i] = v
 					end
@@ -399,8 +387,8 @@ function GetTargets(type)
 		i=1
 		if paimbot:GetInt()==1 then
 			for k,v in pairs(player.GetAll()) do
-				if v:IsPlayer() then
-					if table.HasValue(targets,v)==false and v!=LocalPlayer() and IsFriend(v,"Aim")==false then
+				if v:IsPlayer() and v:Team() != TEAM_SPECTATOR then
+					if table.HasValue(targets,v)==false and v != LocalPlayer() and IsFriend(v, "Aim")==false then
 						targets[i] = v
 					end
 				end
@@ -510,14 +498,29 @@ end)
 
 --TTT Traitor Finder
 hook.Add("Think","TraitorFinder",function()
-	if TraitorFinder:GetInt()==1 then
-		for k,v in pairs(player.GetAll()) do
+	if TraitorFinder:GetBool() then
+		/*for k,v in pairs(player.GetAll()) do
 			for l,w in pairs(TWeapons) do
 				if v:HasWeapon(w) then
 					chat.AddText(v:Nick().." has got Weapon "..w.." and is probably a traitor!")
 				end
 			end
-		end	
+		end	*/
+		local _R = debug.getregistry()
+
+        if(_G.KARMA) then
+                for k, v in ipairs(player.GetAll()) do
+                        if(v:Alive()) then
+                                for x, y in pairs(_R.Player.GetWeapons(v)) do
+                                        if(IsValid(y)) then
+                                                if(y.CanBuy and table.HasValue(y.CanBuy, ROLE_TRAITOR)) then
+                                                        chat.AddText(v:Nick().." has got Weapon "..w.." and is probably a traitor!")
+                                                end
+                                        end
+                                end
+                        end
+                end
+        end
 		LocalPlayer():ConCommand("tfinder_enabled 0")
 	end
 end)
@@ -554,9 +557,9 @@ hook.Add("HUDPaint","ModelSearcher",function()
 				local distance=math.floor(LocalPlayer():GetPos():Distance(v:GetPos()))
 				local vector = v:OBBMaxs()
 				local pos=(v:GetPos()+Vector(0,0,(vector.z+10))):ToScreen()
-				draw.DrawText(name,Default,pos.x,pos.y,c4color,TEXT_ALIGN_CENTER)
+				draw.DrawText(name,Default,pos.x,pos.y,modelcolor,TEXT_ALIGN_CENTER)
 				local pos=(v:GetPos()+Vector(0,0,(vector.z+7.5))):ToScreen()
-				draw.DrawText(distance,Default,pos.x,pos.y,c4color,TEXT_ALIGN_CENTER)
+				draw.DrawText(distance,Default,pos.x,pos.y,modelcolor,TEXT_ALIGN_CENTER)
 			end
 		end
 	end

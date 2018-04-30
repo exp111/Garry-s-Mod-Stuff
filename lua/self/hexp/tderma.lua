@@ -72,11 +72,11 @@ local friendcr = CreateClientConVar( "friendcolorr", 0, true, false )
 local friendcg = CreateClientConVar( "friendcolorg", 255, true, false )
 local friendcb = CreateClientConVar( "friendcolorb", 0, true, false )
 local friendca = CreateClientConVar( "friendcolora", 255, true, false )
---C4
-local c4cr = CreateClientConVar( "c4colorr", 255, true, false )
-local c4cg = CreateClientConVar( "c4colorg", 0, true, false )
-local c4cb = CreateClientConVar( "c4colorb", 0, true, false )
-local c4ca = CreateClientConVar( "c4colora", 255, true, false )
+--ModelSearcher
+local modelcr = CreateClientConVar( "modelcolorr", 255, true, false )
+local modelcg = CreateClientConVar( "modelcolorg", 0, true, false )
+local modelcb = CreateClientConVar( "modelcolorb", 0, true, false )
+local modelca = CreateClientConVar( "modelcolora", 255, true, false )
 
 --Colors
 panelcolor=Color(255,255,255,155)
@@ -87,7 +87,7 @@ crosscolor=Color(crosscr:GetInt(),crosscg:GetInt(),crosscb:GetInt(),crossca:GetI
 glowcolor=Color(glowcr:GetInt(), glowcg:GetInt(), glowcb:GetInt(), glowca:GetInt())
 glow2color=Color(glow2cr:GetInt(), glow2cg:GetInt(), glow2cb:GetInt(), glow2ca:GetInt())
 friendcolor=Color(friendcr:GetInt(),friendcg:GetInt(),friendcb:GetInt(),friendca:GetInt())
-c4color=Color(c4cr:GetInt(), c4cg:GetInt(), c4cb:GetInt(), c4ca:GetInt())
+modelcolor=Color(modelcr:GetInt(), modelcg:GetInt(), modelcb:GetInt(), modelca:GetInt())
 
 --Other Vars
 crosssize = 50
@@ -183,6 +183,8 @@ local keyspanel = vgui.Create( "DPanel", PropertySheet )
 keyspanel:SetDrawBackground(false)
 local modelspanel = vgui.Create( "DPanel", PropertySheet )
 modelspanel:SetDrawBackground(false)
+local weaponpanel = vgui.Create( "DPanel", PropertySheet )
+weaponpanel:SetDrawBackground(false)
 
 --Checkboxes & Things
 
@@ -455,7 +457,7 @@ DComboBox:AddChoice( "Crosshair" )
 DComboBox:AddChoice( "Glow" )
 DComboBox:AddChoice( "Glow (Visible)" )
 DComboBox:AddChoice( "Friends" )
-DComboBox:AddChoice( "C4" )
+DComboBox:AddChoice( "Models" )
 
 function ColorRefresh(color,name)
 	r=color.r
@@ -479,8 +481,37 @@ ConfirmColor.DoClick = function()
 	if choice=="Glow" then glowcolor=ChosenColor ColorRefresh(glowcolor,"glowcolor") end
 	if choice=="Glow (Visible)" then glow2color=ChosenColor ColorRefresh(glow2color,"glow2color") end
 	if choice=="Friends" then friendcolor=ChosenColor ColorRefresh(friendcolor,"friendcolor") end
-	if choice=="C4" then c4color=ChosenColor ColorRefresh(c4color,"c4color") end
+	if choice=="Models" then modelcolor=ChosenColor ColorRefresh(modelcolor,"modelcolor") end
 end
+
+--weaponshit
+local PlayerWeaponsView = vgui.Create( "DListView" ,  weaponpanel )
+PlayerWeaponsView:SetPos(5, 30)
+PlayerWeaponsView:SetSize(200, 310)
+PlayerWeaponsView:SetMultiSelect(false)
+PlayerWeaponsView:AddColumn("Players")
+
+local WeaponWeaponPanel = vgui.Create( "DListView" ,  weaponpanel )
+WeaponWeaponPanel:SetPos(255, 30)
+WeaponWeaponPanel:SetSize(200, 310)
+WeaponWeaponPanel:SetMultiSelect(false)
+WeaponWeaponPanel:AddColumn("Weapons")
+
+function PlayerWeaponsView:DoDoubleClick( lineID, line )
+	Refresh()
+	local ply = player.GetAll()[lineID]
+	if (ply != null) then
+		for x, y in pairs(ply:GetWeapons()) do
+			WeaponWeaponPanel:AddLine(y)
+		end
+	end
+end
+
+local refresh2button = vgui.Create("DButton", weaponpanel)
+	refresh2button:SetText("Refresh")
+	refresh2button:SetPos(180,345)
+	refresh2button:SetSize(100,30)
+	refresh2button.DoClick = Refresh
 
 --Friends
 local FriendsView = vgui.Create( "DListView" ,  friendspanel )
@@ -488,7 +519,6 @@ FriendsView:SetPos(5, 30)
 FriendsView:SetSize(200, 310)
 FriendsView:SetMultiSelect(false)
 FriendsView:AddColumn("Friends")
-
 
 local PlayersView = vgui.Create( "DListView" ,  friendspanel )
 PlayersView:SetPos(255, 30)
@@ -500,6 +530,8 @@ PlayersView:AddColumn("Enemies")
 function Refresh()
 	PlayersView:Clear()
 	FriendsView:Clear()
+	PlayerWeaponsView:Clear()
+	WeaponWeaponPanel:Clear()
 
 	table.Empty(otherplayers)
 
@@ -514,6 +546,12 @@ function Refresh()
 	for k,v in pairs(player.GetAll()) do
 		if v!=LocalPlayer() and (table.HasValue( friends, v)==true) then
     			FriendsView:AddLine(v) 
+		end
+	end
+
+	for k,v in pairs(player.GetAll()) do
+		if v!=LocalPlayer() then
+    			PlayerWeaponsView:AddLine(v) 
 		end
 	end
 end
@@ -652,7 +690,6 @@ ModelSearcherBox:SetPos( 180, 345 )
 ModelSearcherBox:SetDark(true)
 ModelSearcherBox:SizeToContents()
 
-
 --Add Tabs to Sheet
 PropertySheet:AddSheet( "Aimbot", aimbotpanel , nil, false, false, nil )
 PropertySheet:AddSheet( "Wallhack", wallhackpanel , nil, false, false, nil )
@@ -661,6 +698,7 @@ PropertySheet:AddSheet( "Style", colorpanel , nil, false, false, nil )
 PropertySheet:AddSheet( "Friends", friendspanel , nil, false, false, nil )
 PropertySheet:AddSheet( "Keys", keyspanel , nil, false, false, nil )
 PropertySheet:AddSheet( "Model Searcher", modelspanel , nil, false, false, nil )
+PropertySheet:AddSheet( "Weapons", weaponpanel , nil, false, false, nil )
 
 --CLOSE BUTTON
 button = vgui.Create("DButton", MainPanel)
