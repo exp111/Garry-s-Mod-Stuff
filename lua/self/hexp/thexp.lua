@@ -55,10 +55,11 @@ function IsFriend(EntityName,Type)
 end
 
 --HOOKS
-hook.Add( "Think", "PanelToggle", function()
-	if input.IsKeyDown(KEY_INSERT) and (os.time - lastOpened > 1) then
-			MainPanel:ToggleVisible()
-			lastOpened = os.time(nil)
+hook.Add("Think", "PanelToggle", function()
+	if input.IsKeyDown(KEY_INSERT) and !MainPanel:IsVisible() then
+		MainPanel:ToggleVisible()
+	elseif input.IsKeyDown(KEY_DELETE) and MainPanel:IsVisible() then
+		MainPanel:ToggleVisible()
 	end
 end)
 
@@ -521,7 +522,6 @@ hook.Add("Think","TraitorFinder",function()
                 end
         end
 		--LocalPlayer():ConCommand("tfinder_enabled 0")
-		Sleep(100)
 	end
 end)
 
