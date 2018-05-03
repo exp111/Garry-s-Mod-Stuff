@@ -1,4 +1,4 @@
-include("../../convars.lua")
+include("../../../convars.lua")
 
 secondPanel = vgui.Create("DPanel", propertySheet)
 secondPanel:SetDrawBackground(false)

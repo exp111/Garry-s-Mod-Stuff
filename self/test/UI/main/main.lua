@@ -1,6 +1,6 @@
-include("../convars.lua")
-include("mainTabs/firstPanel.lua")
-include("mainTabs/secondPanel.lua")
+include("../../convars.lua")
+include("tabs/firstPanel.lua")
+include("tabs/secondPanel.lua")
 
 --Main Panels
 mainPanel = vgui.Create("DFrame")
@@ -9,7 +9,8 @@ mainPanel:SetSize(500, 500)
 mainPanel:SetTitle("Main")
 mainPanel:SetVisible(false)
 mainPanel:SetDraggable(true)
-mainPanel:ShowCloseButton(false)
+mainPanel:ShowCloseButton(true)
+mainPanel:SetDeleteOnClose(false)
 mainPanel:MakePopup()
 mainPanel.Paint = function(self, w, h) 
 	draw.RoundedBox(0, 0, 0, w, h, panelColor)
@@ -29,12 +30,3 @@ end
 --Add Tabs to Sheet
 propertySheet:AddSheet("First", firstPanel , nil, false, false, nil)
 propertySheet:AddSheet("Second", secondPanel , nil, false, false, nil)
-
---CLOSE BUTTON
-local button = vgui.Create("DButton", mainPanel)
-	button:SetText("Close")
-	button:SetPos(15,440)
-	button:SetSize(100,40)
-	button.DoClick = function()
-		mainPanel:SetVisible(false)
-end
