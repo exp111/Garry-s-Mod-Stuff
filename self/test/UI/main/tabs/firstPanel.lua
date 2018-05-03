@@ -38,8 +38,6 @@ CheckBoxLabel:SetPos(5, 50)
 CheckBoxLabel:SetDark(true)
 CheckBoxLabel:SizeToContents()
 
-chosenColor = nil
-
 local ColorMixer = vgui.Create("DColorMixer", firstPanel)
 ColorMixer:SetPos(5, 75)
 ColorMixer:SetSize(200, 200)
@@ -70,7 +68,7 @@ dButton:SetSize(150, 40)
 dButton.DoClick = function()
 	local chosenColor = ColorMixer:GetColor()
 	local choice = dComboBox:GetSelectedID()
-	
+
 	if choice == menuBGColorIndex then menuBGColor = chosenColor ColorRefresh(chosenColor, "menucolor1")
 	elseif choice == menuFGColorIndex then menuFGColor = chosenColor ColorRefresh(chosenColor, "menucolor2") end
 end

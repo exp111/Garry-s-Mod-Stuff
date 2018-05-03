@@ -2,6 +2,7 @@
             --CreateClientConVar(Name, string Default, shouldSave = true, UserData = false, helpText = "")
 testBoolVar = CreateClientConVar("exp_test_bool", "0", false)
 testIntVar = CreateClientConVar("exp_test_int", "1", false)
+radarConVar = CreateClientConVar("exp_radar_enable", "0", false)
 
 --Color ConVars
 local function createColorConVar(name, r, g, b, a)

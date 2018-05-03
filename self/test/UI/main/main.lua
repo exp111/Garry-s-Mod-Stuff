@@ -3,25 +3,25 @@ include("tabs/firstPanel.lua")
 include("tabs/secondPanel.lua")
 
 --Main Panels
-mainPanel = vgui.Create("DFrame")
-mainPanel:SetPos((ScrW()/2)-250, (ScrH()/2)-250)
-mainPanel:SetSize(500, 500)
-mainPanel:SetTitle("Main")
-mainPanel:SetVisible(false)
-mainPanel:SetDraggable(true)
-mainPanel:ShowCloseButton(true)
-mainPanel:SetDeleteOnClose(false)
-mainPanel:MakePopup()
-mainPanel.Paint = function(self, w, h) 
+menuPanel = vgui.Create("DFrame")
+menuPanel:SetPos((ScrW()/2)-250, (ScrH()/2)-250)
+menuPanel:SetSize(500, 500)
+menuPanel:SetTitle("Main")
+menuPanel:SetVisible(false)
+menuPanel:SetDraggable(true)
+menuPanel:ShowCloseButton(true)
+menuPanel:SetDeleteOnClose(false)
+menuPanel:MakePopup()
+menuPanel.Paint = function(self, w, h) 
 	draw.RoundedBox(0, 0, 0, w, h, menuBGColor)
 end
 
 local propertySheet = vgui.Create("DPropertySheet")
-propertySheet:SetParent(mainPanel)
+propertySheet:SetParent(menuPanel)
 propertySheet:SetPos(5, 30)
 propertySheet:SetSize(490, 460)
 propertySheet.Paint = function(self, w, h) 
-	draw.RoundedBox(0, 0, 0, w, h, menuFGColor) 
+	draw.RoundedBox(0, 0, 20, w, h, menuFGColor) 
 end
 
 --DPanels
