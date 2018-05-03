@@ -38,7 +38,7 @@ CheckBoxLabel:SetPos(5, 50)
 CheckBoxLabel:SetDark(true)
 CheckBoxLabel:SizeToContents()
 
-ChosenColor = nil
+chosenColor = nil
 
 local ColorMixer = vgui.Create("DColorMixer", firstPanel)
 ColorMixer:SetPos(5, 75)
@@ -55,11 +55,11 @@ dComboBox:SetValue("Change Color of")
 dComboBox:AddChoice("Menu Background Color")
 dComboBox:AddChoice("Menu Foreground Color")
 dComboBox.OnSelect = function(panel, index, value)
-	if value == "Menu Background Color" then ColorMixer:SetColor(menuBGColor)
-	elseif value == "Menu Foreground Color" then ColorMixer:SetColor(menuFGColor) end
+	if index == menuBGColorIndex then ColorMixer:SetColor(menuBGColor)
+	elseif index == menuFGColorIndex then ColorMixer:SetColor(menuFGColor) end
 end
 
-function ColorRefresh(color, name)
+local function ColorRefresh(color, name)
 	LocalPlayer():ConCommand(colorConVarPrefix..name.."r "..color.r.."; "..colorConVarPrefix..name.."g "..color.g.."; "..colorConVarPrefix..name.."b "..color.b.."; "..colorConVarPrefix..name.."a "..color.a)
 end
 
@@ -68,8 +68,9 @@ dButton:SetText("Set Color")
 dButton:SetPos(210, 125)
 dButton:SetSize(150, 40)
 dButton.DoClick = function()
-	ChosenColor = ColorMixer:GetColor()
-	choice = dComboBox:GetSelected()
-	if choice == "Menu Background Color" then menuBGColor=ChosenColor ColorRefresh(color1, "menucolor1")
-	elseif choice == "Menu Foreground Color" then menuFGColor=ChosenColor ColorRefresh(color2, "menucolor2") end
+	local chosenColor = ColorMixer:GetColor()
+	local choice = dComboBox:GetSelectedID()
+	
+	if choice == menuBGColorIndex then menuBGColor = chosenColor ColorRefresh(chosenColor, "menucolor1")
+	elseif choice == menuFGColorIndex then menuFGColor = chosenColor ColorRefresh(chosenColor, "menucolor2") end
 end
