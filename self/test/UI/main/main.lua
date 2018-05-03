@@ -13,7 +13,7 @@ mainPanel:ShowCloseButton(true)
 mainPanel:SetDeleteOnClose(false)
 mainPanel:MakePopup()
 mainPanel.Paint = function(self, w, h) 
-	draw.RoundedBox(0, 0, 0, w, h, panelColor)
+	draw.RoundedBox(0, 0, 0, w, h, menuBGColor)
 end
 
 local propertySheet = vgui.Create("DPropertySheet")
@@ -21,7 +21,7 @@ propertySheet:SetParent(mainPanel)
 propertySheet:SetPos(5, 30)
 propertySheet:SetSize(490, 460)
 propertySheet.Paint = function(self, w, h) 
-	draw.RoundedBox(0, 0, 0, w, h, panelColor) 
+	draw.RoundedBox(0, 0, 0, w, h, menuFGColor) 
 end
 
 --DPanels
