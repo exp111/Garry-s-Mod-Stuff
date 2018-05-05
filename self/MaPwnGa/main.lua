@@ -20,14 +20,18 @@ hook.Add("Think", "Main", function()
     end
 end)
 
-hook.Add("CreateMove", "Aimbot", function(cmd)
-    Aimbot()
+hook.Add("CreateMove", "HookCreateMove", function(cmd)
+    --If CUserCmd is faulty/not valid no need to do the other shit
+    if cmd == nil or cmd:CommandNumber() == 0 then return end
+
+    Aimbot(cmd)
+    Triggerbot(cmd)
 end)
 
 hook.Add("HUDPaint", "Visuals", function()
     Visuals()
 end)
 
-hook.Add("CreateMove", "Trigger", function()
-	Triggerbot()
+hook.Add("CreateMove", "Trigger", function(cmd)
+	
 end)

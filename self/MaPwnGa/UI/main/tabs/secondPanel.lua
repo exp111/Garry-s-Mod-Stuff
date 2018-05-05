@@ -56,7 +56,7 @@ CheckBoxLabel:SizeToContents()
 
 local dNumberWang = vgui.Create( "DNumberWang", secondPanel )
 dNumberWang:SetPos( 100, 125 )
-dNumberWang:SetValue(aimbotFOVCircleConVar:GetInt())
+dNumberWang:SetValue(aimbotFOVConVar:GetInt())
 dNumberWang:SetConVar("exp_aim_fov")
 dNumberWang:SetMin( 0 )
 dNumberWang:SetMax( 180 )

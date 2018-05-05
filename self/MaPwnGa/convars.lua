@@ -8,7 +8,7 @@ aimbotConVar = CreateClientConVar("exp_aim_enable", "0", false)
 aimbotBoneConVar = CreateClientConVar("exp_aim_bone", "ValveBiped.Bip01_Head1", false)
 aimbotKeyConVar = CreateClientConVar("exp_aim_key", "111", false)
 aimbotFOVCircleConVar = CreateClientConVar("exp_aim_fovcircle", "0", false)
-aimbotFOVConVar = CreateClientConVar("exp_aim_fov", "30", false)
+aimbotFOVConVar = CreateClientConVar("exp_aim_fov", "10", false)
 
 triggerConVar = CreateClientConVar("exp_trigger_enable", "0", false)
 

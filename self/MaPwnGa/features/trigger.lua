@@ -1,20 +1,18 @@
 include("../convars.lua")
 
-function Triggerbot()
-    if Shooting then
-		RunConsoleCommand("-attack")
-		Shooting=false	
-	end
+function Triggerbot(cmd)
+	if !triggerConVar:GetBool() then return end
 
-	if triggerConVar:GetBool() then
-		if LocalPlayer():Alive() and LocalPlayer():GetActiveWeapon() and LocalPlayer():GetActiveWeapon():Clip1() > 0 then
-			local ent = LocalPlayer():GetEyeTrace().Entity
-			if ent:IsValid() and (ent:IsNPC() or ent:Team() != TEAM_SPECTATOR and ent:Alive()) then
-				if not Shooting then
-					RunConsoleCommand( "+attack" )
-					Shooting = true
-				end
-			end
-		end
-	end
+	if !LocalPlayer():Alive() then return end
+    if !LocalPlayer():GetActiveWeapon() or LocalPlayer():GetActiveWeapon():Clip1() <= 0 then return end
+
+	local ent = LocalPlayer():GetEyeTrace().Entity
+	if !ent:IsValid() then return end
+    if ent:IsPlayer() then
+        if ent:Team() == TEAM_SPECTATOR or !ent:Alive() then return end
+    elseif !ent:IsNPC() then return end
+	
+     if !LocalPlayer():KeyDown(IN_ATTACK) then --No need if already pressed
+        cmd:SetButtons(cmd:GetButtons() + IN_ATTACK)
+    end
 end
