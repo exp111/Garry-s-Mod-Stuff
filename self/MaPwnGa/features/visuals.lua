@@ -34,6 +34,28 @@ function Visuals()
             local name = GetName(v)
             local pos = (v:GetPos() + Vector(0, 0, 80)):ToScreen()
 			draw.DrawText(name, "DermaDefault", pos.x, pos.y, textcolor, TEXT_ALIGN_CENTER)
+
+            --BONE ESP
+            local boneCount = v:GetBoneCount()
+            if boneCount > -1 then
+                for i = v:GetBoneCount() - 1, 0, -1 do
+                    if !v:BoneHasFlag(i, BONE_USED_BY_HITBOX) then continue end
+                    local bonePos = v:GetBonePosition(i);
+                    if bonePos == nil then continue end
+                    --if v:GetBoneParent(i) == -1 then continue end
+                    local cur = bonePos:ToScreen()
+                    local childs = v:GetChildBones(i)
+
+                    for l, w in pairs(childs) do
+                        local childPos = v:GetBonePosition(w)
+                        /*This is a real shitty fix cuz we don't know if there is a child bone that is at v:GetPos() but fuck it*/
+                        if childPos == nil or childPos == v:GetPos() then continue end
+                        local curChild = childPos:ToScreen()
+                        surface.SetDrawColor(255, 0, 255)
+                        surface.DrawLine(cur.x, cur.y, curChild.x, curChild.y)
+                    end
+                end
+            end
         end
     end
 end

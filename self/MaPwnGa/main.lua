@@ -31,7 +31,3 @@ end)
 hook.Add("HUDPaint", "Visuals", function()
     Visuals()
 end)
-
-hook.Add("CreateMove", "Trigger", function(cmd)
-	
-end)
