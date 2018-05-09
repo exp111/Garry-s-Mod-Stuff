@@ -6,6 +6,7 @@ include("UI/radar/main.lua")
 include("features/visuals.lua")
 include("features/aimbot.lua")
 include("features/trigger.lua")
+include("features/misc.lua")
 
 hook.Add("Think", "Main", function()
     if LocalPlayer():KeyPressed(IN_SCORE) then

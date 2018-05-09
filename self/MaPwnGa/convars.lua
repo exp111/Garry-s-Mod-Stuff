@@ -19,6 +19,7 @@ ESPBoneConVar = CreateClientConVar("exp_esp_bone", "0", false)
 ESP3DBoxConVar = CreateClientConVar("exp_esp_3dbox", "0", false)
 ESP2DBoxConVar = CreateClientConVar("exp_esp_2dbox", "0", false)
 ESPHealthConVar = CreateClientConVar("exp_esp_health", "0", false)
+ESPGlowConVar = CreateClientConVar("exp_esp_glow", "0", false)
 
 PerfectHeadAdjustmentConVar = CreateClientConVar("exp_misc_pha_enable", "0", false)
 PerfectHeadAdjustmentPositionConVar = CreateClientConVar("exp_misc_pha_position", "0", false)

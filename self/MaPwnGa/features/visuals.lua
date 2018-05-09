@@ -62,6 +62,7 @@ function Visuals()
 
     --ESP
     if ESPConVar:GetBool() then
+        local entities = {}
         for k,v in pairs(ents.GetAll()) do
             if !ValidTarget(v, ESPVisibleOnlyConVar:GetBool()) then continue end
 
@@ -99,6 +100,16 @@ function Visuals()
                 surface.SetDrawColor(Color(0, 0, 0))  
                 surface.DrawOutlinedRect(bottom.x - width / 2 - hOffset - 1, top.y - 1, width / 10 + 2, height + 2)
             end
+
+            --GLOW
+            if ESPGlowConVar:GetBool() then
+                entities[#entities + 1] = v
+            end
+        end
+
+        --GLOW (again)
+        if ESPGlowConVar:GetBool() and #entities > 0 then
+            halo.Add(entities, Color(255, 0, 0), 1, 1, 1, true, !ESPVisibleOnlyConVar:GetBool())
         end
     end
 
