@@ -20,6 +20,7 @@ function Aimbot(cmd)
 
     if bestTarget == nil then return end
 
-    local targetheadpos = GetBonePos(bestTarget, bone)
-	cmd:SetViewAngles((targetheadpos - LocalPlayer():GetShootPos()):Angle())
+    local targetHeadPos = GetBonePos(bestTarget, bone)
+    if targetHeadPos == nil then return end
+	cmd:SetViewAngles((targetHeadPos - LocalPlayer():GetShootPos()):Angle())
 end

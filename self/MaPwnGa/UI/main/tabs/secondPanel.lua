@@ -46,7 +46,7 @@ CheckBoxLabel:SizeToContents()
 
 local Binder = vgui.Create( "DBinder", secondPanel )
 Binder:SetPos( 100, 95 )
-Binder:SetSize( 100, 20 )
+Binder:SetSize( 100, 25 )
 Binder:SetConVar("exp_aim_key")
 
 local CheckBoxLabel = vgui.Create( "DCheckBoxLabel", secondPanel)
@@ -71,6 +71,18 @@ CheckBoxLabel:SetText("Triggerbot")
 CheckBoxLabel:SetPos(5, 150)
 CheckBoxLabel:SetDark(true)
 CheckBoxLabel:SizeToContents()
+
+local CheckBoxLabel = vgui.Create( "DCheckBoxLabel", secondPanel)
+CheckBoxLabel:SetConVar("exp_trigger_onkey")
+CheckBoxLabel:SetText("On Key")
+CheckBoxLabel:SetPos(100, 150)
+CheckBoxLabel:SetDark(true)
+CheckBoxLabel:SizeToContents()
+
+local Binder = vgui.Create( "DBinder", secondPanel )
+Binder:SetPos( 195, 145 )
+Binder:SetSize( 100, 25 )
+Binder:SetConVar("exp_trigger_key")
 
 --ESP
 local CheckBoxLabel = vgui.Create( "DCheckBoxLabel", secondPanel)
@@ -112,6 +124,13 @@ local CheckBoxLabel = vgui.Create( "DCheckBoxLabel", secondPanel)
 CheckBoxLabel:SetConVar("exp_esp_bone")
 CheckBoxLabel:SetText("Bone")
 CheckBoxLabel:SetPos(25, 250)
+CheckBoxLabel:SetDark(true)
+CheckBoxLabel:SizeToContents()
+
+local CheckBoxLabel = vgui.Create( "DCheckBoxLabel", secondPanel)
+CheckBoxLabel:SetConVar("exp_esp_weapon")
+CheckBoxLabel:SetText("Weapon")
+CheckBoxLabel:SetPos(150, 250)
 CheckBoxLabel:SetDark(true)
 CheckBoxLabel:SizeToContents()
 

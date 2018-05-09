@@ -11,6 +11,8 @@ aimbotFOVCircleConVar = CreateClientConVar("exp_aim_fovcircle", "0", false)
 aimbotFOVConVar = CreateClientConVar("exp_aim_fov", "10", false)
 
 triggerConVar = CreateClientConVar("exp_trigger_enable", "0", false)
+triggerOnKeyConVar = CreateClientConVar("exp_trigger_onkey", "1", false)
+triggerKeyConVar = CreateClientConVar("exp_trigger_key", "109", false)
 
 ESPConVar = CreateClientConVar("exp_esp_enable", "0", false)
 ESPVisibleOnlyConVar = CreateClientConVar("exp_esp_visibleonly", "0", false)
@@ -20,6 +22,7 @@ ESP3DBoxConVar = CreateClientConVar("exp_esp_3dbox", "0", false)
 ESP2DBoxConVar = CreateClientConVar("exp_esp_2dbox", "0", false)
 ESPHealthConVar = CreateClientConVar("exp_esp_health", "0", false)
 ESPGlowConVar = CreateClientConVar("exp_esp_glow", "0", false)
+ESPWeaponConVar = CreateClientConVar("exp_esp_weapon", "0", false)
 
 PerfectHeadAdjustmentConVar = CreateClientConVar("exp_misc_pha_enable", "0", false)
 PerfectHeadAdjustmentPositionConVar = CreateClientConVar("exp_misc_pha_position", "0", false)

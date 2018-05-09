@@ -70,8 +70,16 @@ function Visuals()
             --Name
             if ESPNameConVar:GetBool() then
                 local name = GetName(v)
-                local pos = (v:GetPos() + Vector(0, 0, 80)):ToScreen()
+                local pos = (v:GetPos() + Vector(0, 0, 100)):ToScreen()
                 draw.DrawText(name, "DermaDefault", pos.x, pos.y, textcolor, TEXT_ALIGN_CENTER)
+            end
+
+            --WEAPON
+            if ESPWeaponConVar:GetBool() and v:GetActiveWeapon() != nil and v:GetActiveWeapon():IsValid() then
+                local name = v:GetActiveWeapon():GetPrintName()
+                if name == nil then break end
+                local pos = (v:GetPos() + Vector(0, 0, 90)):ToScreen()
+                draw.DrawText(language.GetPhrase(name), "DermaDefault", pos.x, pos.y, textcolor, TEXT_ALIGN_CENTER)
             end
 
             --BONE ESP
@@ -93,12 +101,15 @@ function Visuals()
 			
             --HEALTH
             if ESPHealthConVar:GetBool() then
-                surface.SetDrawColor(Color(0, 255, 0))
                 local hOffset = width / 10 + width / 20
                 local hPercentage = (v:Health() / v:GetMaxHealth())
-                surface.DrawRect(bottom.x - width / 2 - hOffset, (1 - hPercentage) * height + top.y, width / 10, height * hPercentage)
-                surface.SetDrawColor(Color(0, 0, 0))  
-                surface.DrawOutlinedRect(bottom.x - width / 2 - hOffset - 1, top.y - 1, width / 10 + 2, height + 2)
+                if (width > 10) then
+                    surface.SetDrawColor(Color(0, 0, 0))  
+                    surface.DrawOutlinedRect(bottom.x - width / 2 - hOffset - 1, top.y - 1, width / 10 + 3, height + 2)
+                end
+                surface.SetDrawColor(Color(0, 255, 0))
+                surface.DrawRect(bottom.x - width / 2 - hOffset, (1 - hPercentage) * height + top.y, width / 10 + 1, height * hPercentage)
+                
             end
 
             --GLOW

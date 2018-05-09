@@ -8,3 +8,9 @@ function ValidTarget(target, visibleOnly)
     if visibleOnly and !LocalPlayer():IsLineOfSightClear(target) then return false end
     return true
 end
+
+function ForceKey(cmd, KeyCode)
+    if !LocalPlayer():KeyDown(KeyCode) then --No need if already pressed
+        cmd:SetButtons(cmd:GetButtons() + KeyCode)
+    end
+end
