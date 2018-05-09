@@ -33,6 +33,23 @@ local function DrawBones(target)
     end
 end
 
+local function GetRect(target)
+    local min, max = target:GetCollisionBounds()
+    local pos = target:GetPos()
+    local top, bottom = (pos + Vector(0, 0, max.z)):ToScreen(), (pos - Vector(0, 0, 8)):ToScreen()
+    local height = bottom.y - top.y
+	local width = height / 2.425
+    return top, bottom, height, width
+end
+
+local function Draw2DBox(target, top, bottom, height, width)
+	surface.SetDrawColor(Color(255, 0, 0))
+	surface.DrawOutlinedRect(bottom.x - width / 2, top.y, width / 0.9, height)
+	surface.SetDrawColor(Color(0, 0, 0))
+	surface.DrawOutlinedRect(bottom.x - width / 2 + 1, top.y + 1, width / 0.9 - 2, height - 2)
+	surface.DrawOutlinedRect(bottom.x - width / 2 - 1, top.y - 1, width / 0.9 + 2, height + 2)
+end
+
 local perfectCounter = {}
 local perfectStep = math.pi * 0.005;
 --Main Visuals Function
@@ -48,6 +65,7 @@ function Visuals()
         for k,v in pairs(ents.GetAll()) do
             if !ValidTarget(v, ESPVisibleOnlyConVar:GetBool()) then continue end
 
+            local top, bottom, height, width = GetRect(v)
             --Name
             if ESPNameConVar:GetBool() then
                 local name = GetName(v)
@@ -65,6 +83,21 @@ function Visuals()
                 cam.Start3D()
                 render.DrawWireframeBox( v:GetPos(), Angle( 0, v:EyeAngles().y, 0), v:OBBMins(), v:OBBMaxs(), Color(255, 0, 0) )
                 cam.End3D()
+            end
+
+            --2D Box
+            if ESP2DBoxConVar:GetBool() then
+                Draw2DBox(v, top, bottom, height, width)
+            end
+			
+            --HEALTH
+            if ESPHealthConVar:GetBool() then
+                surface.SetDrawColor(Color(0, 255, 0))
+                local hOffset = width / 10 + width / 20
+                local hPercentage = (v:Health() / v:GetMaxHealth())
+                surface.DrawRect(bottom.x - width / 2 - hOffset, (1 - hPercentage) * height + top.y, width / 10, height * hPercentage)
+                surface.SetDrawColor(Color(0, 0, 0))  
+                surface.DrawOutlinedRect(bottom.x - width / 2 - hOffset - 1, top.y - 1, width / 10 + 2, height + 2)
             end
         end
     end
