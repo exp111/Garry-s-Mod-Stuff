@@ -34,3 +34,7 @@ hook.Add("HUDPaint", "Visuals", function()
     Visuals()
     TTTCheckerVisuals()
 end)
+
+hook.Add("CalcView", "ThirdPerson", function(ply, pos, angles, fov)
+	return ThirdPerson(ply, pos, angles, fov)
+end);

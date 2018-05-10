@@ -1,5 +1,6 @@
 include("../convars.lua")
 include("../helpers/utils.lua")
+include("../helpers/math.lua")
 
 --Helper Functions
 local function GetName(target)
@@ -51,14 +52,24 @@ local function Draw2DBox(target, top, bottom, height, width)
 	surface.DrawOutlinedRect(bottom.x - width / 2 - 1, top.y - 1, width / 0.9 + 2, height + 2)
 end
 
+local function DrawFOVCircle()
+    local radius = math.tan(math.rad(aimbotFOVConVar:GetInt()) / 2) / math.tan(math.rad(LocalPlayer():GetFOV()) / 2) * ScrW();
+    surface.DrawCircle(ScrW() / 2, ScrH() / 2, radius, FOVCircleColor.r, FOVCircleColor.g, FOVCircleColor.b)
+end
+
+local function DrawSnapline(target, bone)
+    local ePos = GetBonePos(target, bone):ToScreen()
+    surface.SetDrawColor(Color(255, 0, 0))
+    surface.DrawLine(ScrW() / 2, ScrH() / 2, ePos.x, ePos.y)
+end
+
 local perfectCounter = {}
 local perfectStep = math.pi * 0.005;
 --Main Visuals Function
 function Visuals()
     --FOV Circle
     if aimbotConVar:GetBool() and aimbotFOVCircleConVar:GetBool() then
-        local radius = math.tan(math.rad(aimbotFOVConVar:GetInt()) / 2) / math.tan(math.rad(LocalPlayer():GetFOV()) / 2) * ScrW();
-        surface.DrawCircle(ScrW() / 2, ScrH() / 2, radius, FOVCircleColor.r, FOVCircleColor.g, FOVCircleColor.b)
+        DrawFOVCircle()
     end
 
     --ESP
@@ -116,6 +127,13 @@ function Visuals()
             if ESPGlowConVar:GetBool() then
                 entities[#entities + 1] = v
             end
+
+            --SNAPLINES
+            if aimbotConVar:GetBool() and aimbotSnaplinesConVar:GetBool() then
+                if CheckAimbotFOV(LocalPlayer(), v, aimbotFOVConVar:GetInt()) then
+                    DrawSnapline(v, aimbotBoneConVar:GetString())
+                end
+            end
         end
 
         --GLOW (again)
@@ -132,7 +150,7 @@ function Visuals()
             if !ValidTarget(v, false) then continue end
 
             local bone = v:LookupBone("ValveBiped.Bip01_Head1")
-            if bone <= 0 then continue end
+            if bone == nil or bone <= 0 then continue end
 
             if perfectCounter[k] == nil or perfectCounter[k] > (math.pi * 2.0) then perfectCounter[k] = 0 end
             perfectCounter[k] = perfectCounter[k] + perfectStep;

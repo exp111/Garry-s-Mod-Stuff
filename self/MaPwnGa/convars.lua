@@ -9,6 +9,7 @@ aimbotBoneConVar = CreateClientConVar("exp_aim_bone", "ValveBiped.Bip01_Head1", 
 aimbotKeyConVar = CreateClientConVar("exp_aim_key", "111", false)
 aimbotFOVCircleConVar = CreateClientConVar("exp_aim_fovcircle", "0", false)
 aimbotFOVConVar = CreateClientConVar("exp_aim_fov", "10", false)
+aimbotSnaplinesConVar = CreateClientConVar("exp_aim_snaplines", "0", false)
 
 triggerConVar = CreateClientConVar("exp_trigger_enable", "0", false)
 triggerOnKeyConVar = CreateClientConVar("exp_trigger_onkey", "1", false)
@@ -29,6 +30,7 @@ PerfectHeadAdjustmentPositionConVar = CreateClientConVar("exp_misc_pha_position"
 PerfectHeadAdjustmentScaleConVar = CreateClientConVar("exp_misc_pha_scale", "0", false)
 
 TTTCheckerConVar = CreateClientConVar("exp_misc_tttcheck", "0", false)
+ThirdPersonConVar = CreateClientConVar("exp_misc_thirdperson", "0", false)
 
 --Color ConVars
 local function createColorConVar(name, r, g, b, a)

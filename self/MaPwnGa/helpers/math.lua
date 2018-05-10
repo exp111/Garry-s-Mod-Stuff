@@ -1,4 +1,4 @@
-function CheckAimbotFOV(ply, target, fov, bone)
+function CheckAimbotFOV(ply, target, fov)
     --Thanks shitcheat
     --Weird math is weird
     local playerAngles = ply:GetAngles()

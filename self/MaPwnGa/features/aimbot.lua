@@ -9,18 +9,17 @@ function Aimbot(cmd)
     --Aimbot Stuff
 
     local bestTarget = nil
-    local bone = aimbotBoneConVar:GetString()
     for k, v in pairs(ents.GetAll()) do
         if !ValidTarget(v, true) then continue end
 
-        if !CheckAimbotFOV(LocalPlayer(), v, aimbotFOVConVar:GetInt(), bone) then continue end
+        if !CheckAimbotFOV(LocalPlayer(), v, aimbotFOVConVar:GetInt()) then continue end
 
         bestTarget = v
     end
 
     if bestTarget == nil then return end
 
-    local targetHeadPos = GetBonePos(bestTarget, bone)
+    local targetHeadPos = GetBonePos(bestTarget, aimbotBoneConVar:GetString())
     if targetHeadPos == nil then return end
 	cmd:SetViewAngles((targetHeadPos - LocalPlayer():GetShootPos()):Angle())
 end

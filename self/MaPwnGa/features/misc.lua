@@ -24,6 +24,8 @@ end
 function TTTCheckerVisuals()
     if !TTTCheckerConVar:GetBool() then return end
 
+    if !_G.KARMA then return end
+
     if !LocalPlayer() or !LocalPlayer():Alive() then return end
 
     local ent = LocalPlayer():GetEyeTrace().Entity
@@ -42,3 +44,16 @@ end)
 hook.Add("TTTBeginRound", "TTTBeginRound", function()
     table.Empty(traitors)
 end)
+
+--THIRDPERSON
+function ThirdPerson(ply, pos, angles, fov)
+    if !ThirdPersonConVar:GetBool() then return end
+    local view = {}
+
+    view.origin = pos - (angles:Forward() * 100)
+	view.angles = angles
+	view.fov = fov
+	view.drawviewer = true
+
+	return view
+end
