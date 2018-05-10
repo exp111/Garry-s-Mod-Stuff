@@ -4,7 +4,7 @@ include("../helpers/utils.lua")
 function Triggerbot(cmd)
 	if !triggerConVar:GetBool() then return end
 
-	if !LocalPlayer():Alive() then return end
+	if !LocalPlayer() or !LocalPlayer():Alive() then return end
     local activeWeapon = LocalPlayer():GetActiveWeapon()
     if activeWeapon == nil or !activeWeapon:IsValid() or activeWeapon:Clip1() <= 0 then return end
 

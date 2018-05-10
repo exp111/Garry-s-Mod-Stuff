@@ -28,6 +28,8 @@ PerfectHeadAdjustmentConVar = CreateClientConVar("exp_misc_pha_enable", "0", fal
 PerfectHeadAdjustmentPositionConVar = CreateClientConVar("exp_misc_pha_position", "0", false)
 PerfectHeadAdjustmentScaleConVar = CreateClientConVar("exp_misc_pha_scale", "0", false)
 
+TTTCheckerConVar = CreateClientConVar("exp_misc_tttcheck", "0", false)
+
 --Color ConVars
 local function createColorConVar(name, r, g, b, a)
     CreateClientConVar( colorConVarPrefix .. name .."_r", r, true, false )

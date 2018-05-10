@@ -34,6 +34,7 @@ local function DrawBones(target)
 end
 
 local function GetRect(target)
+    --I stole this from shitcheat too
     local min, max = target:GetCollisionBounds()
     local pos = target:GetPos()
     local top, bottom = (pos + Vector(0, 0, max.z)):ToScreen(), (pos - Vector(0, 0, 8)):ToScreen()
@@ -109,7 +110,6 @@ function Visuals()
                 end
                 surface.SetDrawColor(Color(0, 255, 0))
                 surface.DrawRect(bottom.x - width / 2 - hOffset, (1 - hPercentage) * height + top.y, width / 10 + 1, height * hPercentage)
-                
             end
 
             --GLOW
