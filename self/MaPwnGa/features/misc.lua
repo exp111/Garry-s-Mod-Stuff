@@ -27,12 +27,15 @@ local function TTTCheckerVisuals()
 
     if !LocalPlayer() then return end
 
-    local ent = LocalPlayer():GetEyeTrace().Entity
+    if TTTCheckerConVar:GetBool() then
+        local ent = LocalPlayer():GetEyeTrace().Entity
+        if ent != nil and ent:IsValid() then
+            local pos = ent:GetPos()
 
-    local pos = ent:GetPos()
-
-    if table.HasValue(traitors, ent) then
-        draw.SimpleTextOutlined( "[TRAITOR]", "DermaDefault", pos.x, pos.y + 10, Color(255, 0, 0, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, 1, Color(0,0,0,255))
+            if table.HasValue(traitors, ent) then
+                draw.SimpleTextOutlined( "[TRAITOR]", "DermaDefault", pos.x, pos.y + 10, Color(255, 0, 0, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, 1, Color(0,0,0,255))
+            end
+        end
     end
 
     if TTTCorpseDetectorConVar:GetBool() then
