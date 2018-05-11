@@ -53,9 +53,11 @@ local function Draw2DBox(target, top, bottom, height, width)
 end
 
 local function DrawSnapline(target, bone)
-    local ePos = GetBonePos(target, bone):ToScreen()
+    local ePos = GetBonePos(target, bone)
+    if ePos == nil then return end
+    ePosS = ePos:ToScreen()
     surface.SetDrawColor(Color(255, 0, 0))
-    surface.DrawLine(ScrW() / 2, ScrH() / 2, ePos.x, ePos.y)
+    surface.DrawLine(ScrW() / 2, ScrH() / 2, ePosS.x, ePosS.y)
 end
 
 --Main ESP Function

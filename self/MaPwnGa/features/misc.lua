@@ -86,7 +86,19 @@ function MiscVisuals()
     
     --CROSSHAIR
     if crosshairConVar:GetBool() then
-        DrawCrosshair(ScrW() / 2, ScrH() / 2)
+        local posX = ScrW() / 2
+        local posY = ScrH() / 2
+
+        if LocalPlayer():Alive() and LocalPlayer():GetActiveWeapon() != nil then
+            local punchAngle = LocalPlayer():GetViewPunchAngles()
+	        local dx = posX / LocalPlayer():GetFOV()
+	        local dy = posY / LocalPlayer():GetFOV()
+
+	        posX = posX - ( dx * punchAngle.yaw)
+	        posY = posY + ( dy * punchAngle.pitch)
+        end
+
+        DrawCrosshair(posX, posY)
     end
     
     --TTTChecker
@@ -137,4 +149,14 @@ function MiscVisuals()
             end
         end
     end
+end
+
+--NORECOIL
+function NoRecoil()
+    if !norecoilConVar:GetBool() then return end
+
+    local activeWeapon = LocalPlayer():GetActiveWeapon()
+    if activeWeapon == nil or !activeWeapon.Primary then return end
+    
+    activeWeapon.Primary.Recoil = 0
 end

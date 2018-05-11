@@ -34,6 +34,7 @@ PerfectHeadAdjustmentScaleConVar = CreateClientConVar("exp_misc_pha_scale", "0",
 TTTCheckerConVar = CreateClientConVar("exp_misc_tttcheck", "0", false)
 ThirdPersonConVar = CreateClientConVar("exp_misc_thirdperson", "0", false)
 crosshairConVar = CreateClientConVar("exp_misc_crosshair", "0", false)
+norecoilConVar = CreateClientConVar("exp_misc_norecoil", "0", false)
 
 --Color ConVars
 local function createColorConVar(name, r, g, b, a)

@@ -25,8 +25,12 @@ hook.Add("CreateMove", "HookCreateMove", function(cmd)
     --If CUserCmd is faulty/not valid no need to do the other shit
     if cmd == nil or cmd:CommandNumber() == 0 then return end
 
-    Aimbot(cmd)
-    Triggerbot(cmd)
+    if LocalPlayer() and LocalPlayer():Alive() then
+        Aimbot(cmd)
+        Triggerbot(cmd)
+        NoRecoil()
+    end
+    
     CheckForTraitors()
 end)
 
@@ -37,4 +41,4 @@ end)
 
 hook.Add("CalcView", "ThirdPerson", function(ply, pos, angles, fov)
 	return ThirdPerson(ply, pos, angles, fov)
-end);
+end)

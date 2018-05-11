@@ -44,13 +44,6 @@ ColorMixer:SetAlphaBar(true)
 ColorMixer:SetWangs(true)
 ColorMixer:SetColor(Color( 255, 255, 255 ))
 
-local function SetColorConVar(colorName, mixer)
-	mixer:SetConVarR(colorConVarPrefix..colorName.."_r")
-	mixer:SetConVarG(colorConVarPrefix..colorName.."_g")
-	mixer:SetConVarB(colorConVarPrefix..colorName.."_b")
-	mixer:SetConVarA(colorConVarPrefix..colorName.."_a")
-end
-
 local dComboBox = vgui.Create("DComboBox", firstPanel)
 dComboBox:SetPos(210, 75)
 dComboBox:SetSize(150, 40)
@@ -59,9 +52,16 @@ dComboBox:AddChoice("Menu Background Color")
 dComboBox:AddChoice("Menu Foreground Color")
 dComboBox:AddChoice("Draw FOV Color")
 dComboBox.OnSelect = function(panel, index, value)
-	if index == menuBGColorIndex then SetColorConVar("menuBG", ColorMixer)
-	elseif index == menuFGColorIndex then SetColorConVar("menuFG", ColorMixer) 
-	elseif index == FOVCircleColorIndex then SetColorConVar("fovCircle", ColorMixer) end
+	if index == menuBGColorIndex then ColorMixer:SetColor(menuBGColor)
+	elseif index == menuFGColorIndex then ColorMixer:SetColor(menuFGColor) 
+	elseif index == FOVCircleColorIndex then ColorMixer:SetColor(FOVCircleColor) end
+end
+
+local function ColorRefresh(color, name)
+	LocalPlayer():ConCommand(colorConVarPrefix..name.."_r "..color.r.."; "
+							..colorConVarPrefix..name.."_g "..color.g.."; "
+							..colorConVarPrefix..name.."_b "..color.b.."; "
+							..colorConVarPrefix..name.."_a "..color.a)
 end
 
 local dButton = vgui.Create("DButton", firstPanel)
