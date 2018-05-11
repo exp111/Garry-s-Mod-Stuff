@@ -52,26 +52,14 @@ local function Draw2DBox(target, top, bottom, height, width)
 	surface.DrawOutlinedRect(bottom.x - width / 2 - 1, top.y - 1, width / 0.9 + 2, height + 2)
 end
 
-local function DrawFOVCircle()
-    local radius = math.tan(math.rad(aimbotFOVConVar:GetInt()) / 2) / math.tan(math.rad(LocalPlayer():GetFOV()) / 2) * ScrW();
-    surface.DrawCircle(ScrW() / 2, ScrH() / 2, radius, FOVCircleColor.r, FOVCircleColor.g, FOVCircleColor.b)
-end
-
 local function DrawSnapline(target, bone)
     local ePos = GetBonePos(target, bone):ToScreen()
     surface.SetDrawColor(Color(255, 0, 0))
     surface.DrawLine(ScrW() / 2, ScrH() / 2, ePos.x, ePos.y)
 end
 
-local perfectCounter = {}
-local perfectStep = math.pi * 0.005;
---Main Visuals Function
-function Visuals()
-    --FOV Circle
-    if aimbotConVar:GetBool() and aimbotFOVCircleConVar:GetBool() then
-        DrawFOVCircle()
-    end
-
+--Main ESP Function
+function ESP()
     --ESP
     if ESPConVar:GetBool() then
         local entities = {}
@@ -139,49 +127,6 @@ function Visuals()
         --GLOW (again)
         if ESPGlowConVar:GetBool() and #entities > 0 then
             halo.Add(entities, Color(255, 0, 0), 1, 1, 1, true, !ESPVisibleOnlyConVar:GetBool())
-        end
-    end
-
-    if PerfectHeadAdjustmentConVar:GetBool() then
-        if !changed then
-            changed = true
-        end
-        for k,v in pairs(ents.GetAll()) do
-            if !ValidTarget(v, false) then continue end
-
-            local bone = v:LookupBone("ValveBiped.Bip01_Head1")
-            if bone == nil or bone <= 0 then continue end
-
-            if perfectCounter[k] == nil or perfectCounter[k] > (math.pi * 2.0) then perfectCounter[k] = 0 end
-            perfectCounter[k] = perfectCounter[k] + perfectStep;
-
-            if PerfectHeadAdjustmentPositionConVar:GetBool() then
-                v:ManipulateBonePosition(bone, Vector(20 * math.sin(perfectCounter[k]),10, 20 * math.cos(perfectCounter[k])))
-            else
-                --Reset then
-                if v:GetManipulateBonePosition(bone) != Vector(0, 0, 0) then
-                    v:ManipulateBonePosition(bone, Vector(0, 0, 0))
-                end
-            end
-            if PerfectHeadAdjustmentScaleConVar:GetBool() then
-                local cur = 5 * math.abs(math.sin(perfectCounter[k]))
-                v:ManipulateBoneScale(bone, Vector(cur, cur, cur))
-            else
-                --Reset then
-                if v:GetManipulateBoneScale(bone) != Vector(1, 1, 1) then
-                    v:ManipulateBoneScale(bone, Vector(1, 1, 1))
-                end
-            end
-        end
-    else
-        if changed then
-            for k,v in pairs(ents.GetAll()) do  
-                if v:HasBoneManipulations() then
-                    local bone = v:LookupBone("ValveBiped.Bip01_Head1")
-                    v:ManipulateBonePosition(bone, Vector(0,0,0))
-                    v:ManipulateBoneScale(bone, Vector(1, 1, 1))
-                end
-            end
         end
     end
 end

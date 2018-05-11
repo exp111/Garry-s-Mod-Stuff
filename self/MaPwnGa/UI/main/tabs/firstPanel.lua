@@ -76,5 +76,5 @@ dButton.DoClick = function()
 
 	if choice == menuBGColorIndex then menuBGColor = chosenColor ColorRefresh(chosenColor, "menuBG")
 	elseif choice == menuFGColorIndex then menuFGColor = chosenColor ColorRefresh(chosenColor, "menuFG")
-	elseif choice == FOVCircleColorIndex then drawFOVColor = chosenColor ColorRefresh(chosenColor, "fovCircle") end
+	elseif choice == FOVCircleColorIndex then FOVCircleColor = chosenColor ColorRefresh(chosenColor, "fovCircle") end
 end
