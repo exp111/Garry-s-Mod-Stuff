@@ -32,6 +32,7 @@ PerfectHeadAdjustmentPositionConVar = CreateClientConVar("exp_misc_pha_position"
 PerfectHeadAdjustmentScaleConVar = CreateClientConVar("exp_misc_pha_scale", "0", false)
 
 TTTCheckerConVar = CreateClientConVar("exp_misc_tttcheck", "0", false)
+TTTCorpseDetectorConVar = CreateClientConVar("exp_misc_tttcorpsedetector", "0", false)
 ThirdPersonConVar = CreateClientConVar("exp_misc_thirdperson", "0", false)
 crosshairConVar = CreateClientConVar("exp_misc_crosshair", "0", false)
 norecoilConVar = CreateClientConVar("exp_misc_norecoil", "0", false)

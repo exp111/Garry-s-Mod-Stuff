@@ -30,7 +30,7 @@ hook.Add("CreateMove", "HookCreateMove", function(cmd)
         Triggerbot(cmd)
         NoRecoil()
     end
-    
+
     CheckForTraitors()
 end)
 

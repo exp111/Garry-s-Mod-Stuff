@@ -7,7 +7,7 @@ function CheckForTraitors()
     
     if(_G.KARMA) then
         for k, v in ipairs(player.GetAll()) do
-            if(v != LocalPlayer() and v:IsValid() and !table.HasValue(traitors, v) and v:Alive() and v:Team() != TEAM_SPECTATOR) then
+            if(v != LocalPlayer() and v:IsValid() and !table.HasValue(traitors, v) and v:Alive() and v:Team() != TEAM_SPECTATOR and !v:IsDetective()) then
                 for l, w in pairs(_R.Player.GetWeapons(v)) do
                     if(IsValid(w)) then
                         if(w.CanBuy and table.HasValue(w.CanBuy, ROLE_TRAITOR)) then
@@ -21,10 +21,11 @@ function CheckForTraitors()
     end
 end
 
+local corpses = {}
 local function TTTCheckerVisuals()
     if !_G.KARMA then return end
 
-    if !LocalPlayer() or !LocalPlayer():Alive() then return end
+    if !LocalPlayer() then return end
 
     local ent = LocalPlayer():GetEyeTrace().Entity
 
@@ -33,14 +34,47 @@ local function TTTCheckerVisuals()
     if table.HasValue(traitors, ent) then
         draw.SimpleTextOutlined( "[TRAITOR]", "DermaDefault", pos.x, pos.y + 10, Color(255, 0, 0, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, 1, Color(0,0,0,255))
     end
+
+    if TTTCorpseDetectorConVar:GetBool() then
+        for k,v in pairs(corpses) do
+            if v == nil or !v:IsValid() then 
+                table.remove(corpses, k)
+                continue
+            end
+            local pos = v:GetPos():ToScreen()
+            local ply = v:GetDTEntity(0)
+            local name = "Unknown Corpse"
+            if ply != nil then
+                name = "Corpse of: ".. ply:Nick()
+            end
+
+            draw.DrawText(name, "DermaDefault", pos.x, pos.y)
+        end
+    end
 end
+
+hook.Add("OnEntityCreated", "TTTCorpseDetector", function(entity)
+    if !TTTCorpseDetectorConVar:GetBool() then return end
+
+    if entity:GetClass() == "prop_ragdoll" then
+        local ply = entity:GetDTEntity(0)
+        if ply != nil then
+            chat.AddText("The corpse of " .. ply:Nick() .. " was spawned!")
+        else
+            chat.AddText("A unknown corpse was spawned!")
+        end
+        corpses[#corpses + 1] = entity
+    end
+end)
 
 hook.Add("TTTPrepareRound", "TTTPrepareRound", function()
     table.Empty(traitors)
+    table.Empty(corpses)
 end)
 
 hook.Add("TTTBeginRound", "TTTBeginRound", function()
     table.Empty(traitors)
+    table.Empty(corpses)
 end)
 
 --THIRDPERSON
@@ -102,9 +136,7 @@ function MiscVisuals()
     end
     
     --TTTChecker
-    if TTTCheckerConVar:GetBool() then 
-        TTTCheckerVisuals()
-    end
+    TTTCheckerVisuals()
 
     --PERFECT HEAD ADJUSTMENT
     if PerfectHeadAdjustmentConVar:GetBool() then
