@@ -10,6 +10,8 @@ aimbotKeyConVar = CreateClientConVar("exp_aim_key", "111", false)
 aimbotFOVCircleConVar = CreateClientConVar("exp_aim_fovcircle", "0", false)
 aimbotFOVConVar = CreateClientConVar("exp_aim_fov", "10", false)
 aimbotSnaplinesConVar = CreateClientConVar("exp_aim_snaplines", "0", false)
+aimbotSmoothConVar = CreateClientConVar("exp_aim_smooth", "0", false)
+aimbotSaltConVar = CreateClientConVar("exp_aim_salt", "0", false)
 
 triggerConVar = CreateClientConVar("exp_trigger_enable", "0", false)
 triggerOnKeyConVar = CreateClientConVar("exp_trigger_onkey", "1", false)

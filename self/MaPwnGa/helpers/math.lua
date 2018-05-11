@@ -1,11 +1,16 @@
-function CheckAimbotFOV(ply, target, fov)
-    --Thanks shitcheat
-    --Weird math is weird
+function GetAimbotFOV(ply, target)
     local playerAngles = ply:GetAngles()
     local targetAngles = (target:GetPos() - ply:GetPos()):Angle()
     local ady = math.abs(math.NormalizeAngle(playerAngles.y - targetAngles.y))
     local adx = math.abs(math.NormalizeAngle(playerAngles.x - targetAngles.x ))
-    return !(ady > fov or adx > fov)
+    return math.max(ady, adx)
+end
+
+function CheckAimbotFOV(ply, target, fov)
+    --Thanks shitcheat
+    --Weird math is weird
+    local max = GetAimbotFOV(ply, target)
+    return !(max > fov)
 end
 
 function GetBonePos(target, boneString)
