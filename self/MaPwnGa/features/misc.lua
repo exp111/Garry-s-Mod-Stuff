@@ -50,8 +50,19 @@ local function TTTCheckerVisuals()
             if ply != nil then
                 name = "Corpse of: ".. ply:Nick()
             end
+            local clr = Color(255, 255, 255)
+            local found = v:GetDTBool(0)
+            if found != nil and found then
+                if ply.role == 0 then --inno
+                    clr = Color(0, 255, 0)
+                elseif ply.role == 1 then --traitor
+                    clr = Color(255, 0, 0)
+                else --detective?
+                    clr = Color(0, 0, 255)
+                end
+            end
 
-            draw.DrawText(name, "DermaDefault", pos.x, pos.y)
+            draw.DrawText(name, "DermaDefault", pos.x, pos.y, clr)
         end
     end
 end
@@ -96,14 +107,14 @@ end
 local function DrawCrosshair(x, y)
 	surface.SetDrawColor(Color(0, 0, 0, 170));
 	// outline horizontal
-	surface.DrawRect(x - 5, y - 1, 9, 3);
+	surface.DrawRect(x - 4, y - 1, 9, 3);
 	// outline vertical
-	surface.DrawRect(x - 2, y - 4, 3, 9);
+	surface.DrawRect(x - 1, y - 4, 3, 9);
 	surface.SetDrawColor(Color(255, 255, 255, 255));
 	// line horizontal
-	surface.DrawLine(x - 4, y, x + 3, y);
+	surface.DrawLine(x - 3, y, x + 4, y);
 	// line vertical
-	surface.DrawLine(x - 1, y + 3, x - 1, y - 4);
+	surface.DrawLine(x - 0, y + 3, x - 0, y - 4);
 end
 
 local function DrawFOVCircle()
