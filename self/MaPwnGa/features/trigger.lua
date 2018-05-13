@@ -5,7 +5,7 @@ function Triggerbot(cmd)
 	if !triggerConVar:GetBool() then return end
 
     local activeWeapon = LocalPlayer():GetActiveWeapon()
-    if activeWeapon == nil or !activeWeapon:IsValid() or activeWeapon:Clip1() <= 0 then return end
+    if !activeWeapon or !activeWeapon:IsValid() or activeWeapon:Clip1() <= 0 then return end
 
     if triggerOnKeyConVar:GetBool() and (!input.IsKeyDown(triggerKeyConVar:GetInt()) and !input.IsMouseDown(triggerKeyConVar:GetInt())) then return end
 

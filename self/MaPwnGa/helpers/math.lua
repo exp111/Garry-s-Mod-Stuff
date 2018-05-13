@@ -16,7 +16,7 @@ end
 function GetBonePos(target, boneString)
 	if target:IsValid() and target:Health() > 0 then
         local bone = target:LookupBone(boneString)
-		if  bone != nil then
+		if bone then
 			return target:GetBonePosition(bone)
 		else --Bone not found? aim at center of the target then /shrug
 			return target:GetPos() + target:OBBCenter()

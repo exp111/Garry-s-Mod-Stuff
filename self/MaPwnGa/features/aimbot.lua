@@ -45,10 +45,10 @@ function Aimbot(cmd)
         bestTarget = v
     end
 
-    if bestTarget == nil then return end
+    if !bestTarget then return end
 
     local targetHeadPos = GetBonePos(bestTarget, aimbotBoneConVar:GetString())
-    if targetHeadPos == nil then return end
+    if !targetHeadPos then return end
     local angle = (targetHeadPos - LocalPlayer():GetShootPos()):Angle()
 
     if aimbotSmoothConVar:GetFloat() > 0 then

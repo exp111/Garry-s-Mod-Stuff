@@ -77,11 +77,12 @@ function ESP()
             end
 
             --WEAPON
-            if ESPWeaponConVar:GetBool() and v:GetActiveWeapon() != nil and v:GetActiveWeapon():IsValid() then
+            if ESPWeaponConVar:GetBool() and v:GetActiveWeapon() and v:GetActiveWeapon():IsValid() then
                 local name = v:GetActiveWeapon():GetPrintName()
-                if name == nil then break end
-                local pos = (v:GetPos() + Vector(0, 0, 90)):ToScreen()
-                draw.DrawText(language.GetPhrase(name), "DermaDefault", pos.x, pos.y, textcolor, TEXT_ALIGN_CENTER)
+                if name then
+                    local pos = (v:GetPos() + Vector(0, 0, 90)):ToScreen()
+                    draw.DrawText(language.GetPhrase(name), "DermaDefault", pos.x, pos.y, textcolor, TEXT_ALIGN_CENTER)
+                end
             end
 
             --BONE ESP

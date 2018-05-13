@@ -29,7 +29,7 @@ local function TTTCheckerVisuals()
 
     if TTTCheckerConVar:GetBool() then
         local ent = LocalPlayer():GetEyeTrace().Entity
-        if ent != nil and ent:IsValid() then
+        if ent and ent:IsValid() then
             local pos = ent:GetPos()
 
             if table.HasValue(traitors, ent) then
@@ -40,19 +40,19 @@ local function TTTCheckerVisuals()
 
     if TTTCorpseDetectorConVar:GetBool() then
         for k,v in pairs(corpses) do
-            if v == nil or !v:IsValid() then 
+            if !v or !v:IsValid() then 
                 table.remove(corpses, k)
                 continue
             end
             local pos = v:GetPos():ToScreen()
             local ply = v:GetDTEntity(0)
             local name = "Unknown Corpse"
-            if ply != nil then
+            if ply then
                 name = "Corpse of: ".. ply:Nick()
             end
             local clr = Color(255, 255, 255)
             local found = v:GetDTBool(0)
-            if found != nil and found then
+            if found then
                 if ply.role == 0 then --inno
                     clr = Color(0, 255, 0)
                 elseif ply.role == 1 then --traitor
@@ -72,7 +72,7 @@ hook.Add("OnEntityCreated", "TTTCorpseDetector", function(entity)
 
     if entity:GetClass() == "prop_ragdoll" then
         local ply = entity:GetDTEntity(0)
-        if ply != nil then
+        if ply then
             chat.AddText("The corpse of " .. ply:Nick() .. " was spawned!")
         else
             chat.AddText("A unknown corpse was spawned!")
@@ -137,7 +137,7 @@ function MiscVisuals()
         local posX = ScrW() / 2
         local posY = ScrH() / 2
 
-        if LocalPlayer():Alive() and LocalPlayer():GetActiveWeapon() != nil then
+        if LocalPlayer():Alive() and LocalPlayer():GetActiveWeapon() then
             local punchAngle = LocalPlayer():GetViewPunchAngles()
 	        local dx = posX / LocalPlayer():GetFOV()
 	        local dy = posY / LocalPlayer():GetFOV()
@@ -161,9 +161,9 @@ function MiscVisuals()
             if !ValidTarget(v, false) then continue end
 
             local bone = v:LookupBone("ValveBiped.Bip01_Head1")
-            if bone == nil or bone <= 0 then continue end
+            if !bone or bone <= 0 then continue end
 
-            if perfectCounter[k] == nil or perfectCounter[k] > (math.pi * 2.0) then perfectCounter[k] = 0 end
+            if !perfectCounter[k] or perfectCounter[k] > (math.pi * 2.0) then perfectCounter[k] = 0 end
             perfectCounter[k] = perfectCounter[k] + perfectStep;
 
             if PerfectHeadAdjustmentPositionConVar:GetBool() then
@@ -202,7 +202,7 @@ function NoRecoil()
     if !norecoilConVar:GetBool() then return end
 
     local activeWeapon = LocalPlayer():GetActiveWeapon()
-    if activeWeapon == nil or !activeWeapon.Primary then return end
-    
+    if !activeWeapon or !activeWeapon.Primary then return end
+
     activeWeapon.Primary.Recoil = 0
 end
