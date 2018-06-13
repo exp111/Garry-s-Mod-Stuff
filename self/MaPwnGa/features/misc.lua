@@ -206,3 +206,82 @@ function NoRecoil()
 
     activeWeapon.Primary.Recoil = 0
 end
+
+
+--SPONGEMOCK
+function isUpper(char)
+    local ascii = string.byte(char)
+    return ascii >= 65 and ascii <= 90
+end
+
+function isLower(char)
+    local ascii = string.byte(char)
+    return ascii >= 97 and ascii <= 122
+end
+
+function isAlpha(char)
+    return isUpper(char) or isLower(char)
+end
+
+function changeCase(char)
+	if isUpper(char) then
+		return string.lower(char)
+	else
+		return string.upper(char)
+    end
+end
+
+function decideCase(char, prev, prev2)
+	local charIsUpper = isUpper(char)
+    local isValid1 = prev and isAlpha(prev)
+	local isValid2 = prev2 and isAlpha(prev2)
+	local odds = math.random(1, 100)
+	//First char -> 50%
+	if !isValid1 and !isValid2 then
+		if odds > 50 then
+			return changeCase(char)
+        end
+    //prev char has other case -> 15% chance to change case
+	elseif isValid1 and isUpper(prev) != charIsUpper then
+		if odds > 85 then
+			return changeCase(char)
+        end
+	// Else, there is a 85% chance to swap if prev2 does not match case
+	elseif isValid2 and isUpper(prev2) != charIsUpper then
+		if odds < 85 then
+			return changeCase(char)
+		else
+			return char
+		end
+	// Prev2 *also* matches case, so there is a 98% chance to swap
+	elseif odds < 98 then
+		return changeCase(char)
+    end
+	return char
+end
+
+function SpongeMockify(text, addImageURL)
+    local buffer = text
+    local prevLetter = nil
+    local prev2Letter = nil
+	for i = 1, #text do
+		local char = string.GetChar(buffer, i)
+		if !char then
+			continue
+		elseif !isAlpha(char) then
+			continue
+        end
+
+		if char == '"' or char == '\\' or char == ';' then
+			char = '.'
+		else
+			char = decideCase(char, prevLetter, prev2Letter)
+		end
+
+		prev2Letter = prevLetter
+		prevLetter = char
+        buffer = string.SetChar(buffer, i, char)
+    end
+    return buffer
+end
+//text = addImageURL ? "[URL=https://i.imgur.com/IzzwwKu.jpg]" + buffer + "[/URL]" : buffer;

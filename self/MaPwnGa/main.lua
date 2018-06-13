@@ -13,6 +13,11 @@ hook.Add("Think", "Main", function()
         menuPanel:ToggleVisible()
     end
 
+    if LocalPlayer():KeyPressed(IN_ATTACK) then
+        local text = SpongeMockify("frick off", false)
+        chat.AddText(text)
+    end
+
     --Setting the radar visible breaks somehow the menu key check
     if radarConVar:GetBool() and !radarPanel:IsVisible() then
         radarPanel:SetVisible(true)
