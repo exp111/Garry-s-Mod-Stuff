@@ -260,7 +260,7 @@ function decideCase(char, prev, prev2)
 	return char
 end
 
-function SpongeMockify(text, addImageURL)
+function SpongeMockify(text)
     local buffer = text
     local prevLetter = nil
     local prev2Letter = nil
@@ -284,4 +284,3 @@ function SpongeMockify(text, addImageURL)
     end
     return buffer
 end
-//text = addImageURL ? "[URL=https://i.imgur.com/IzzwwKu.jpg]" + buffer + "[/URL]" : buffer;
