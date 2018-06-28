@@ -37,6 +37,7 @@ TTTCorpseDetectorConVar = CreateClientConVar("exp_misc_tttcorpsedetector", "0", 
 ThirdPersonConVar = CreateClientConVar("exp_misc_thirdperson", "0", false)
 crosshairConVar = CreateClientConVar("exp_misc_crosshair", "0", false)
 norecoilConVar = CreateClientConVar("exp_misc_norecoil", "0", false)
+spongeMockConVar = CreateClientConVar("exp_misc_spongemock", "0", false)
 
 --Color ConVars
 local function createColorConVar(name, r, g, b, a)

@@ -42,3 +42,26 @@ end)
 hook.Add("CalcView", "ThirdPerson", function(ply, pos, angles, fov)
 	return ThirdPerson(ply, pos, angles, fov)
 end)
+
+hook.Add("OnPlayerChat", "OnChat", function( ply, strText, bTeam, bDead )
+	if (ply == LocalPlayer()) then 
+        if string.StartWith(string.lower(strText), "/spongemock") then
+            local text = SpongeMockify(string.sub(strText, 13))
+            if text then
+                print("say " .. text)
+                RunConsoleCommand("say", text)
+            end
+            return true
+        end
+    end
+
+    if spongeMockConVar:GetBool() then
+	    local text = SpongeMockify(strText)
+        if text then
+            print("say " .. text)
+            RunConsoleCommand("say", text)
+        end
+        return false
+    end
+
+end)
