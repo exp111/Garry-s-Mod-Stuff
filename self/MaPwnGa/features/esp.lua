@@ -66,7 +66,21 @@ function ESP()
     if ESPConVar:GetBool() then
         local entities = {}
         for k,v in pairs(ents.GetAll()) do
-            if !ValidTarget(v, ESPVisibleOnlyConVar:GetBool()) then continue end
+            if !ValidTarget(v, ESPVisibleOnlyConVar:GetBool()) then 
+                if ValidEntity(v, ESPVisibleOnlyConVar:GetBool()) then //TODO: oh boi we (possibly) double check if target is visible
+                    if ESPDroppedWeaponConVar:GetBool() then
+                        if v:IsWeapon() and v:GetOwner() == NULL then
+                            local name = v:GetPrintName()
+                            if name then
+                                local pos = v:GetPos():ToScreen()
+                                draw.DrawText(language.GetPhrase(name), "DermaDefault", pos.x, pos.y, textcolor, TEXT_ALIGN_CENTER)
+                            end
+                        end
+                    end
+                end
+
+                continue
+            end
 
             local top, bottom, height, width = GetRect(v)
             --Name

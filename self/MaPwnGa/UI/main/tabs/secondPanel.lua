@@ -132,6 +132,13 @@ CheckBoxLabel:SetDark(true)
 CheckBoxLabel:SizeToContents()
 
 local CheckBoxLabel = vgui.Create( "DCheckBoxLabel", secondPanel)
+CheckBoxLabel:SetConVar("exp_esp_droppedweapon")
+CheckBoxLabel:SetText("Dropped Weapons")
+CheckBoxLabel:SetPos(250, 200)
+CheckBoxLabel:SetDark(true)
+CheckBoxLabel:SizeToContents()
+
+local CheckBoxLabel = vgui.Create( "DCheckBoxLabel", secondPanel)
 CheckBoxLabel:SetConVar("exp_esp_name")
 CheckBoxLabel:SetText("Name")
 CheckBoxLabel:SetPos(25, 225)

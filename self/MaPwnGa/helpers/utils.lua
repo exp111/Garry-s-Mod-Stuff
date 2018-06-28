@@ -9,6 +9,13 @@ function ValidTarget(target, visibleOnly)
     return true
 end
 
+function ValidEntity(target, visibleOnly)
+    if !target:IsValid() then return false end
+    if target == LocalPlayer() then return false end
+    if visibleOnly and !LocalPlayer():IsLineOfSightClear(target) then return false end
+    return true
+end
+
 function ForceKey(cmd, KeyCode)
     if !LocalPlayer():KeyDown(KeyCode) then --No need if already pressed
         cmd:SetButtons(cmd:GetButtons() + KeyCode)
