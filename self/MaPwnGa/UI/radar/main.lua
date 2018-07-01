@@ -1,6 +1,10 @@
 include("../../convars.lua")
 
 --Radar Panel
+local radar = {}
+radar.diameter = 5
+radar.radius = 2.5
+
 radarPanel = vgui.Create("DFrame", nil, "Radar")
 radarPanel:SetPos(5, 5)
 radarPanel:SetSize(250, 250)
@@ -9,9 +13,12 @@ radarPanel:SetVisible(false)
 radarPanel:SetDraggable(true)
 radarPanel:ShowCloseButton(false)
 radarPanel:SetDeleteOnClose(false)
-radarPanel:MakePopup()
+radarPanel:MoveToFront()
 radarPanel.Paint = function(self, w, h) 
 	draw.RoundedBox(0, 0, 0, w, h, menuBGColor)
+end
+radarPanel.Think = function(self)
+	self:MoveToFront()
 end
 
 local propertySheet = vgui.Create("DPropertySheet")
@@ -20,8 +27,25 @@ propertySheet:SetPos(5, 25)
 propertySheet:SetSize(240, 220)
 propertySheet.Paint = function(self, w, h) 
 	draw.RoundedBox(0, 0, 0, w, h, menuFGColor)
-end
+	--Horizontal/Vertical Lines
+	surface.SetDrawColor(0, 0, 0, 255)
+	surface.DrawLine(0, h/2, w, h/2)
+	surface.DrawLine(w/2, 0, w/2, h)
 
+	--draw.RoundedBox(180, w/2 - radar.radius, h/2 - radar.radius, radar.diameter, radar.diameter, Color(255, 0, 0, 255))
+	local pos = LocalPlayer():GetPos()
+	for k,v in pairs(player.GetAll()) do
+		if !ValidTarget(v, ESPVisibleOnlyConVar:GetBool()) then
+			continue 
+		end
+		local clr = Color(0, 0, 255, 255)
+		if v:Team() != LocalPlayer():Team() then
+			clr = Color(255, 0, 0, 255)
+		end
+		local relPos = pos - v:GetPos()
+		draw.RoundedBox(0, relPos.x - radar.radius, relPos.y - radar.radius, radar.diameter, radar.diameter, clr)
+	end
+end
 --DPanels
 --Are declared in their respective files
 
