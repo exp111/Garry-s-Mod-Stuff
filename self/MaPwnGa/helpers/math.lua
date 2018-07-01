@@ -23,3 +23,17 @@ function GetBonePos(target, boneString)
 		end
 	end
 end
+
+function RotatePoint(pointToRotate, centerPoint, angle, isAngleInRadians)
+    if !angleInRadians then
+		angle = angle * (math.pi / 180)
+    end
+	local cosTheta = math.cos(angle)
+	local sinTheta = math.sin(angle)
+	local returnVec = Vector(
+		cosTheta * (pointToRotate.x - centerPoint.x) - sinTheta * (pointToRotate.y - centerPoint.y),
+		sinTheta * (pointToRotate.x - centerPoint.x) + cosTheta * (pointToRotate.y - centerPoint.y),
+		0)
+	returnVec = returnVec + centerPoint;
+	return returnVec;
+end

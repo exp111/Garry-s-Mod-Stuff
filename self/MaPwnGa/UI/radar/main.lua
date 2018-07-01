@@ -1,4 +1,5 @@
 include("../../convars.lua")
+include("../../helpers/math.lua")
 
 --Radar Panel
 local radar = {}
@@ -34,7 +35,11 @@ propertySheet.Paint = function(self, w, h)
 
 	--draw.RoundedBox(180, w/2 - radar.radius, h/2 - radar.radius, radar.diameter, radar.diameter, Color(255, 0, 0, 255))
 	local pos = LocalPlayer():GetPos()
-	for k,v in pairs(player.GetAll()) do
+	local vAngles = LocalPlayer():EyeAngles()
+	for k,v in pairs(ents.GetAll()) do
+		/*if !ValidEntity(v, false) then
+			continue
+		end*/
 		if !ValidTarget(v, ESPVisibleOnlyConVar:GetBool()) then
 			continue 
 		end
@@ -42,7 +47,15 @@ propertySheet.Paint = function(self, w, h)
 		if v:Team() != LocalPlayer():Team() then
 			clr = Color(255, 0, 0, 255)
 		end
-		local relPos = pos - v:GetPos()
+		local relPos = v:GetPos() - pos
+		local angle = -(vAngles.y - 90)
+		--relPos = RotatePoint(relPos, Vector(w/2, h/2, 0), angle, false)
+		print("Angle: " .. angle .. ";X: ".. relPos.x ..";Y: ".. relPos.y.."\n")
+		--OOB
+		/*if (math.abs(relPos.x) > w || math.abs(relPos.x) > h || math.abs(relPos.y) > w || math.abs(relPos.y) > h) then
+			continue
+		end*/
+		--DRAW THIS SHIT
 		draw.RoundedBox(0, relPos.x - radar.radius, relPos.y - radar.radius, radar.diameter, radar.diameter, clr)
 	end
 end
