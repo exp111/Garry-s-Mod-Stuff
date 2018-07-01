@@ -63,5 +63,15 @@ hook.Add("OnPlayerChat", "OnChat", function( ply, strText, bTeam, bDead )
         end
         return false
     end
+end)
 
+gameevent.Listen("player_hurt")
+hook.Add("player_hurt", "PlayerHurt", function(data)
+    local ply = Player(data.userid)
+    local attacker = Player(data.attacker)
+    if data.attacker == 0 then
+        print(ply:Name() .. " (".. data.userid ..") was hurt and has " .. data.health .. " Health left!")
+    else
+	    print(ply:Name() .. " (".. data.userid ..") was hurt by " .. attacker:Name() .. " (".. data.attacker ..") and has " .. data.health .. " Health left!")
+    end
 end)
