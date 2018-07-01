@@ -32,7 +32,7 @@ function Aimbot(cmd)
 
     if !input.IsKeyDown(aimbotKeyConVar:GetInt()) and !input.IsMouseDown(aimbotKeyConVar:GetInt()) then return end
     --Aimbot Stuff
-
+   
     local bestTarget = nil
     local bestFOV = aimbotFOVConVar:GetInt()
     for k, v in pairs(ents.GetAll()) do

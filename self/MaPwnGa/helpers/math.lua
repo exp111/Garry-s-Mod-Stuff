@@ -25,8 +25,8 @@ function GetBonePos(target, boneString)
 end
 
 function RotatePoint(pointToRotate, centerPoint, angle, isAngleInRadians)
-    if !angleInRadians then
-		angle = angle * (math.pi / 180)
+	if !angleInRadians then
+		angle = math.rad(angle)
     end
 	local cosTheta = math.cos(angle)
 	local sinTheta = math.sin(angle)

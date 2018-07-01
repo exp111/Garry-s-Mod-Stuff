@@ -36,21 +36,22 @@ propertySheet.Paint = function(self, w, h)
 	--draw.RoundedBox(180, w/2 - radar.radius, h/2 - radar.radius, radar.diameter, radar.diameter, Color(255, 0, 0, 255))
 	local pos = LocalPlayer():GetPos()
 	local vAngles = LocalPlayer():EyeAngles()
+	local radarCenter = Vector(w/2, h/2, 0)
 	for k,v in pairs(ents.GetAll()) do
-		/*if !ValidEntity(v, false) then
+		if !ValidEntity(v, false) then
 			continue
-		end*/
-		if !ValidTarget(v, ESPVisibleOnlyConVar:GetBool()) then
-			continue 
 		end
+		--if !ValidTarget(v, ESPVisibleOnlyConVar:GetBool()) then
+		--	continue 
+		--end
 		local clr = Color(0, 0, 255, 255)
-		if v:Team() != LocalPlayer():Team() then
-			clr = Color(255, 0, 0, 255)
-		end
-		local relPos = v:GetPos() - pos
-		local angle = -(vAngles.y - 90)
-		--relPos = RotatePoint(relPos, Vector(w/2, h/2, 0), angle, false)
-		print("Angle: " .. angle .. ";X: ".. relPos.x ..";Y: ".. relPos.y.."\n")
+		--if v:Team() != LocalPlayer():Team() then
+		--	clr = Color(255, 0, 0, 255)
+		--end
+		local pPos = v:GetPos()
+		local relPos = Vector(pPos.x - pos.x, pPos.y - pos.y, 0)
+		local angle = vAngles.y - 90
+		relPos = RotatePoint(relPos, Vector(), angle, false) + radarCenter
 		--OOB
 		/*if (math.abs(relPos.x) > w || math.abs(relPos.x) > h || math.abs(relPos.y) > w || math.abs(relPos.y) > h) then
 			continue
