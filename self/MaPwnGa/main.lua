@@ -8,6 +8,7 @@ include("features/esp.lua")
 include("features/aimbot.lua")
 include("features/trigger.lua")
 include("features/misc.lua")
+include("features/chams.lua")
 
 local function CheckPanel(bool, panel)
     local panelVisible = panel:IsVisible()
@@ -44,6 +45,10 @@ end)
 hook.Add("HUDPaint", "Visuals", function()
     ESP()
     MiscVisuals()
+end)
+
+hook.Add("RenderScreenspaceEffects", "Chams", function()
+    Chams()
 end)
 
 hook.Add("CalcView", "ThirdPerson", function(ply, pos, angles, fov)

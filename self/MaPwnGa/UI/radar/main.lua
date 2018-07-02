@@ -1,5 +1,6 @@
 include("../../convars.lua")
 include("../../helpers/math.lua")
+include("../../helpers/utils.lua")
 
 --Radar Panel
 local radar = {}
@@ -45,7 +46,7 @@ propertySheet.Paint = function(self, w, h)
 			continue 
 		end
 		local clr = Color(0, 0, 255, 255)
-		if v:Team() != LocalPlayer():Team() or (IsTTT() and v.role and LocalPlayer().role and v.role != LocalPlayer().role) then
+		if IsEnemy(v) then
 			clr = Color(255, 0, 0, 255)
 		end
 		local pPos = v:GetPos()

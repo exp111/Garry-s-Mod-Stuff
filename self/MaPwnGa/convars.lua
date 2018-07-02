@@ -8,6 +8,11 @@ radarScaleConVar = CreateClientConVar("exp_radar_scale", "1", shouldSave)
 
 spectatorConVar = CreateClientConVar("exp_spectator_enable", "0", shouldSave)
 
+chamsConVar = CreateClientConVar("exp_chams_enable", "0", shouldSave)
+chamsFlatConVar = CreateClientConVar("exp_chams_flat", "0", shouldSave)
+chamsIgnoreZConVar = CreateClientConVar("exp_chams_ignorez", "0", shouldSave)
+chamsDrawWeaponConVar = CreateClientConVar("exp_chams_weapon", "0", shouldSave)
+
 aimbotConVar = CreateClientConVar("exp_aim_enable", "0", shouldSave)
 aimbotBoneConVar = CreateClientConVar("exp_aim_bone", "ValveBiped.Bip01_Head1", shouldSave)
 aimbotKeyConVar = CreateClientConVar("exp_aim_key", "111", shouldSave)

@@ -27,7 +27,11 @@ function IsTTT()
 end
 
 function Log(text)
-    local toLog = os.date("[%H:%M:%S] Log:", os.time()).. text
+    local toLog = os.date("[%H:%M:%S] Log: ", os.time()).. text
     print(toLog)
     chat.AddText(toLog)
+end
+
+function IsEnemy(entity)
+    return entity:Team() != LocalPlayer():Team() or (IsTTT() and entity.role and LocalPlayer().role and entity.role != LocalPlayer().role)
 end
