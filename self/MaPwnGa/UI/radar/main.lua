@@ -58,9 +58,6 @@ propertySheet.Paint = function(self, w, h)
 		end
 		--DRAW THIS SHIT
 		draw.RoundedBox(0, relPos.x - radar.radius, relPos.y - radar.radius, radar.diameter, radar.diameter, clr)
+		end
 	end
 end
---DPanels
---Are declared in their respective files
-
---Add Tabs to Sheet

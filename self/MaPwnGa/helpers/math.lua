@@ -33,7 +33,7 @@ function RotatePoint(pointToRotate, centerPoint, angle, isAngleInRadians)
 	local returnVec = Vector(
 		cosTheta * (pointToRotate.x - centerPoint.x) - sinTheta * (pointToRotate.y - centerPoint.y),
 		sinTheta * (pointToRotate.x - centerPoint.x) + cosTheta * (pointToRotate.y - centerPoint.y),
-		0)
+		pointToRotate.z)
 	returnVec = returnVec + centerPoint;
 	return returnVec;
 end
