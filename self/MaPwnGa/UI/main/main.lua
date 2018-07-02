@@ -1,6 +1,7 @@
 include("../../convars.lua")
 include("tabs/firstPanel.lua")
 include("tabs/secondPanel.lua")
+include("tabs/weaponsPanel.lua")
 
 --Main Panels
 menuPanel = vgui.Create("DFrame")
@@ -29,3 +30,4 @@ propertySheet:Dock(FILL)
 --Add Tabs to Sheet
 propertySheet:AddSheet("First", firstPanel , nil, false, false, nil)
 propertySheet:AddSheet("Second", secondPanel , nil, false, false, nil)
+propertySheet:AddSheet("Weapons", weaponsPanel , nil, false, false, nil)
