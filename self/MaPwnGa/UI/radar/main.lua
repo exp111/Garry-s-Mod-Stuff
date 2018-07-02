@@ -37,25 +37,25 @@ propertySheet.Paint = function(self, w, h)
 	local pos = LocalPlayer():GetPos()
 	local vAngles = LocalPlayer():EyeAngles()
 	local radarCenter = Vector(w/2, h/2, 0)
-	for k,v in pairs(ents.GetAll()) do
-		if !ValidEntity(v, false) then
+	for k,v in pairs(player.GetAll()) do
+		/*if !ValidEntity(v, false) then
 			continue
+		end*/
+		if !ValidTarget(v, ESPVisibleOnlyConVar:GetBool()) then
+			continue 
 		end
-		--if !ValidTarget(v, ESPVisibleOnlyConVar:GetBool()) then
-		--	continue 
-		--end
 		local clr = Color(0, 0, 255, 255)
-		--if v:Team() != LocalPlayer():Team() then
-		--	clr = Color(255, 0, 0, 255)
-		--end
+		if v:Team() != LocalPlayer():Team() then
+			clr = Color(255, 0, 0, 255)
+		end
 		local pPos = v:GetPos()
 		local relPos = Vector(pPos.x - pos.x, pos.y - pPos.y, 0) * radarScaleConVar:GetFloat()
 		local angle = vAngles.y - 90
-		relPos = RotatePoint(relPos, Vector(), angle, false) + radarCenter
+		relPos = RotatePoint(relPos, Vector(0, 0, 0), angle, false) + radarCenter
 		--OOB
-		/*if (math.abs(relPos.x) > w || math.abs(relPos.x) > h || math.abs(relPos.y) > w || math.abs(relPos.y) > h) then
+		if (relPos.x > w || relPos.x < 0 || relPos.y > h || relPos.y < 0) then
 			continue
-		end*/
+		end
 		--DRAW THIS SHIT
 		draw.RoundedBox(0, relPos.x - radar.radius, relPos.y - radar.radius, radar.diameter, radar.diameter, clr)
 	end
