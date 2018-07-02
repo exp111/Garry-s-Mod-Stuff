@@ -68,10 +68,27 @@ end)
 gameevent.Listen("player_hurt")
 hook.Add("player_hurt", "PlayerHurt", function(data)
     local ply = Player(data.userid)
+    if !ply then
+        return 
+    end
     local attacker = Player(data.attacker)
-    if data.attacker == 0 then
+    if !attacker or data.attacker == 0 then
         print(ply:Name() .. " (".. data.userid ..") was hurt and has " .. data.health .. " Health left!")
     else
 	    print(ply:Name() .. " (".. data.userid ..") was hurt by " .. attacker:Name() .. " (".. data.attacker ..") and has " .. data.health .. " Health left!")
     end
+end)
+
+hook.Add("OnEntityCreated", "TTTCorpseDetector", function(entity)
+    TTTCorpseDetector(entity)
+end)
+
+hook.Add("TTTPrepareRound", "TTTPrepareRound", function()
+    table.Empty(traitors)
+    table.Empty(corpses)
+end)
+
+hook.Add("TTTBeginRound", "TTTBeginRound", function()
+    table.Empty(traitors)
+    table.Empty(corpses)
 end)

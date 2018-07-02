@@ -57,7 +57,7 @@ local function TTTCheckerVisuals()
                     clr = Color(0, 255, 0)
                 elseif ply.role == 1 then --traitor
                     clr = Color(255, 0, 0)
-                else --detective?
+                else --prolly detective or some other unknown role
                     clr = Color(0, 0, 255)
                 end
             end
@@ -67,8 +67,12 @@ local function TTTCheckerVisuals()
     end
 end
 
-hook.Add("OnEntityCreated", "TTTCorpseDetector", function(entity)
+function TTTCorpseDetector(entity)
     if !TTTCorpseDetectorConVar:GetBool() then return end
+
+    if !entity or !entity:GetClass() then
+        return
+    end
 
     if entity:GetClass() == "prop_ragdoll" then
         local ply = entity:GetDTEntity(0)
@@ -79,17 +83,7 @@ hook.Add("OnEntityCreated", "TTTCorpseDetector", function(entity)
         end
         corpses[#corpses + 1] = entity
     end
-end)
-
-hook.Add("TTTPrepareRound", "TTTPrepareRound", function()
-    table.Empty(traitors)
-    table.Empty(corpses)
-end)
-
-hook.Add("TTTBeginRound", "TTTBeginRound", function()
-    table.Empty(traitors)
-    table.Empty(corpses)
-end)
+end
 
 --THIRDPERSON
 function ThirdPerson(ply, pos, angles, fov)

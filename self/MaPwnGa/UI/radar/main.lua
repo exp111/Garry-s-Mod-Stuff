@@ -49,7 +49,7 @@ propertySheet.Paint = function(self, w, h)
 		--	clr = Color(255, 0, 0, 255)
 		--end
 		local pPos = v:GetPos()
-		local relPos = Vector(pPos.x - pos.x, pPos.y - pos.y, 0)
+		local relPos = Vector(pPos.x - pos.x, pos.y - pPos.y, 0) * radarScaleConVar:GetFloat()
 		local angle = vAngles.y - 90
 		relPos = RotatePoint(relPos, Vector(), angle, false) + radarCenter
 		--OOB
