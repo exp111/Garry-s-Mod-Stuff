@@ -6,6 +6,8 @@ testIntVar = CreateClientConVar("exp_test_int", "1", false)
 radarConVar = CreateClientConVar("exp_radar_enable", "0", shouldSave)
 radarScaleConVar = CreateClientConVar("exp_radar_scale", "1", shouldSave)
 
+spectatorConVar = CreateClientConVar("exp_spectator_enable", "0", shouldSave)
+
 aimbotConVar = CreateClientConVar("exp_aim_enable", "0", shouldSave)
 aimbotBoneConVar = CreateClientConVar("exp_aim_bone", "ValveBiped.Bip01_Head1", shouldSave)
 aimbotKeyConVar = CreateClientConVar("exp_aim_key", "111", shouldSave)

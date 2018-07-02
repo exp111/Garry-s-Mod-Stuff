@@ -36,6 +36,13 @@ CheckBoxLabel:SetPos(5, 75)
 CheckBoxLabel:SetDark(true)
 CheckBoxLabel:SizeToContents()
 
+local CheckBoxLabel = vgui.Create( "DCheckBoxLabel", secondPanel)
+CheckBoxLabel:SetConVar("exp_spectator_enable")
+CheckBoxLabel:SetText("Spectator")
+CheckBoxLabel:SetPos(100, 75)
+CheckBoxLabel:SetDark(true)
+CheckBoxLabel:SizeToContents()
+
 --AIMBOT
 local CheckBoxLabel = vgui.Create( "DCheckBoxLabel", secondPanel)
 CheckBoxLabel:SetConVar("exp_aim_enable")
