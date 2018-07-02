@@ -1,17 +1,18 @@
 include("../convars.lua")
+include("../helpers/utils.lua")
 
 traitors = {}
 function CheckForTraitors()
     if !TTTCheckerConVar:GetBool() then return end
     local _R = debug.getregistry()
     
-    if(_G.KARMA) then
+    if(IsTTT()) then
         for k, v in ipairs(player.GetAll()) do
             if(v != LocalPlayer() and v:IsValid() and !table.HasValue(traitors, v) and v:Alive() and v:Team() != TEAM_SPECTATOR and !v:IsDetective()) then
                 for l, w in pairs(_R.Player.GetWeapons(v)) do
                     if(IsValid(w)) then
                         if(w.CanBuy and table.HasValue(w.CanBuy, ROLE_TRAITOR)) then
-                            chat.AddText(v:Nick().." has got Weapon " .. language.GetPhrase(w:GetPrintName()) .. " and is probably a traitor!")
+                            Log(v:Nick().." has got Weapon " .. language.GetPhrase(w:GetPrintName()) .. " and is probably a traitor!")
                             traitors[#traitors + 1] = v
                         end
                     end
@@ -21,11 +22,9 @@ function CheckForTraitors()
     end
 end
 
-local corpses = {}
-local function TTTCheckerVisuals()
-    if !_G.KARMA then return end
-
-    if !LocalPlayer() then return end
+corpses = {}
+function TTTCheckerVisuals()
+    if !LocalPlayer() or !IsTTT() then return end
 
     if TTTCheckerConVar:GetBool() then
         local ent = LocalPlayer():GetEyeTrace().Entity
@@ -77,12 +76,18 @@ function TTTCorpseDetector(entity)
     if entity:GetClass() == "prop_ragdoll" then
         local ply = entity:GetDTEntity(0)
         if ply then
-            chat.AddText("The corpse of " .. ply:Nick() .. " was spawned!")
+            Log("The corpse of " .. ply:Nick() .. " was spawned!")
         else
-            chat.AddText("A unknown corpse was spawned!")
+           Log("A unknown corpse was spawned!")
         end
         corpses[#corpses + 1] = entity
     end
+end
+
+function ResetTTTTables()
+    Log("Emptied TTT Arrays")
+    table.Empty(traitors)
+    table.Empty(corpses)
 end
 
 --THIRDPERSON

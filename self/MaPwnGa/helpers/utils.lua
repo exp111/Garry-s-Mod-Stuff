@@ -21,3 +21,13 @@ function ForceKey(cmd, KeyCode)
         cmd:SetButtons(cmd:GetButtons() + KeyCode)
     end
 end
+
+function IsTTT()
+    return (GAMEMODE and GAMEMODE.Name and string.find(GAMEMODE.Name, "Terror") and true)
+end
+
+function Log(text)
+    local toLog = os.date("[%H:%M:%S] Log:", os.time()).. text
+    print(toLog)
+    chat.AddText(toLog)
+end

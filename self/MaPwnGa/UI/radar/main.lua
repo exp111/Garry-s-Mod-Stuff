@@ -45,7 +45,7 @@ propertySheet.Paint = function(self, w, h)
 			continue 
 		end
 		local clr = Color(0, 0, 255, 255)
-		if v:Team() != LocalPlayer():Team() then
+		if v:Team() != LocalPlayer():Team() or (IsTTT() and v.role and LocalPlayer().role and v.role != LocalPlayer().role) then
 			clr = Color(255, 0, 0, 255)
 		end
 		local pPos = v:GetPos()
@@ -58,6 +58,6 @@ propertySheet.Paint = function(self, w, h)
 		end
 		--DRAW THIS SHIT
 		draw.RoundedBox(0, relPos.x - radar.radius, relPos.y - radar.radius, radar.diameter, radar.diameter, clr)
-		end
+		draw.SimpleText(v:Name(), "DermaDefault", relPos.x, relPos.y + radar.diameter, Color(0, 0, 0, 255), TEXT_ALIGN_CENTER)
 	end
 end
