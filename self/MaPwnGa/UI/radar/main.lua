@@ -54,11 +54,17 @@ propertySheet.Paint = function(self, w, h)
 		local angle = vAngles.y - 90
 		relPos = RotatePoint(relPos, Vector(0, 0, 0), angle, false) + radarCenter
 		--Clamp Entities to the border if they are higher
-		relPos.x = math.Clamp(relPos.x, 0, w)
-		relPos.y = math.Clamp(relPos.y, 0, h)
+		local clamped = false
+		if (relPos.x > w || relPos.x < 0 || relPos.y > h || relPos.y < 0) then
+ 			relPos.x = math.Clamp(relPos.x, 0, w)
+			relPos.y = math.Clamp(relPos.y, 0, h)
+			clamped = true
+		end
 
 		--DRAW THIS SHIT
 		draw.RoundedBox(0, relPos.x - radar.radius, relPos.y - radar.radius, radar.diameter, radar.diameter, clr)
-		draw.SimpleText(v:Name(), "DermaDefault", relPos.x, relPos.y + radar.diameter, Color(0, 0, 0, 255), TEXT_ALIGN_CENTER)
+		if !clamped then
+			draw.SimpleText(v:Name(), "DermaDefault", relPos.x, relPos.y + radar.diameter, Color(0, 0, 0, 255), TEXT_ALIGN_CENTER)
+		end
 	end
 end

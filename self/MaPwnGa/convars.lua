@@ -36,7 +36,7 @@ ESPHealthConVar = CreateClientConVar("exp_esp_health", "0", shouldSave)
 ESPGlowConVar = CreateClientConVar("exp_esp_glow", "0", shouldSave)
 ESPWeaponConVar = CreateClientConVar("exp_esp_weapon", "0", shouldSave)
 ESPDroppedWeaponConVar = CreateClientConVar("exp_esp_droppedweapon", "0", shouldSave)
-ESPDistanceConVar = CreateClientConVar("exp_esp_distance", "100", shouldSave)
+ESPDistanceConVar = CreateClientConVar("exp_esp_distance", "500", shouldSave)
 
 PerfectHeadAdjustmentConVar = CreateClientConVar("exp_misc_pha_enable", "0", shouldSave)
 PerfectHeadAdjustmentPositionConVar = CreateClientConVar("exp_misc_pha_position", "0", shouldSave)
