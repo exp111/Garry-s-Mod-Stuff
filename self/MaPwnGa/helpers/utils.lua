@@ -1,4 +1,4 @@
-function ValidTarget(target, visibleOnly)
+function ValidTarget(target, visibleOnly, allowedDistance)
     if !target:IsValid() then return false end
     if target == LocalPlayer() then return false end
     if target:IsPlayer() then
@@ -6,13 +6,15 @@ function ValidTarget(target, visibleOnly)
         if !target:Alive() then return false end
     elseif !target:IsNPC() then return false end
     if visibleOnly and !LocalPlayer():IsLineOfSightClear(target) then return false end
+    if allowedDistance != 0 and (LocalPlayer():GetShootPos():Distance(target:GetPos()) > allowedDistance) then return false end
     return true
 end
 
-function ValidEntity(target, visibleOnly)
+function ValidEntity(target, visibleOnly, allowedDistance)
     if !target:IsValid() then return false end
     if target == LocalPlayer() then return false end
     if visibleOnly and !LocalPlayer():IsLineOfSightClear(target) then return false end
+    if allowedDistance != 0 and (LocalPlayer():GetShootPos():Distance(target:GetPos()) > allowedDistance) then return false end
     return true
 end
 

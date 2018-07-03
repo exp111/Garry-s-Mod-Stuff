@@ -157,7 +157,7 @@ function MiscVisuals()
             changed = true
         end
         for k,v in pairs(ents.GetAll()) do
-            if !ValidTarget(v, false) then continue end
+            if !ValidTarget(v, false, 0) then continue end
 
             local bone = v:LookupBone("ValveBiped.Bip01_Head1")
             if !bone or bone <= 0 then continue end
@@ -210,7 +210,7 @@ end
 local shootNext = false
 function AutoPistol(cmd)
     if !autoPistolConVar:GetBool() then return end
-    
+
     local weapon = LocalPlayer():GetActiveWeapon()
     if weapon and ((weapon.Primary and type(weapon.Primary.Automatic) == "boolean" and not weapon.Primary.Automatic) or (weapon.Automatic and type(weapon.Automatic) == "boolean" and not weapon.Automatic)) then
         if cmd:KeyDown(IN_ATTACK) then

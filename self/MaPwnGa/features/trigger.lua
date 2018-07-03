@@ -10,7 +10,7 @@ function Triggerbot(cmd)
     if triggerOnKeyConVar:GetBool() and (!input.IsKeyDown(triggerKeyConVar:GetInt()) and !input.IsMouseDown(triggerKeyConVar:GetInt())) then return end
 
 	local ent = LocalPlayer():GetEyeTrace().Entity
-	if !ValidTarget(ent, false) then return end
+	if !ValidTarget(ent, false, 0) then return end
 	
     ForceKey(cmd, IN_ATTACK)
 end

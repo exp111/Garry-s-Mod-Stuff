@@ -39,10 +39,10 @@ propertySheet.Paint = function(self, w, h)
 	local vAngles = LocalPlayer():EyeAngles()
 	local radarCenter = Vector(w/2, h/2, 0)
 	for k,v in pairs(player.GetAll()) do
-		/*if !ValidEntity(v, false) then
+		/*if !ValidEntity(v, false, 0) then
 			continue
 		end*/
-		if !ValidTarget(v, ESPVisibleOnlyConVar:GetBool()) then
+		if !ValidTarget(v, ESPVisibleOnlyConVar:GetBool(), ESPDistanceConVar:GetInt()) then
 			continue 
 		end
 		local clr = Color(0, 0, 255, 255)

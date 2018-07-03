@@ -14,7 +14,7 @@ function Chams()
     end
 
     for k,v in pairs(player.GetAll()) do
-        if !ValidTarget(v, false) then continue end
+        if !ValidTarget(v, false, 0) then continue end
         
         local clr = Color(41, 128, 185)
         if IsEnemy(v) then

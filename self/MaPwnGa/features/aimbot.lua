@@ -36,7 +36,7 @@ function Aimbot(cmd)
     local bestTarget = nil
     local bestFOV = aimbotFOVConVar:GetInt()
     for k, v in pairs(ents.GetAll()) do
-        if !ValidTarget(v, true) then continue end
+        if !ValidTarget(v, true, 0) then continue end
 
         local fov = GetAimbotFOV(LocalPlayer(), v)
         if fov > bestFOV then continue end
