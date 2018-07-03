@@ -206,6 +206,23 @@ function NoRecoil()
     activeWeapon.Primary.Recoil = 0
 end
 
+--AUTOPISTOL
+local shootNext = false
+function AutoPistol(cmd)
+    if !autoPistolConVar:GetBool() then return end
+    
+    local weapon = LocalPlayer():GetActiveWeapon()
+    if weapon and ((weapon.Primary and type(weapon.Primary.Automatic) == "boolean" and not weapon.Primary.Automatic) or (weapon.Automatic and type(weapon.Automatic) == "boolean" and not weapon.Automatic)) then
+        if cmd:KeyDown(IN_ATTACK) then
+            if shootNext then
+                shootNext = false
+            else
+                cmd:SetButtons(cmd:GetButtons() - IN_ATTACK)
+                shootNext = true
+            end
+        end
+    end
+end
 
 --SPONGEMOCK
 function isUpper(char)

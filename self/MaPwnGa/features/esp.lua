@@ -70,6 +70,9 @@ function ESP()
                 if ValidEntity(v, ESPVisibleOnlyConVar:GetBool()) then //TODO: oh boi we (possibly) double check if target is visible
                     if ESPDroppedWeaponConVar:GetBool() then
                         if v:IsWeapon() and v:GetOwner() == NULL then
+                            if ESPDistanceConVar:GetInt() != 0 and LocalPlayer():GetShootPos():Distance(v:GetPos()) > ESPDistanceConVar:GetInt() then 
+                                continue
+                            end
                             local name = v:GetPrintName()
                             if name then
                                 local pos = v:GetPos():ToScreen()

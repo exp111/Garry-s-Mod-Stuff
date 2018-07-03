@@ -53,10 +53,10 @@ propertySheet.Paint = function(self, w, h)
 		local relPos = Vector(pPos.x - pos.x, pos.y - pPos.y, 0) * radarScaleConVar:GetFloat()
 		local angle = vAngles.y - 90
 		relPos = RotatePoint(relPos, Vector(0, 0, 0), angle, false) + radarCenter
-		--OOB
-		if (relPos.x > w || relPos.x < 0 || relPos.y > h || relPos.y < 0) then
-			continue
-		end
+		--Clamp Entities to the border if they are higher
+		relPos.x = math.Clamp(relPos.x, 0, w)
+		relPos.y = math.Clamp(relPos.y, 0, h)
+
 		--DRAW THIS SHIT
 		draw.RoundedBox(0, relPos.x - radar.radius, relPos.y - radar.radius, radar.diameter, radar.diameter, clr)
 		draw.SimpleText(v:Name(), "DermaDefault", relPos.x, relPos.y + radar.diameter, Color(0, 0, 0, 255), TEXT_ALIGN_CENTER)

@@ -36,6 +36,7 @@ ESPHealthConVar = CreateClientConVar("exp_esp_health", "0", shouldSave)
 ESPGlowConVar = CreateClientConVar("exp_esp_glow", "0", shouldSave)
 ESPWeaponConVar = CreateClientConVar("exp_esp_weapon", "0", shouldSave)
 ESPDroppedWeaponConVar = CreateClientConVar("exp_esp_droppedweapon", "0", shouldSave)
+ESPDistanceConVar = CreateClientConVar("exp_esp_distance", "100", shouldSave)
 
 PerfectHeadAdjustmentConVar = CreateClientConVar("exp_misc_pha_enable", "0", shouldSave)
 PerfectHeadAdjustmentPositionConVar = CreateClientConVar("exp_misc_pha_position", "0", shouldSave)
@@ -47,6 +48,7 @@ ThirdPersonConVar = CreateClientConVar("exp_misc_thirdperson", "0", shouldSave)
 crosshairConVar = CreateClientConVar("exp_misc_crosshair", "0", shouldSave)
 norecoilConVar = CreateClientConVar("exp_misc_norecoil", "0", shouldSave)
 spongeMockConVar = CreateClientConVar("exp_misc_spongemock", "0", shouldSave)
+autoPistolConVar = CreateClientConVar("exp_misc_autopistol", "0", shouldSave)
 
 --Color ConVars
 local function createColorConVar(name, r, g, b, a)

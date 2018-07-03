@@ -37,6 +37,7 @@ hook.Add("CreateMove", "HookCreateMove", function(cmd)
         Aimbot(cmd)
         Triggerbot(cmd)
         NoRecoil()
+        AutoPistol(cmd)
     end
 
     CheckForTraitors()
