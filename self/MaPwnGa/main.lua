@@ -11,6 +11,22 @@ include("features/misc.lua")
 include("features/chams.lua")
 include("features/hvh.lua")
 
+concommand.Add("exp_ttt_role", function(ply, cmd, args)
+    if #args < 1 then print("Usage: exp_ttt_role <0|1|2> (Innocent | Traitor | Detective)") return end
+    local arg = tonumber(args[1])
+    if !arg then print("'" .. args[1] .. "' is not a number!") return end
+
+    ply.role = arg
+end)
+
+concommand.Add("exp_ttt_credits", function(ply, cmd, args)
+    if #args < 1 then print("Usage: exp_ttt_credits <number>") return end
+    local arg = tonumber(args[1])
+    if !arg then print("'" .. args[1] .. "' is not a number!") return end
+
+    ply.equipment_credits = arg
+end)
+
 local function CheckPanel(bool, panel)
     local panelVisible = panel:IsVisible()
     if bool and !panelVisible then
