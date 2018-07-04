@@ -224,6 +224,27 @@ function AutoPistol(cmd)
     end
 end
 
+--BHOP
+function BHop(cmd)
+    if !bhopConVar:GetBool() then return end
+
+    if cmd:KeyDown(IN_JUMP) then
+        if LocalPlayer():WaterLevel() <= 1 && LocalPlayer():GetMoveType() != MOVETYPE_LADDER && !LocalPlayer():IsOnGround() then
+            cmd:RemoveKey(IN_JUMP)
+        end
+    end
+end
+
+function AutoStrafe(cmd)
+    if autoStrafeConVar:GetBool() or LocalPlayer():IsOnGround() then return end
+
+    if (cmd:GetMouseX() < 0) then
+        cmd:SetSideMove(-450)
+    elseif (cmd:GetMouseX() > 0) then
+        cmd:SetSideMove(450)
+    end
+end
+
 --SPONGEMOCK
 function isUpper(char)
     local ascii = string.byte(char)
