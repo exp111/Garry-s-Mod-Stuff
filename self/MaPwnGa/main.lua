@@ -9,6 +9,7 @@ include("features/aimbot.lua")
 include("features/trigger.lua")
 include("features/misc.lua")
 include("features/chams.lua")
+include("features/hvh.lua")
 
 local function CheckPanel(bool, panel)
     local panelVisible = panel:IsVisible()
@@ -34,6 +35,8 @@ hook.Add("CreateMove", "HookCreateMove", function(cmd)
     if !cmd or cmd:CommandNumber() == 0 then return end
 
     if LocalPlayer() and LocalPlayer():Alive() then
+        AntiAim(cmd)
+
         Aimbot(cmd)
         Triggerbot(cmd)
         NoRecoil()

@@ -3,10 +3,14 @@
 shouldSave = false
 testBoolVar = CreateClientConVar("exp_test_bool", "0", false)
 testIntVar = CreateClientConVar("exp_test_int", "1", false)
+
 radarConVar = CreateClientConVar("exp_radar_enable", "0", shouldSave)
 radarScaleConVar = CreateClientConVar("exp_radar_scale", "1", shouldSave)
 
 spectatorConVar = CreateClientConVar("exp_spectator_enable", "0", shouldSave)
+
+antiAimConVar = CreateClientConVar("exp_hvh_aa", "0", shouldSave)
+antiAimTypeConVar = CreateClientConVar("exp_hvh_aaType", "1", shouldSave)
 
 chamsConVar = CreateClientConVar("exp_chams_enable", "0", shouldSave)
 chamsFlatConVar = CreateClientConVar("exp_chams_flat", "0", shouldSave)

@@ -55,7 +55,7 @@ propertySheet.Paint = function(self, w, h)
 		relPos = RotatePoint(relPos, Vector(0, 0, 0), angle, false) + radarCenter
 		--Clamp Entities to the border if they are higher
 		local clamped = false
-		if (relPos.x > w || relPos.x < 0 || relPos.y > h || relPos.y < 0) then
+		if (relPos.x > w or relPos.x < 0 or relPos.y > h or relPos.y < 0) then
  			relPos.x = math.Clamp(relPos.x, 0, w)
 			relPos.y = math.Clamp(relPos.y, 0, h)
 			clamped = true
