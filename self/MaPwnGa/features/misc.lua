@@ -92,7 +92,7 @@ end
 
 --THIRDPERSON
 function ThirdPerson(ply, pos, angles, fov)
-    if !ThirdPersonConVar:GetBool() then return end
+    if !ThirdPersonConVar:GetBool() then return({angles = angles, origin = pos, fov = fov}) end
     local view = {}
 
     view.origin = pos - (angles:Forward() * 100)

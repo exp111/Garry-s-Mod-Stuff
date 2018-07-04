@@ -56,7 +56,9 @@ hook.Add("RenderScreenspaceEffects", "Chams", function()
 end)
 
 hook.Add("CalcView", "ThirdPerson", function(ply, pos, angles, fov)
-	return ThirdPerson(ply, pos, angles, fov)
+    local angle = angles
+    if fakeView and antiAimConVar:GetBool() then angle = fakeView end
+	return ThirdPerson(ply, pos, angle, fov)
 end)
 
 hook.Add("OnPlayerChat", "OnChat", function( ply, strText, bTeam, bDead )

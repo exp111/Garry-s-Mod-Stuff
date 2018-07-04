@@ -29,6 +29,13 @@ CheckBoxLabel:SetPos(5, 50)
 CheckBoxLabel:SetDark(true)
 CheckBoxLabel:SizeToContents()
 
+local CheckBoxLabel = vgui.Create( "DCheckBoxLabel", secondPanel)
+CheckBoxLabel:SetConVar("exp_hvh_aa")
+CheckBoxLabel:SetText("Anti Aim")
+CheckBoxLabel:SetPos(290, 30)
+CheckBoxLabel:SetDark(true)
+CheckBoxLabel:SizeToContents()
+
 local dComboBox = vgui.Create("DComboBox" , secondPanel)
 dComboBox:SetPos(360, 25)
 dComboBox:SetSize(100, 20)
