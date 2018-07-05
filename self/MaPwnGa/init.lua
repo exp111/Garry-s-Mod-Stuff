@@ -104,6 +104,7 @@ hook.Add("OnPlayerChat", "OnChat", function( ply, strText, bTeam, bDead )
     end
 end)
 
+--EVENTS
 gameevent.Listen("player_hurt")
 hook.Add("player_hurt", "PlayerHurt", function(data)
     local ply = Player(data.userid)
@@ -117,6 +118,29 @@ hook.Add("player_hurt", "PlayerHurt", function(data)
 	    Log(ply:Name() .. " (".. data.userid ..") was hurt by " .. attacker:Name() .. " (".. data.attacker ..") and has " .. data.health .. " Health left!")
     end
 end)
+
+gameevent.Listen("entity_killed")
+hook.Add("entity_killed", "EntityKill", function(data)
+    local killed = Entity(data.entindex_killed)
+    if !killed then
+        return 
+    end
+    local weapon = Entity(data.entindex_inflictor)
+    local attacker = Entity(data.entindex_attacker)
+    if !attacker or data.entindex_attacker == 0 then
+        Log(killed:GetName() .. " (".. data.entindex_killed ..") was killed with " .. weapon:GetName() .. "(" .. data.entindex_inflictor .. ")!")
+    else
+	    Log(killed:GetName() .. " (".. data.entindex_killed ..") was killed by " .. attacker:GetName() .. " (".. data.attacker ..") with " .. weapon:GetName() .. "(" .. data.entindex_inflictor .. ")!")
+    end
+end)
+
+gameevent.Listen("server_cvar")
+hook.Add("server_cvar", "ServerCVar", function(data)
+    local name = data.cvarname
+    local value = data.cvarvalue
+    Log("The CVar " .. name .. " was changed to " .. value ..".")
+end)
+--END EVENTS
 
 hook.Add("OnEntityCreated", "TTTCorpseDetector", function(entity)
     TTTCorpseDetector(entity)
