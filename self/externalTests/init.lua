@@ -1,4 +1,6 @@
---include("test/includeme.lua")
+if !IsExternal then
+    include("test/includeme.lua")
+end
 
 hook.Add("CreateMove", "HookCreateMove", function(cmd)
     --If CUserCmd is faulty/not valid no need to do the other shit

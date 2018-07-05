@@ -1,4 +1,6 @@
-include("../../convars.lua")
+if !IsExternal then
+    include("../../convars.lua")
+end
 
 local panelW = 250
 spectatorPanel = vgui.Create("DFrame", nil, "SpectatorList")

@@ -1,6 +1,8 @@
-include("../convars.lua")
-include("../helpers/math.lua")
-include("../helpers/utils.lua")
+if !IsExternal then
+    include("../convars.lua")
+    include("../helpers/math.lua")
+    include("../helpers/utils.lua")
+end
 
 local function Salt(smooth)
     local sine = math.sin(os.time());
@@ -15,7 +17,7 @@ local function Smooth(cmd, angle)
 	local delta = angle - viewAngles
     delta:Normalize()
 
-	local smooth = math.pow(aimbotSmoothConVar:GetFloat(), 0.4) // Makes more slider space for actual useful values
+	local smooth = math.pow(aimbotSmoothConVar:GetFloat(), 0.4) --Makes more slider space for actual useful values
 	smooth = math.min(0.99, smooth)
 
     if aimbotSaltConVar:GetFloat() > 0 then

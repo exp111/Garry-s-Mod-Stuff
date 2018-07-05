@@ -1,4 +1,4 @@
-//include("../../../convars.lua")
+--include("../../../convars.lua")
 weaponsPanel = vgui.Create("DPanel", propertySheet)
 weaponsPanel:SetDrawBackground(false)
 

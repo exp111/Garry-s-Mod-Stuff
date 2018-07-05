@@ -1,7 +1,9 @@
-include("../../convars.lua")
-include("tabs/firstPanel.lua")
-include("tabs/secondPanel.lua")
-include("tabs/weaponsPanel.lua")
+if !IsExternal then
+	include("../../convars.lua")
+	include("tabs/firstPanel.lua")
+	include("tabs/secondPanel.lua")
+	include("tabs/weaponsPanel.lua")
+end
 
 --Main Panels
 menuPanel = vgui.Create("DFrame")

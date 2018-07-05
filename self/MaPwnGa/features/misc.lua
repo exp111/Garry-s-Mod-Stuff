@@ -1,5 +1,7 @@
-include("../convars.lua")
-include("../helpers/utils.lua")
+if !IsExternal then
+    include("../convars.lua")
+    include("../helpers/utils.lua")
+end
 
 traitors = {}
 function CheckForTraitors()
@@ -105,14 +107,14 @@ end
 
 local function DrawCrosshair(x, y)
 	surface.SetDrawColor(Color(0, 0, 0, 170));
-	// outline horizontal
+	-- outline horizontal
 	surface.DrawRect(x - 4, y - 1, 9, 3);
-	// outline vertical
+	-- outline vertical
 	surface.DrawRect(x - 1, y - 4, 3, 9);
 	surface.SetDrawColor(Color(255, 255, 255, 255));
-	// line horizontal
+	-- line horizontal
 	surface.DrawLine(x - 3, y, x + 4, y);
-	// line vertical
+	-- line vertical
 	surface.DrawLine(x - 0, y + 3, x - 0, y - 4);
 end
 
@@ -273,24 +275,24 @@ function decideCase(char, prev, prev2)
     local isValid1 = prev and isAlpha(prev)
 	local isValid2 = prev2 and isAlpha(prev2)
 	local odds = math.random(1, 100)
-	//First char -> 50%
+	--First char -> 50%
 	if !isValid1 and !isValid2 then
 		if odds > 50 then
 			return changeCase(char)
         end
-    //prev char has other case -> 15% chance to change case
+    --prev char has other case -> 15% chance to change case
 	elseif isValid1 and isUpper(prev) != charIsUpper then
 		if odds > 85 then
 			return changeCase(char)
         end
-	// Else, there is a 85% chance to swap if prev2 does not match case
+	-- Else, there is a 85% chance to swap if prev2 does not match case
 	elseif isValid2 and isUpper(prev2) != charIsUpper then
 		if odds < 85 then
 			return changeCase(char)
 		else
 			return char
 		end
-	// Prev2 *also* matches case, so there is a 98% chance to swap
+	-- Prev2 *also* matches case, so there is a 98% chance to swap
 	elseif odds < 98 then
 		return changeCase(char)
     end

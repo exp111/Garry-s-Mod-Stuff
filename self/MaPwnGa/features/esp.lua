@@ -1,6 +1,8 @@
-include("../convars.lua")
-include("../helpers/utils.lua")
-include("../helpers/math.lua")
+if !IsExternal then
+    include("../convars.lua")
+    include("../helpers/utils.lua")
+    include("../helpers/math.lua")
+end
 
 --Helper Functions
 local function GetName(target)
@@ -67,7 +69,7 @@ function ESP()
         local entities = {}
         for k,v in pairs(ents.GetAll()) do
             if !ValidTarget(v, ESPVisibleOnlyConVar:GetBool(), ESPDistanceConVar:GetInt()) then 
-                if ValidEntity(v, ESPVisibleOnlyConVar:GetBool(), ESPDistanceConVar:GetInt()) then //TODO: oh boi we (possibly) double check if target is visible
+                if ValidEntity(v, ESPVisibleOnlyConVar:GetBool(), ESPDistanceConVar:GetInt()) then --TODO: oh boi we (possibly) double check if target is visible
                     if ESPDroppedWeaponConVar:GetBool() then
                         if v:IsWeapon() and v:GetOwner() == NULL then
                             local name = v:GetPrintName()

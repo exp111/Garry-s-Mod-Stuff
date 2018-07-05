@@ -1,5 +1,7 @@
-include("../convars.lua")
-include("../helpers/math.lua")
+if !IsExternal then
+    include("../convars.lua")
+    include("../helpers/math.lua")
+end
 
 local function FixMovement(cmd, oldAngles, needsMod)
 	local move = Vector(cmd:GetForwardMove(), cmd:GetSideMove(), 0);
@@ -39,24 +41,24 @@ function AntiAim(cmd)
     local angle = oldAngles
     --DO AA
     local aaType = antiAimTypeConVar:GetInt()
-    if aaType == 1 then //EyeAngles
+    if aaType == 1 then --EyeAngles
 		angle.y = fakeView.y;
-	elseif aaType == 2 then //Sideways
+	elseif aaType == 2 then --Sideways
 		angle.y = fakeView.y - 90;
-    elseif aaType == 3 then //Jitter
+    elseif aaType == 3 then --Jitter
         angle.y = fakeView.y + math.random(-90, 90)
-    elseif aaType == 4 then //Static
+    elseif aaType == 4 then --Static
         angle.y = 0
-    elseif aaType == 5 then //Forward
+    elseif aaType == 5 then --Forward
 		angle.y = fakeView.y;
-	elseif aaType == 6 then //Backwards
+	elseif aaType == 6 then --Backwards
 		angle.y = fakeView.y - 180;
     end
 
     --SET THE SHIT
     cmd:SetViewAngles(Angle(angle.x, math.NormalizeAngle(angle.y), 0))
     --Movement Fix cuz we don't wanna be one of the drunks
-    //CorrectMovement(cmd, oldAngles, oldForward, oldSide)
+    --CorrectMovement(cmd, oldAngles, oldForward, oldSide)
     local x = angle.x
     FixMovement(cmd, angle, x > 89 or x < -89)
 end

@@ -1,4 +1,6 @@
-include("../convars.lua")
+if !IsExternal then
+    include("../convars.lua")
+end
 
 local playerChams = CreateMaterial("Cham_Texture","VertexLitGeneric",{ ["$basetexture"] = "models/debug/debugwhite", ["$model"] = 1, ["$translucent"] = 1, ["$alpha"] = 1, ["$nocull"] = 1, ["$ignorez"] = 0 } )
 local playerChamsIgnoreZ = CreateMaterial("Cham_Texture","VertexLitGeneric",{ ["$basetexture"] = "models/debug/debugwhite", ["$model"] = 1, ["$translucent"] = 1, ["$alpha"] = 1, ["$nocull"] = 1, ["$ignorez"] = 1 } )
@@ -9,7 +11,7 @@ function Chams()
     if !LocalPlayer() or !chamsConVar:GetBool() then return end
 
     local chamsMat = playerChams
-    if chamsIgnoreZConVar:GetBool() then //TODO: doesn't work cuz it needs sv_pure or smth
+    if chamsIgnoreZConVar:GetBool() then --TODO: doesn't work cuz it needs sv_pure or smth
         chamsMat = playerChamsIgnoreZ
     end
 
@@ -18,7 +20,7 @@ function Chams()
         
         local clr = Color(41, 128, 185)
         if IsEnemy(v) then
-            clr = Color(243, 156, 18) //orange
+            clr = Color(243, 156, 18) --orange
         end
         cam.Start3D(EyePos(),EyeAngles())
             render.SuppressEngineLighting( chamsFlatConVar:GetBool() )
