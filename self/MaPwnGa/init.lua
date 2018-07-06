@@ -104,6 +104,12 @@ hook.Add("OnPlayerChat", "OnChat", function( ply, strText, bTeam, bDead )
     end
 end)
 
+
+hook.Add("PreRender", "Fullbright", FullbrightPreRender)
+
+hook.Add("PostRender", "Fullbright", FullbrightDisable)
+hook.Add("PreDrawHUD", "Fullbright", FullbrightDisable)
+
 --EVENTS
 gameevent.Listen("player_hurt")
 hook.Add("player_hurt", "PlayerHurt", function(data)
@@ -125,12 +131,15 @@ hook.Add("entity_killed", "EntityKill", function(data)
     if !killed then
         return 
     end
-    local weapon = Entity(data.entindex_inflictor)
     local attacker = Entity(data.entindex_attacker)
+    
+    local killedName = ((killed:IsPlayer() and killed:Nick()) or killed:GetClass())
+    local attackerName = ((attacker:IsPlayer() and attacker:Nick()) or attacker:GetClass())
+
     if !attacker or data.entindex_attacker == 0 then
-        Log(killed:GetName() .. " (".. data.entindex_killed ..") was killed with " .. weapon:GetName() .. "(" .. data.entindex_inflictor .. ")!")
+        Log(killedName .. " (".. data.entindex_killed ..") was killed!")
     else
-	    Log(killed:GetName() .. " (".. data.entindex_killed ..") was killed by " .. attacker:GetName() .. " (".. data.attacker ..") with " .. weapon:GetName() .. "(" .. data.entindex_inflictor .. ")!")
+	    Log(killedName .. " (".. data.entindex_killed ..") was killed by " .. attackerName .. " (".. data.entindex_attacker ..")!")
     end
 end)
 

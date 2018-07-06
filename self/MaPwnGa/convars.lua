@@ -55,6 +55,7 @@ spongeMockConVar = CreateClientConVar("exp_misc_spongemock", "0", shouldSave)
 autoPistolConVar = CreateClientConVar("exp_misc_autopistol", "0", shouldSave)
 bhopConVar = CreateClientConVar("exp_misc_bhop", "0", shouldSave)
 autoStrafeConVar = CreateClientConVar("exp_misc_autostrafe", "0", shouldSave)
+fullbrightConVar = CreateClientConVar("exp_misc_fullbright", "0", shouldSave)
 
 --Color ConVars
 local function createColorConVar(name, r, g, b, a)

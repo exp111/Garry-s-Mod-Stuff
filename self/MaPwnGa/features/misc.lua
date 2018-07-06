@@ -247,6 +247,22 @@ function AutoStrafe(cmd)
     end
 end
 
+--FULLBRIGHT
+local LightingModeChanged = false
+function FullbrightPreRender()
+    if !fullbrightConVar:GetBool() then return end
+    
+    render.SetLightingMode(1)
+	LightingModeChanged = true
+end
+
+function FullbrightDisable()
+    if LightingModeChanged then
+		render.SetLightingMode(0)
+		LightingModeChanged = false
+	end
+end
+
 --SPONGEMOCK
 function isUpper(char)
     local ascii = string.byte(char)
