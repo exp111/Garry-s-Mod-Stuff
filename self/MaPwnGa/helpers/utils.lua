@@ -37,7 +37,12 @@ function Log(text, logType)
     local timeStamp = os.date("[%H:%M:%S]", os.time())
     local lType = logType or "Log"
     local toLog = timeStamp .. " " .. lType .. ": " .. text
+
+    --Print in the Menu Log
     logListView:AddLine(timeStamp, lType, text)
+    logListView:PerformLayout()
+    logListView.VBar:SetScroll(logListView.VBar.CanvasSize)
+
     print(toLog)
     chat.AddText(toLog)
 end
