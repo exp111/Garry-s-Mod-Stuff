@@ -1,3 +1,8 @@
+if !IsExternal then
+    --TODO: I don't like including this here. maybe move logger to utils or smth?
+    include("../UI/main/tabs/logPanel.lua")
+end
+
 function ValidTarget(target, visibleOnly, allowedDistance)
     if !target:IsValid() then return false end
     if target == LocalPlayer() then return false end
@@ -28,8 +33,11 @@ function IsTTT()
     return (GAMEMODE and GAMEMODE.Name and string.find(GAMEMODE.Name, "Terror") and true)
 end
 
-function Log(text)
-    local toLog = os.date("[%H:%M:%S] Log: ", os.time()).. text
+function Log(text, logType)
+    local timeStamp = os.date("[%H:%M:%S]", os.time())
+    local lType = logType or "Log"
+    local toLog = timeStamp .. " " .. lType .. ": " .. text
+    logListView:AddLine(timeStamp, lType, text)
     print(toLog)
     chat.AddText(toLog)
 end

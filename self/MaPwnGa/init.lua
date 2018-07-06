@@ -147,7 +147,7 @@ gameevent.Listen("server_cvar")
 hook.Add("server_cvar", "ServerCVar", function(data)
     local name = data.cvarname
     local value = data.cvarvalue
-    Log("The CVar " .. name .. " was changed to " .. value ..".")
+    Log("The ConVar " .. name .. " was changed to " .. value ..".")
 end)
 --END EVENTS
 

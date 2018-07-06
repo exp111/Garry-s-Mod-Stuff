@@ -3,6 +3,7 @@ if !IsExternal then
 	include("tabs/firstPanel.lua")
 	include("tabs/secondPanel.lua")
 	include("tabs/weaponsPanel.lua")
+	include("tabs/logPanel.lua")
 end
 
 --Main Panels
@@ -33,3 +34,4 @@ propertySheet:Dock(FILL)
 propertySheet:AddSheet("First", firstPanel , nil, false, false, nil)
 propertySheet:AddSheet("Second", secondPanel , nil, false, false, nil)
 propertySheet:AddSheet("Weapons", weaponsPanel , nil, false, false, nil)
+propertySheet:AddSheet("Log", logPanel , nil, false, false, nil)

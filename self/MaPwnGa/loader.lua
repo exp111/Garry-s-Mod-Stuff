@@ -26,6 +26,7 @@ external(relativeDirectory .. "helpers/utils.lua")
 external(relativeDirectory .. "UI/main/tabs/firstPanel.lua")
 external(relativeDirectory .. "UI/main/tabs/secondPanel.lua")
 external(relativeDirectory .. "UI/main/tabs/weaponsPanel.lua")
+external(relativeDirectory .. "UI/main/tabs/logPanel.lua")
 external(relativeDirectory .. "UI/main/main.lua")
 
 external(relativeDirectory .. "UI/radar/main.lua")
