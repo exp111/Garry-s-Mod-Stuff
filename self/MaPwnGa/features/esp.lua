@@ -2,6 +2,7 @@ if !IsExternal then
     include("../convars.lua")
     include("../helpers/utils.lua")
     include("../helpers/math.lua")
+    include("../helpers/draw.lua")
 end
 
 --Helper Functions
@@ -17,18 +18,24 @@ end
 
 local function DrawBones(target)
     local boneCount = target:GetBoneCount()
+
     if boneCount > -1 then
         for i = target:GetBoneCount() - 1, 0, -1 do
             if !target:BoneHasFlag(i, BONE_USED_BY_HITBOX) then continue end
+
             local bonePos = target:GetBonePosition(i)
-            if bonePos == nil then continue end
+            if !bonePos then continue end
+
             local cur = bonePos:ToScreen()
             local childs = target:GetChildBones(i)
+
             for l, w in pairs(childs) do
                 local childPos = target:GetBonePosition(w)
                 /*This is a real shitty fix cuz we don't know if there is a child bone that is at v:GetPos() but fuck it*/
-                if childPos == nil or childPos == target:GetPos() then continue end
+                if !childPos or childPos == target:GetPos() then continue end
+
                 local curChild = childPos:ToScreen()
+
                 surface.SetDrawColor(255, 0, 255)
                 surface.DrawLine(cur.x, cur.y, curChild.x, curChild.y)
             end
@@ -46,29 +53,13 @@ local function GetRect(target)
     return top, bottom, height, width
 end
 
-local function Draw2DBox(target, top, bottom, height, width)
-	surface.SetDrawColor(Color(255, 0, 0))
-	surface.DrawOutlinedRect(bottom.x - width / 2, top.y, width / 0.9, height)
-	surface.SetDrawColor(Color(0, 0, 0))
-	surface.DrawOutlinedRect(bottom.x - width / 2 + 1, top.y + 1, width / 0.9 - 2, height - 2)
-	surface.DrawOutlinedRect(bottom.x - width / 2 - 1, top.y - 1, width / 0.9 + 2, height + 2)
-end
-
-local function DrawSnapline(target, bone)
-    local ePos = GetBonePos(target, bone)
-    if ePos == nil then return end
-    ePosS = ePos:ToScreen()
-    surface.SetDrawColor(Color(255, 0, 0))
-    surface.DrawLine(ScrW() / 2, ScrH() / 2, ePosS.x, ePosS.y)
-end
-
 --Main ESP Function
 function ESP()
     --ESP
     if ESPConVar:GetBool() then
         local entities = {}
         for k,v in pairs(ents.GetAll()) do
-            if !ValidTarget(v, ESPVisibleOnlyConVar:GetBool(), ESPDistanceConVar:GetInt()) then 
+            if !ValidTarget(v, ESPVisibleOnlyConVar:GetBool(), ESPDistanceConVar:GetInt()) then
                 if ValidEntity(v, ESPVisibleOnlyConVar:GetBool(), ESPDistanceConVar:GetInt()) then --TODO: oh boi we (possibly) double check if target is visible
                     if ESPDroppedWeaponConVar:GetBool() then
                         if v:IsWeapon() and v:GetOwner() == NULL then
