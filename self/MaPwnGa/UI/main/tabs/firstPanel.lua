@@ -60,9 +60,9 @@ dComboBox.OnSelect = function(panel, index, value)
 end
 
 local function ColorRefresh(color, name)
-	LocalPlayer():ConCommand(colorConVarPrefix..name.."_r "..color.r.."; "
-							..colorConVarPrefix..name.."_g "..color.g.."; "
-							..colorConVarPrefix..name.."_b "..color.b.."; "
+	LocalPlayer():ConCommand(colorConVarPrefix..name.."_r "..color.r.." "
+							..colorConVarPrefix..name.."_g "..color.g.." "
+							..colorConVarPrefix..name.."_b "..color.b.." "
 							..colorConVarPrefix..name.."_a "..color.a)
 end
 

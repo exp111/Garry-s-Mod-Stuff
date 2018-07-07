@@ -34,6 +34,6 @@ function RotatePoint(pointToRotate, centerPoint, angle, isAngleInRadians)
 		cosTheta * (pointToRotate.x - centerPoint.x) - sinTheta * (pointToRotate.y - centerPoint.y),
 		sinTheta * (pointToRotate.x - centerPoint.x) + cosTheta * (pointToRotate.y - centerPoint.y),
 		pointToRotate.z)
-	returnVec = returnVec + centerPoint;
-	return returnVec;
+	returnVec = returnVec + centerPoint
+	return returnVec
 end

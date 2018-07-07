@@ -107,30 +107,30 @@ function ThirdPerson(ply, pos, angles, fov)
 end
 
 local function DrawCrosshair(x, y)
-	surface.SetDrawColor(Color(0, 0, 0, 170));
+	surface.SetDrawColor(Color(0, 0, 0, 170))
 	-- outline horizontal
-	surface.DrawRect(x - 4, y - 1, 9, 3);
+	surface.DrawRect(x - 4, y - 1, 9, 3)
 	-- outline vertical
-	surface.DrawRect(x - 1, y - 4, 3, 9);
-	surface.SetDrawColor(Color(255, 255, 255, 255));
+	surface.DrawRect(x - 1, y - 4, 3, 9)
+	surface.SetDrawColor(Color(255, 255, 255, 255))
 	-- line horizontal
-	surface.DrawLine(x - 3, y, x + 4, y);
+	surface.DrawLine(x - 3, y, x + 4, y)
 	-- line vertical
-	surface.DrawLine(x - 0, y + 3, x - 0, y - 4);
+	surface.DrawLine(x - 0, y + 3, x - 0, y - 4)
 end
 
 local function DrawFOVCircle()
-    local radius = math.tan(math.rad(aimbotFOVConVar:GetInt()) / 2) / math.tan(math.rad(LocalPlayer():GetFOV()) / 2) * ScrW();
+    local radius = math.tan(math.rad(aimbotFOVConVar:GetInt()) / 2) / math.tan(math.rad(LocalPlayer():GetFOV()) / 2) * ScrW()
     surface.DrawCircle(ScrW() / 2, ScrH() / 2, radius, FOVCircleColor)
 end
 
 local perfectCounter = {}
-local perfectStep = math.pi * 0.005;
+local perfectStep = math.pi * 0.005
 
 --VISUALS
 function MiscVisuals()
     if watermarkConVar:GetBool() then
-        DrawTextShadow("Hey Exp ;)", "DermaDefault", 5, 5, RainbowColor())
+        DrawTextShadow("Hey Exp )", "DermaDefault", 5, 5, RainbowColor())
     end
 
     --FOV Circle
@@ -170,7 +170,7 @@ function MiscVisuals()
             if !bone or bone <= 0 then continue end
 
             if !perfectCounter[k] or perfectCounter[k] > (math.pi * 2.0) then perfectCounter[k] = 0 end
-            perfectCounter[k] = perfectCounter[k] + perfectStep;
+            perfectCounter[k] = perfectCounter[k] + perfectStep
 
             if PerfectHeadAdjustmentPositionConVar:GetBool() then
                 v:ManipulateBonePosition(bone, Vector(20 * math.sin(perfectCounter[k]),10, 20 * math.cos(perfectCounter[k])))
@@ -332,7 +332,7 @@ function SpongeMockify(text)
 			continue
         end
 
-		if char == '"' or char == '\\' or char == ';' then
+		if char == '"' or char == '\\' or char == '' then
 			char = '.'
 		else
 			char = decideCase(char, prevLetter, prev2Letter)

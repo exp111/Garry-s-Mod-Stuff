@@ -20,7 +20,7 @@ local function DrawBones(target)
     if boneCount > -1 then
         for i = target:GetBoneCount() - 1, 0, -1 do
             if !target:BoneHasFlag(i, BONE_USED_BY_HITBOX) then continue end
-            local bonePos = target:GetBonePosition(i);
+            local bonePos = target:GetBonePosition(i)
             if bonePos == nil then continue end
             local cur = bonePos:ToScreen()
             local childs = target:GetChildBones(i)

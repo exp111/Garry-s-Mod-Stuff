@@ -5,10 +5,10 @@ if !IsExternal then
 end
 
 local function Salt(smooth)
-    local sine = math.sin(os.time());
-	local salt = sine * aimbotSaltConVar:GetFloat();
-	local oval = smooth + salt;
-	return smooth * oval;
+    local sine = math.sin(os.time())
+	local salt = sine * aimbotSaltConVar:GetFloat()
+	local oval = smooth + salt
+	return smooth * oval
 end
 
 local function Smooth(cmd, angle)

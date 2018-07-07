@@ -4,14 +4,14 @@ if !IsExternal then
 end
 
 local function FixMovement(cmd, oldAngles, needsMod)
-	local move = Vector(cmd:GetForwardMove(), cmd:GetSideMove(), 0);
-	local speed = math.sqrt(move.x * move.x + move.y * move.y);
-	local ang = move:Angle();
+	local move = Vector(cmd:GetForwardMove(), cmd:GetSideMove(), 0)
+	local speed = math.sqrt(move.x * move.x + move.y * move.y)
+	local ang = move:Angle()
 	local yaw = math.rad(cmd:GetViewAngles().y - oldAngles.y + ang.y)
     local mod = (needsMod and -1) or 1
 
 	cmd:SetForwardMove((math.cos(yaw) * speed) * mod)
-	cmd:SetSideMove(math.sin(yaw) * speed);
+	cmd:SetSideMove(math.sin(yaw) * speed)
 end
 
 local function FakeView(cmd)
@@ -42,17 +42,17 @@ function AntiAim(cmd)
     --DO AA
     local aaType = antiAimTypeConVar:GetInt()
     if aaType == 1 then --EyeAngles
-		angle.y = fakeView.y;
+		angle.y = fakeView.y
 	elseif aaType == 2 then --Sideways
-		angle.y = fakeView.y - 90;
+		angle.y = fakeView.y - 90
     elseif aaType == 3 then --Jitter
         angle.y = fakeView.y + math.random(-90, 90)
     elseif aaType == 4 then --Static
         angle.y = 0
     elseif aaType == 5 then --Forward
-		angle.y = fakeView.y;
+		angle.y = fakeView.y
 	elseif aaType == 6 then --Backwards
-		angle.y = fakeView.y - 180;
+		angle.y = fakeView.y - 180
     end
 
     --SET THE SHIT
