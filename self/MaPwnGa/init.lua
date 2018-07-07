@@ -78,8 +78,9 @@ end)
 
 hook.Add("CalcView", "ThirdPerson", function(ply, pos, angles, fov)
     local angle = angles
+    local f = (!fovConVar:GetBool() and fov) or fovConVar:GetInt() --fovConVar == 0 -> use normal
     if fakeView and antiAimConVar:GetBool() then angle = fakeView end
-	return ThirdPerson(ply, pos, angle, fov)
+	return ThirdPerson(ply, pos, angle, f)
 end)
 
 hook.Add("OnPlayerChat", "OnChat", function( ply, strText, bTeam, bDead )
@@ -103,7 +104,6 @@ hook.Add("OnPlayerChat", "OnChat", function( ply, strText, bTeam, bDead )
         return false
     end
 end)
-
 
 hook.Add("PreRender", "Fullbright", FullbrightPreRender)
 

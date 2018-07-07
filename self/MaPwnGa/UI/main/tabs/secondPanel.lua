@@ -228,7 +228,7 @@ CheckBoxLabel:SetPos(150, 275)
 CheckBoxLabel:SetDark(true)
 CheckBoxLabel:SizeToContents()
 
---MISC
+--PERFECT HEAD ADJUSTMENT
 local CheckBoxLabel = vgui.Create( "DCheckBoxLabel", secondPanel)
 CheckBoxLabel:SetConVar("exp_misc_pha_enable")
 CheckBoxLabel:SetText("PerfectHeadAdjustment")
@@ -278,6 +278,16 @@ CheckBoxLabel:SetText("Draw Weapon")
 CheckBoxLabel:SetPos(170, 350)
 CheckBoxLabel:SetDark(true)
 CheckBoxLabel:SizeToContents()
+
+--MISC
+local slider = vgui.Create("Slider", secondPanel)
+slider:SetPos(275, 340)
+slider:SetWide(150)
+slider:SetMin(0)
+slider:SetMax(180)
+slider:SetValue(fovConVar:GetInt())
+slider:SetConVar("exp_misc_fov")
+slider:SetDecimals(0)
 
 local CheckBoxLabel = vgui.Create( "DCheckBoxLabel", secondPanel)
 CheckBoxLabel:SetConVar("exp_misc_tttcheck")

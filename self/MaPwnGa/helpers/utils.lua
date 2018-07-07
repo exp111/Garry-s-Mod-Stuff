@@ -51,7 +51,10 @@ gunIcon        = Material("icon16/gun.png"),
 heartIcon      = Material("icon16/heart.png"),
 connectIcon    = Material("icon16/connect.png"),
 disconnectIcon = Material("icon16/disconnect.png"),
-skullIcon      = Material("icon16/user_delete.png")}
+skullIcon      = Material("icon16/user_delete.png"),
+eyeIcon        = Material("icon16/lighting.png"),
+lightningIcon  = Material("icon16/lightning.png"),
+colorIcon      = Material("icon16/color_wheel.png")}
 
 concommand.Add("exp_test_logicons", function()
     for k,v in pairs(icons) do
