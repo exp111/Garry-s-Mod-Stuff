@@ -85,3 +85,7 @@ end
 function IsEnemy(entity)
     return entity:Team() != LocalPlayer():Team() or (IsTTT() and entity.role and LocalPlayer().role and entity.role != LocalPlayer().role)
 end
+
+function RainbowColor()
+    return HSVToColor(RealTime() * 120 % 360, 1, 1)
+end

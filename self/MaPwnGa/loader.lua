@@ -21,6 +21,7 @@ external(relativeDirectory .. "features/trigger.lua")
 --HELPERS
 external(relativeDirectory .. "helpers/math.lua")
 external(relativeDirectory .. "helpers/utils.lua")
+external(relativeDirectory .. "helpers/draw.lua")
 
 --UI
 external(relativeDirectory .. "UI/main/tabs/firstPanel.lua")
