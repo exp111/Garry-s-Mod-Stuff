@@ -2,6 +2,9 @@
 	"folders": [
 		{
 			"path": "MaPwnGa"
+		},
+		{
+			"path": "externalTests"
 		}
 	],
 	"settings": {}
