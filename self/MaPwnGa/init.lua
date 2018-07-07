@@ -39,8 +39,8 @@ local function CheckPanel(bool, panel)
 end
 
 hook.Add("Think", "Main", function()
-    if LocalPlayer():KeyPressed(IN_SCORE) then
-        menuPanel:ToggleVisible()
+    if input.IsButtonDown(KEY_INSERT) and !menuPanel:IsVisible() then
+        menuPanel:SetVisible(true)
     end
 
     --Setting the radar and other windows visible
@@ -119,9 +119,9 @@ hook.Add("player_hurt", "PlayerHurt", function(data)
     end
     local attacker = Player(data.attacker)
     if !attacker or data.attacker == 0 then
-        Log(ply:Name() .. " (".. data.userid ..") was hurt and has " .. data.health .. " Health left!")
+        Log(ply:Name() .. " (".. data.userid ..") was hurt and has " .. data.health .. " Health left!", icons.unhappyIcon)
     else
-	    Log(ply:Name() .. " (".. data.userid ..") was hurt by " .. attacker:Name() .. " (".. data.attacker ..") and has " .. data.health .. " Health left!")
+	    Log(ply:Name() .. " (".. data.userid ..") was hurt by " .. attacker:Name() .. " (".. data.attacker ..") and has " .. data.health .. " Health left!", icons.unhappyIcon)
     end
 end)
 
@@ -137,9 +137,9 @@ hook.Add("entity_killed", "EntityKill", function(data)
     local attackerName = ((attacker:IsPlayer() and attacker:Nick()) or attacker:GetClass())
 
     if !attacker or data.entindex_attacker == 0 then
-        Log(killedName .. " (".. data.entindex_killed ..") was killed!")
+        Log(killedName .. " (".. data.entindex_killed ..") was killed!", icons.skullIcon)
     else
-	    Log(killedName .. " (".. data.entindex_killed ..") was killed by " .. attackerName .. " (".. data.entindex_attacker ..")!")
+	    Log(killedName .. " (".. data.entindex_killed ..") was killed by " .. attackerName .. " (".. data.entindex_attacker ..")!", icons.skullIcon)
     end
 end)
 
@@ -147,7 +147,7 @@ gameevent.Listen("server_cvar")
 hook.Add("server_cvar", "ServerCVar", function(data)
     local name = data.cvarname
     local value = data.cvarvalue
-    Log("The ConVar " .. name .. " was changed to " .. value ..".")
+    Log("The ConVar " .. name .. " was changed to " .. value ..".", icons.shieldIcon)
 end)
 --END EVENTS
 

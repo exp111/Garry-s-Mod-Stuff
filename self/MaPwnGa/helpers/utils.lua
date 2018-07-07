@@ -33,15 +33,42 @@ function IsTTT()
     return (GAMEMODE and GAMEMODE.Name and string.find(GAMEMODE.Name, "Terror") and true)
 end
 
-function Log(text, logType)
-    local timeStamp = os.date("[%H:%M:%S]", os.time())
-    local lType = logType or "Log"
-    local toLog = timeStamp .. " " .. lType .. ": " .. text
+icons = { smileIcon = Material("icon16/emoticon_smile.png"),
+unhappyIcon    = Material("icon16/emoticon_unhappy.png"),
+magnifierIcon  = Material("icon16/magnifier.png"),
+bombIcon       = Material("icon16/bomb.png"),
+wrongIcon      = Material("icon16/cross.png"),
+rightIcon      = Material("icon16/tick.png"),
+shieldIcon     = Material("icon16/shield.png"),
+starIcon       = Material("icon16/star.png"),
+appIcon        = Material("icon16/application.png"),
+creditIcon     = Material("icon16/coins.png"),
+wrenchIcon     = Material("icon16/wrench.png"),
+userIcon       = Material("icon16/user.png"),
+warningIcon    = Material("icon16/exclamation.png"),
+clockIcon      = Material("icon16/time.png"),
+gunIcon        = Material("icon16/gun.png"),
+heartIcon      = Material("icon16/heart.png"),
+connectIcon    = Material("icon16/connect.png"),
+disconnectIcon = Material("icon16/disconnect.png"),
+skullIcon      = Material("icon16/user_delete.png")}
 
-    --Print in the Menu Log
-    logListView:AddLine(timeStamp, lType, text)
-    logListView:PerformLayout()
-    logListView.VBar:SetScroll(logListView.VBar.CanvasSize)
+concommand.Add("exp_test_logicons", function()
+    for k,v in pairs(icons) do
+        table.insert(Events, {icon = v})
+    end
+    BuildLogListView()
+end)
+
+function Log(text, logIcon)
+    local timeStamp = os.date("[%H:%M:%S]", os.time())
+    local lIcon = logIcon --Can be nil then we just have a empty field
+    local toLog = timeStamp .. " Log: " .. text
+    
+    --Insert into Event Table & update the log (not too happy about calling the update function here... maybe add a callback to table insert?)
+    local event = {time = timeStamp, icon = lIcon, details = text}
+    table.insert(Events, event)
+    BuildLogListView()
 
     print(toLog)
     chat.AddText(toLog)

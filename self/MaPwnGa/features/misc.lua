@@ -14,7 +14,7 @@ function CheckForTraitors()
                 for l, w in pairs(_R.Player.GetWeapons(v)) do
                     if(IsValid(w)) then
                         if(w.CanBuy and table.HasValue(w.CanBuy, ROLE_TRAITOR)) then
-                            Log(v:Nick().." has got Weapon " .. language.GetPhrase(w:GetPrintName()) .. " and is probably a traitor!")
+                            Log(v:Nick().." has got Weapon " .. language.GetPhrase(w:GetPrintName()) .. " and is probably a traitor!", icons.gunIcon)
                             traitors[#traitors + 1] = v
                         end
                     end
@@ -78,16 +78,16 @@ function TTTCorpseDetector(entity)
     if entity:GetClass() == "prop_ragdoll" then
         local ply = entity:GetDTEntity(0)
         if ply then
-            Log("The corpse of " .. ply:Nick() .. " was spawned!")
+            Log("The corpse of " .. ply:Nick() .. " was spawned!", icons.magnifierIcon)
         else
-           Log("A unknown corpse was spawned!")
+           Log("A unknown corpse was spawned!", icons.magnifierIcon)
         end
         corpses[#corpses + 1] = entity
     end
 end
 
 function ResetTTTTables()
-    Log("Emptied TTT Arrays")
+    Log("Emptied TTT Arrays", icons.appIcon)
     table.Empty(traitors)
     table.Empty(corpses)
 end
