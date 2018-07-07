@@ -72,6 +72,14 @@ hook.Add("HUDPaint", "Visuals", function()
     MiscVisuals()
 end)
 
+hook.Add("PreDrawViewModel", "NoHands", function(viewmodel, ply, weapon)
+    NoHands(weapon)
+end)
+
+hook.Add("PreDrawPlayerHands", "HandsChams", function()
+    HandsChams()
+end)
+
 hook.Add("RenderScreenspaceEffects", "Chams", function()
     Chams()
 end)

@@ -16,6 +16,8 @@ chamsConVar = CreateClientConVar("exp_chams_enable", "0", shouldSave)
 chamsFlatConVar = CreateClientConVar("exp_chams_flat", "0", shouldSave)
 chamsIgnoreZConVar = CreateClientConVar("exp_chams_ignorez", "0", shouldSave)
 chamsDrawWeaponConVar = CreateClientConVar("exp_chams_weapon", "0", shouldSave)
+chamsWireframeConVar = CreateClientConVar("exp_chams_wireframe", "0", shouldSave)
+chamsHandsConVar = CreateClientConVar("exp_chams_hands", "0", shouldSave) --0 = none, 1 = draw, 2 = nodraw, 3 = wireframe
 
 aimbotConVar = CreateClientConVar("exp_aim_enable", "0", shouldSave)
 aimbotBoneConVar = CreateClientConVar("exp_aim_bone", "ValveBiped.Bip01_Head1", shouldSave)
