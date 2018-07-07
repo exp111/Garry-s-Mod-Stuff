@@ -1,5 +1,6 @@
 if !IsExternal then
     include("../../convars.lua")
+    include("../../helpers/utils.lua")
 end
 
 local panelW = 250
@@ -33,7 +34,7 @@ spectatorListView.Think = function(self, w, h)
         local target = v:GetObserverTarget()
         if !target then continue end
         if target == ply then
-            spectatorListView:AddLine(v:Name(), tostring(v:GetObserverMode()))
+            spectatorListView:AddLine(v:Name(), GetObserverModeString(v:GetObserverMode()))
         end
     end
 end

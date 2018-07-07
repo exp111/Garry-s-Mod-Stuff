@@ -44,7 +44,7 @@ propertySheet.Paint = function(self, w, h)
 		/*if !ValidEntity(v, false, 0) then
 			continue
 		end*/
-		if !ValidTarget(v, ESPVisibleOnlyConVar:GetBool(), 0) then --maybe add own distance var?
+		if !ValidTarget(v, false, 0) then --maybe add own visible & distance cvar?
 			continue 
 		end
 		local clr = Color(0, 0, 255, 255)

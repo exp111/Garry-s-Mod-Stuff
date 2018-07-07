@@ -33,6 +33,11 @@ function IsTTT()
     return (GAMEMODE and GAMEMODE.Name and string.find(GAMEMODE.Name, "Terror") and true)
 end
 
+local observerModes = { "None", "Deathcam", "Freezecam", "Fixed", "Firstperson", "Thirdperson", "Freeroam" }
+function GetObserverModeString(mode)
+    return observerModes[i+1] --+1 cuz enum starts at 0 (not like fuckin lua)
+end
+
 icons = { smileIcon = Material("icon16/emoticon_smile.png"),
 unhappyIcon    = Material("icon16/emoticon_unhappy.png"),
 magnifierIcon  = Material("icon16/magnifier.png"),
@@ -58,7 +63,7 @@ colorIcon      = Material("icon16/color_wheel.png")}
 
 concommand.Add("exp_test_logicons", function()
     for k,v in pairs(icons) do
-        table.insert(Events, {icon = v})
+        table.insert(Events, {icon = v, details = k})
     end
     BuildLogListView()
 end)
