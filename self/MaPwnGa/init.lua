@@ -149,6 +149,37 @@ hook.Add("server_cvar", "ServerCVar", function(data)
     local value = data.cvarvalue
     Log("The ConVar " .. name .. " was changed to " .. value ..".", icons.shieldIcon)
 end)
+
+gameevent.Listen("player_connect")
+hook.Add("player_connect", "playerConnect", function(data)
+	local name = data.name
+	local steamid = data.networkid
+	local ip = data.address
+	local id = data.userid
+	local isBot = data.bot
+	local index = data.index
+
+    if isBot then
+        Log(name .. " (Bot, Index: " .. index .. ", ID: ".. id .. ") has connected.", icons.connectIcon)
+    else
+        Log(name .. " (Index: " .. index .. ", ID: ".. id .. ", SteamID: " .. steamid .. ") has connected from " .. ip .. ".", icons.connectIcon)
+    end
+end)
+
+gameevent.Listen( "player_disconnect" )
+hook.Add("player_disconnect", "playerDisconnect", function(data)
+	local name = data.name
+	local steamid = data.networkid
+	local id = data.userid
+	local isBot = data.bot
+	local reason = data.reason
+
+    if isBot then
+        Log(name .. " (Bot, ID: ".. id .. ") has disconnected. Reason: " .. reason .. ".", icons.disconnectIcon)
+    else
+        Log(name .. " (ID: ".. id .. ", SteamID: " .. steamid .. ") has disconnected. Reason: " .. reason .. ".", icons.disconnectIcon)
+    end
+end)
 --END EVENTS
 
 hook.Add("OnEntityCreated", "TTTCorpseDetector", function(entity)
