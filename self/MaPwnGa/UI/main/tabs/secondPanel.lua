@@ -293,6 +293,22 @@ CheckBoxLabel:SetDark(true)
 CheckBoxLabel:SizeToContents()
 
 --MISC
+local CheckBoxLabel = vgui.Create( "DCheckBoxLabel", secondPanel)
+CheckBoxLabel:SetConVar("exp_misc_freecam")
+CheckBoxLabel:SetText("Free Cam")
+CheckBoxLabel:SetPos(400, 325)
+CheckBoxLabel:SetDark(true)
+CheckBoxLabel:SizeToContents()
+
+local slider = vgui.Create("Slider", secondPanel)
+slider:SetPos(400, 340)
+slider:SetWide(100)
+slider:SetMin(1)
+slider:SetMax(10)
+slider:SetValue(freeCamSpeedConVar:GetInt())
+slider:SetConVar("exp_misc_freecam_speed")
+slider:SetDecimals(0)
+
 local slider = vgui.Create("Slider", secondPanel)
 slider:SetPos(275, 340)
 slider:SetWide(150)

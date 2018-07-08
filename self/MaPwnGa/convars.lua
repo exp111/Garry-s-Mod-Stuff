@@ -60,6 +60,8 @@ autoStrafeConVar = CreateClientConVar("exp_misc_autostrafe", "0", shouldSave)
 fullbrightConVar = CreateClientConVar("exp_misc_fullbright", "0", shouldSave)
 fovConVar = CreateClientConVar("exp_misc_fov", "0", shouldSave)
 watermarkConVar = CreateClientConVar("exp_misc_watermark", "1", shouldSave)
+freeCamConVar = CreateClientConVar("exp_misc_freecam", "0", shouldSave)
+freeCamSpeedConVar = CreateClientConVar("exp_misc_freecam_speed", "5", shouldSave)
 
 --Color ConVars
 local function createColorConVar(name, r, g, b, a)

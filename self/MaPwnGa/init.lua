@@ -53,6 +53,7 @@ hook.Add("CreateMove", "HookCreateMove", function(cmd)
     if !cmd or cmd:CommandNumber() == 0 then return end
 
     if LocalPlayer() and LocalPlayer():Alive() then
+        FreeCamCreateMove(cmd)
         AntiAim(cmd)
 
         Aimbot(cmd)
@@ -88,7 +89,8 @@ hook.Add("CalcView", "ThirdPerson", function(ply, pos, angles, fov)
     local angle = angles
     local f = (!fovConVar:GetBool() and fov) or fovConVar:GetInt() --fovConVar == 0 -> use normal
     if fakeView and antiAimConVar:GetBool() then angle = fakeView end
-	return ThirdPerson(ply, pos, angle, f)
+    pos = FreeCam(pos, angle)
+	return ThirdPerson(ply, pos, angle, f) --TODO: maybe return changed values here and then return the whole thing?
 end)
 
 hook.Add("OnPlayerChat", "OnChat", function( ply, strText, bTeam, bDead )

@@ -106,42 +106,63 @@ function ThirdPerson(ply, pos, angles, fov)
 	return view
 end
 
-local function DrawCrosshair(x, y)
-	surface.SetDrawColor(Color(0, 0, 0, 170))
-	-- outline horizontal
-	surface.DrawRect(x - 4, y - 1, 9, 3)
-	-- outline vertical
-	surface.DrawRect(x - 1, y - 4, 3, 9)
-	surface.SetDrawColor(Color(255, 255, 255, 255))
-	-- line horizontal
-	surface.DrawLine(x - 3, y, x + 4, y)
-	-- line vertical
-	surface.DrawLine(x - 0, y + 3, x - 0, y - 4)
+--FREECAM
+freeCamPos = {}
+function FreeCam(pos, angle)
+    if !freeCamConVar:GetBool() then freeCamPos = pos return pos end
+
+    local freeCamSpeed = freeCamSpeedConVar:GetInt() * ( FrameTime() / 2 ) * 100
+    local ang = angle:Forward()
+    
+    if !freeCamPos or type(freeCamPos) != "Vector" then freeCamPos = pos end --type check cuz after reload var gets set to {} and then isn't nil or smth
+
+    local ply = LocalPlayer()
+    if ply:KeyDown(IN_FORWARD) then
+		freeCamPos = freeCamPos + ply:GetAimVector() * freeCamSpeed
+	end
+		
+	if ply:KeyDown(IN_BACK) then
+	    freeCamPos = freeCamPos - ply:GetAimVector() * freeCamSpeed
+	end
+    
+	if ply:KeyDown(IN_MOVERIGHT) then
+	    freeCamPos = freeCamPos + ang:Angle():Right() * freeCamSpeed
+	end
+	
+	if ply:KeyDown(IN_MOVELEFT) then
+		freeCamPos = freeCamPos - ang:Angle():Right() * freeCamSpeed
+	end
+
+    return freeCamPos
 end
 
-local function DrawFOVCircle()
-    local radius = math.tan(math.rad(aimbotFOVConVar:GetInt()) / 2) / math.tan(math.rad(LocalPlayer():GetFOV()) / 2) * ScrW()
-    surface.DrawCircle(ScrW() / 2, ScrH() / 2, radius, FOVCircleColor)
+function FreeCamCreateMove(cmd)
+    if !freeCamConVar:GetBool() then return end
+    
+    cmd:SetForwardMove(0)
+	cmd:SetUpMove(0)
+	cmd:SetSideMove(0)
 end
 
+--VISUALS
 local perfectCounter = {}
 local perfectStep = math.pi * 0.005
 
---VISUALS
 function MiscVisuals()
+    local mid = { x = ScrW() / 2, y = ScrH() / 2}
     if watermarkConVar:GetBool() then
         DrawTextShadow("Hey Exp ;)", "DermaDefault", 5, 5, RainbowColor())
     end
 
     --FOV Circle
     if aimbotConVar:GetBool() and aimbotFOVCircleConVar:GetBool() then
-        DrawFOVCircle()
+        DrawFOVCircle(mid.x, mid.y)
     end
     
     --CROSSHAIR
     if crosshairConVar:GetBool() then
-        local posX = ScrW() / 2
-        local posY = ScrH() / 2
+        local posX = mid.x
+        local posY = mid.y
 
         if LocalPlayer():Alive() and LocalPlayer():GetActiveWeapon() then
             local punchAngle = LocalPlayer():GetViewPunchAngles()
@@ -158,7 +179,7 @@ function MiscVisuals()
     --TTTChecker
     TTTCheckerVisuals()
 
-    --PERFECT HEAD ADJUSTMENT
+    --PERFECT HEAD ADJUSTMENT --TODO: move pha into own function pls
     if PerfectHeadAdjustmentConVar:GetBool() then
         if !changed then
             changed = true
