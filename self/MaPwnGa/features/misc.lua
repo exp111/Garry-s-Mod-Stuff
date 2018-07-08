@@ -130,7 +130,7 @@ local perfectStep = math.pi * 0.005
 --VISUALS
 function MiscVisuals()
     if watermarkConVar:GetBool() then
-        DrawTextShadow("Hey Exp )", "DermaDefault", 5, 5, RainbowColor())
+        DrawTextShadow("Hey Exp ;)", "DermaDefault", 5, 5, RainbowColor())
     end
 
     --FOV Circle

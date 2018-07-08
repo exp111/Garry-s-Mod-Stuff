@@ -24,9 +24,7 @@ function ValidEntity(target, visibleOnly, allowedDistance)
 end
 
 function ForceKey(cmd, KeyCode)
-    if !LocalPlayer():KeyDown(KeyCode) then --No need if already pressed
-        cmd:SetButtons(cmd:GetButtons() + KeyCode)
-    end
+    cmd:SetButtons(bit.bor(cmd:GetButtons(), KeyCode))
 end
 
 function IsTTT()
