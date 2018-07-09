@@ -1,9 +1,17 @@
 local external = external
+local relativeDirectory = "self/externalTests/"
 
 if external then
     IsExternal = true
 end
 
-local relativeDirectory = "self/externalTests/"
-external(relativeDirectory .. "init.lua")
-external(relativeDirectory .. "test/includeme.lua")
+local function includeFile(filePath)
+    if IsExternal then
+        external(relativeDirectory .. filePath)
+    else
+        include(filePath)
+    end
+end
+
+includeFile("init.lua")
+includeFile("test/includeme.lua")

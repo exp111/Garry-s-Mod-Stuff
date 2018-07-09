@@ -1,8 +1,3 @@
-if !IsExternal then
-    include("../../convars.lua")
-    include("../../helpers/utils.lua")
-end
-
 local panelW = 250
 spectatorPanel = vgui.Create("DFrame", nil, "SpectatorList")
 spectatorPanel:SetPos(ScrW() - panelW - 5, 5)

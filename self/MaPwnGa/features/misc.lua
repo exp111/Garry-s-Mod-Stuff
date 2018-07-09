@@ -1,9 +1,3 @@
-if !IsExternal then
-    include("../convars.lua")
-    include("../helpers/utils.lua")
-    include("../helpers/draw.lua")
-end
-
 traitors = {}
 function CheckForTraitors()
     if !TTTCheckerConVar:GetBool() then return end

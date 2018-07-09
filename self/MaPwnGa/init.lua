@@ -1,18 +1,3 @@
-if !IsExternal then
-    include("convars.lua")
-
-    include("UI/main/main.lua")
-    include("UI/radar/main.lua")
-    include("UI/spectator/main.lua")
-
-    include("features/esp.lua")
-    include("features/aimbot.lua")
-    include("features/trigger.lua")
-    include("features/misc.lua")
-    include("features/chams.lua")
-    include("features/hvh.lua")
-end
-
 concommand.Add("exp_ttt_role", function(ply, cmd, args)
     if #args < 1 then print("Usage: exp_ttt_role <0|1|2> (Innocent | Traitor | Detective)") return end
     local arg = tonumber(args[1])

@@ -1,8 +1,3 @@
-if !IsExternal then
-    include("../convars.lua")
-    include("../helpers/math.lua")
-end
-
 local function FixMovement(cmd, oldAngles, needsMod)
 	local move = Vector(cmd:GetForwardMove(), cmd:GetSideMove(), 0)
 	local speed = math.sqrt(move.x * move.x + move.y * move.y)

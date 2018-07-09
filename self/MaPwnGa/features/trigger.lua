@@ -1,8 +1,3 @@
-if !IsExternal then
-    include("../convars.lua")
-    include("../helpers/utils.lua")
-end
-
 function Triggerbot(cmd)
 	if !triggerConVar:GetBool() then return end
 

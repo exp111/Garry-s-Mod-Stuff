@@ -1,8 +1,3 @@
-if !IsExternal then
-    --TODO: I don't like including this here. maybe move logger to utils or smth?
-    include("../UI/main/tabs/logPanel.lua")
-end
-
 function ValidTarget(target, visibleOnly, allowedDistance)
     if !target:IsValid() then return false end
     if target == LocalPlayer() then return false end

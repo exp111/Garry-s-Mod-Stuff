@@ -1,9 +1,3 @@
-if !IsExternal then
-    include("../convars.lua")
-    include("../helpers/math.lua")
-    include("../helpers/utils.lua")
-end
-
 local function Salt(smooth)
     local sine = math.sin(os.time())
 	local salt = sine * aimbotSaltConVar:GetFloat()

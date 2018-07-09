@@ -1,7 +1,3 @@
-if !IsExternal then
-    include("../convars.lua")
-end
-
 local playerChams = CreateMaterial("Cham_Texture","VertexLitGeneric",{ ["$basetexture"] = "models/debug/debugwhite", ["$model"] = 1, ["$translucent"] = 1, ["$alpha"] = 1, ["$nocull"] = 1, ["$ignorez"] = 0 } )
 local playerWireframeChams = Material("models/wireframe")
 

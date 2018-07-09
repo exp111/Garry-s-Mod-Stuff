@@ -1,7 +1,3 @@
-if !IsExternal then
-	include("../../../convars.lua")
-end
-
 firstPanel = vgui.Create("DPanel", propertySheet)
 firstPanel:SetDrawBackground(false)
 

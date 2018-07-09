@@ -1,9 +1,3 @@
-if !IsExternal then
-	include("../../convars.lua")
-	include("../../helpers/math.lua")
-	include("../../helpers/utils.lua")
-end
-
 --Radar Panel
 local radar = {}
 radar.diameter = 5

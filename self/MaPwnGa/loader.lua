@@ -1,35 +1,42 @@
+local relativeDirectory = "self/MaPwnGa/"
 local external = external
 
 if external then
     IsExternal = true
 end
 
-local relativeDirectory = "self/MaPwnGa/"
+local function includeFile(filePath)
+    if IsExternal then
+        external(relativeDirectory .. filePath)
+    else
+        include(filePath)
+    end
+end
 
 --MAIN or smth
-external(relativeDirectory .. "init.lua")
-external(relativeDirectory .. "convars.lua")
+includeFile("init.lua")
+includeFile("convars.lua")
 
 --FEATURES
-external(relativeDirectory .. "features/aimbot.lua")
-external(relativeDirectory .. "features/chams.lua")
-external(relativeDirectory .. "features/esp.lua")
-external(relativeDirectory .. "features/hvh.lua")
-external(relativeDirectory .. "features/misc.lua")
-external(relativeDirectory .. "features/trigger.lua")
+includeFile("features/aimbot.lua")
+includeFile("features/chams.lua")
+includeFile("features/esp.lua")
+includeFile("features/hvh.lua")
+includeFile("features/misc.lua")
+includeFile("features/trigger.lua")
 
 --HELPERS
-external(relativeDirectory .. "helpers/math.lua")
-external(relativeDirectory .. "helpers/utils.lua")
-external(relativeDirectory .. "helpers/draw.lua")
+includeFile("helpers/math.lua")
+includeFile("helpers/utils.lua")
+includeFile("helpers/draw.lua")
 
 --UI
-external(relativeDirectory .. "UI/main/tabs/firstPanel.lua")
-external(relativeDirectory .. "UI/main/tabs/secondPanel.lua")
-external(relativeDirectory .. "UI/main/tabs/weaponsPanel.lua")
-external(relativeDirectory .. "UI/main/tabs/logPanel.lua")
-external(relativeDirectory .. "UI/main/main.lua")
+includeFile("UI/main/tabs/firstPanel.lua")
+includeFile("UI/main/tabs/secondPanel.lua")
+includeFile("UI/main/tabs/weaponsPanel.lua")
+includeFile("UI/main/tabs/logPanel.lua")
+includeFile("UI/main/main.lua")
 
-external(relativeDirectory .. "UI/radar/main.lua")
+includeFile("UI/radar/main.lua")
 
-external(relativeDirectory .. "UI/spectator/main.lua")
+includeFile("UI/spectator/main.lua")

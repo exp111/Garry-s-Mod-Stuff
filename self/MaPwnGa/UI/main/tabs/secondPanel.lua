@@ -1,8 +1,3 @@
-if !IsExternal then
-	include("../../../convars.lua")
-	include("../../../features/misc.lua")
-end
-
 secondPanel = vgui.Create("DPanel", propertySheet)
 secondPanel:SetDrawBackground(false)
 

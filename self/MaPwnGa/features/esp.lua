@@ -1,10 +1,3 @@
-if !IsExternal then
-    include("../convars.lua")
-    include("../helpers/utils.lua")
-    include("../helpers/math.lua")
-    include("../helpers/draw.lua")
-end
-
 --Helper Functions
 local function GetName(target)
 	if target:IsPlayer() then
