@@ -1,44 +1,114 @@
-local Detours = {}
---HELPER FUNCTION
-function Detour(Old, New)
-	Detours[New] = Old
-	print("Detouring function " .. tostring(Old) .. ".")
-	return New
+netlog = netlog || {};
+netlog.receivers = netlog.receivers || {};
+netlog.originals = netlog.originals || {};
+netlog.curmsg = "";
+netlog.types = {
+	["Angle"] = true,
+	["Bit"] = true,
+	["Bool"] = true,
+	["Color"] = true,
+	["Data"] = true,
+	["Double"] = true,
+	["Entity"] = true,
+	["Float"] = true,
+	["Int"] = true,
+	["Normal"] = true,
+	["String"] = true,
+	["Table"] = true,
+	["Type"] = true,
+	["UInt"] = true,
+	["Vector"] = true,
+};
+
+function netlog.log(msg)
+	MsgN("netLog: " .. msg)
 end
 
---ACTUAL DETOURS
-net.Start = Detour(net.Start, function(name)
-    print("net.Start: " .. name)
-	return Detours[net.Start](name)
-end)
+function netlog.detour(name, func, newfunc)
+	netlog.log("Detoured net Function: " .. name);
+	
+	local ofunc = func;
+	netlog.originals[name] = netlog.originals[name] || ofunc;
+	return newfunc;
+end
 
-net.WriteInt = Detour(net.WriteInt, function(int, bits)
-    print("net.WriteInt:" .. int .. "," .. bits)
-    return Detours[net.WriteInt](int, bits)
-end)
+function netlog.setcurnet(netname)
+	if (!netname || !isstring(netname)) then
+		return;
+	end
 
-net.WriteString = Detour(net.WriteString, function(s)
-    print("net.WriteString: " .. s)
-    return Detours[net.WriteString](s)
-end)
+	if (netlog.curmsg && netlog.curmsg != "") then
+		netlog.log("---End net Message: " .. netlog.curmsg .. "---");
+	end
 
-net.WriteTable = Detour(net.WriteTable, function(tab)
-    print("net.WriteTable: ")
-    PrintTable(tab)
-    return Detours[net.WriteTable](tab)
-end)
+	netlog.log("---Begin net Message: " .. netname .. "---");
+	netlog.curmsg = netname;
+	netlog.originals["net.Start"](netname);
+end
 
-net.SendToServer = Detour(net.SendToServer, function()
-	print("net.SendToServer")
-    return Detours[net.SendToServer]()
-end)
+function netlog.endcurnet()
+	netlog.log("---End net Message: " .. netlog.curmsg .. "---");
+	netlog.curmsg = "";
+	netlog.originals["net.SendToServer"]();
+end
 
-concommand.Add("exp_test_net", function()
-    net.Start("debug1")
-    net.WriteInt(1, 1)
-    net.SendToServer()
-end)
+function netlog.think()
+	local same = true;
 
-concommand.Add("exp_test_printdetours", function()
-    PrintTable(Detours)
-end)
+	for name, func in next, net.Receivers do
+		if (!netlog.receivers[name]) then
+			same = false;
+			netlog.receivers[name] = func;
+		end
+	end
+
+	if (!same) then
+		for name, func in next, net.Receivers do
+			netlog.log("Detouring net Receiver Function for " .. name);
+
+			net.Receivers[name] = function(len)
+				if (netlog.curmsg && netlog.curmsg != "") then
+					netlog.log("---End net Message: " .. netlog.curmsg .. "---");
+				end
+
+				netlog.log("---Begin net Message: " .. name .. "---");
+				netlog.curmsg = name;
+				netlog.receivers[name](len);
+			end
+		end
+	end
+end
+
+net.Start = netlog.detour("net.Start", net.Start, netlog.setcurnet);
+net.SendToServer = netlog.detour("net.SendToServer", net.SendToServer, netlog.endcurnet);
+netlog.log("added think hook");
+hook.Add("Think", "netlog.think", netlog.think);
+
+for name, valid in next, netlog.types do
+	if (!valid) then
+		continue;
+	end
+
+	if (net["Read" .. name]) then
+		netlog.log("Detouring net.Read Function: " .. string.lower(name));
+		netlog.originals["net.Read" .. name] = netlog.originals["net.Read" .. name] || net["Read" .. name];
+		local ofunc = netlog.originals["net.Read" .. name];
+
+		net["Read" .. name] = function(read)
+			local ret = ofunc(read);
+			netlog.log("Read: " .. string.lower(name) .. ": " .. tostring(ret));
+			return ret;
+		end
+	end
+
+	if (net["Write" .. name]) then
+		netlog.log("Detouring net.Write Function " .. string.lower(name));
+		netlog.originals["net.Write" .. name] = netlog.originals["net.Write" .. name] || net["Write" .. name];
+		local ofunc = netlog.originals["net.Write" .. name];
+
+		net["Write" .. name] = function(write, ...)
+			netlog.log("Wrote: " .. string.lower(name) .. ": " .. tostring(write));
+			ofunc(write, ...);
+		end
+	end
+end
