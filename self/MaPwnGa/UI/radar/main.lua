@@ -15,9 +15,6 @@ radarPanel:MoveToFront()
 radarPanel.Paint = function(self, w, h) 
 	draw.RoundedBox(0, 0, 0, w, h, menuBGColor)
 end
-radarPanel.Think = function(self)
-	self:MoveToFront()
-end
 
 local propertySheet = vgui.Create("DPropertySheet")
 propertySheet:SetParent(radarPanel)

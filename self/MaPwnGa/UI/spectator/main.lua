@@ -11,9 +11,6 @@ spectatorPanel:MoveToFront()
 spectatorPanel.Paint = function(self, w, h) 
 	draw.RoundedBox(0, 0, 0, w, h, menuBGColor)
 end
-spectatorPanel.Think = function(self)
-	self:MoveToFront()
-end
 
 local spectatorListView = vgui.Create( "DListView" , spectatorPanel)
 spectatorListView:SetPos(5, 25)

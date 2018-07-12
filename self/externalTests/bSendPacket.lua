@@ -1,4 +1,4 @@
-require("bSendPacket")
+--require("bSendPacket")
 
 --CONVARS
 fakeAnglesConVar = CreateClientConVar("exp_test_fakeangles", "0", false)
