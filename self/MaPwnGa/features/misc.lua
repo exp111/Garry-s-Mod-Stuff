@@ -106,33 +106,31 @@ function FreeCam(pos, angle)
     if !freeCamConVar:GetBool() then freeCamPos = pos return pos end
 
     local freeCamSpeed = freeCamSpeedConVar:GetInt() * ( FrameTime() / 2 ) * 100
-    local ang = angle:Forward()
+    local ang = angle:Forward():Angle()
     
     if !freeCamPos or type(freeCamPos) != "Vector" then freeCamPos = pos end --type check cuz after reload var gets set to {} and then isn't nil or smth
 
     local ply = LocalPlayer()
-    if ply:KeyDown(IN_FORWARD) then
-		freeCamPos = freeCamPos + ply:GetAimVector() * freeCamSpeed
-	end
-		
-	if ply:KeyDown(IN_BACK) then
-	    freeCamPos = freeCamPos - ply:GetAimVector() * freeCamSpeed
-	end
-    
-	if ply:KeyDown(IN_MOVERIGHT) then
-	    freeCamPos = freeCamPos + ang:Angle():Right() * freeCamSpeed
-	end
-	
-	if ply:KeyDown(IN_MOVELEFT) then
-		freeCamPos = freeCamPos - ang:Angle():Right() * freeCamSpeed
-	end
+    local add = Vector(0,0,0)
+
+    if ply:KeyDown(IN_FORWARD) then add = add + ang:Forward() end
+	if ply:KeyDown(IN_BACK) then add = add - ang:Forward() end
+	if ply:KeyDown(IN_MOVERIGHT) then add = add + ang:Right() end
+	if ply:KeyDown(IN_MOVELEFT) then add = add - ang:Right() end
+    if ply:KeyDown(IN_JUMP) then add = add + ang:Up() end
+    if ply:KeyDown(IN_DUCK) then add = add - ang:Up() end
+
+    add = add * freeCamSpeed
+    if input.IsButtonDown(KEY_LSHIFT) then add = add * 2 end
+
+    freeCamPos = freeCamPos + add
 
     return freeCamPos
 end
 
 function FreeCamCreateMove(cmd)
     if !freeCamConVar:GetBool() then return end
-    
+
     cmd:SetForwardMove(0)
 	cmd:SetUpMove(0)
 	cmd:SetSideMove(0)
