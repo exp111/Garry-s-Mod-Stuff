@@ -82,3 +82,23 @@ end
 function RainbowColor()
     return HSVToColor(RealTime() * 120 % 360, 1, 1)
 end
+
+function GetRandomString(seed, length)
+    local seeed = seed
+    if !seed then
+        seed = math.random(0, os.time())
+    end
+
+    local l = length
+    if !length then
+        l = 5
+    end
+
+    math.randomseed(seeed)
+    local ret = ""
+    for i=0, l do
+        ret = ret .. string.char(math.random(65, 122))
+    end
+
+    return ret
+end

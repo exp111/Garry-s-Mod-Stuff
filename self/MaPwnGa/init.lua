@@ -14,6 +14,10 @@ concommand.Add("exp_ttt_credits", function(ply, cmd, args)
     ply.equipment_credits = arg
 end)
 
+concommand.Add("exp_test_randomstring", function()
+    print(GetRandomString())
+end)
+
 local function CheckPanel(bool, panel)
     local panelVisible = panel:IsVisible()
     if bool and !panelVisible then
@@ -23,7 +27,8 @@ local function CheckPanel(bool, panel)
     end
 end
 
-hook.Add("Think", "Main", function()
+--THINK HOOK
+hook.Add("Think", GetRandomString(), function()
     if input.IsButtonDown(KEY_INSERT) and !menuPanel:IsVisible() then
         menuPanel:SetVisible(true)
     end
@@ -33,7 +38,8 @@ hook.Add("Think", "Main", function()
     CheckPanel(spectatorConVar:GetBool(), spectatorPanel)
 end)
 
-hook.Add("CreateMove", "HookCreateMove", function(cmd)
+--CREATE MOVE HOOK
+hook.Add("CreateMove", GetRandomString(), function(cmd)
     --If CUserCmd is faulty/not valid no need to do the other shit
     if !cmd or cmd:CommandNumber() == 0 then return end
 
@@ -53,24 +59,29 @@ hook.Add("CreateMove", "HookCreateMove", function(cmd)
     CheckForTraitors()
 end)
 
-hook.Add("HUDPaint", "Visuals", function()
+--HUDPAINT HOOK | VISUALS
+hook.Add("HUDPaint", GetRandomString(), function()
     ESP()
     MiscVisuals()
 end)
 
-hook.Add("PreDrawViewModel", "NoHands", function(viewmodel, ply, weapon)
+--PREDRAWVIEWMODEL | NOHANDS
+hook.Add("PreDrawViewModel", GetRandomString(), function(viewmodel, ply, weapon)
     NoHands(weapon)
 end)
 
-hook.Add("PreDrawPlayerHands", "HandsChams", function()
+--PREDRAWPLAYERHANDS | HANDS CHAMS
+hook.Add("PreDrawPlayerHands", GetRandomString(), function()
     HandsChams()
 end)
 
-hook.Add("RenderScreenspaceEffects", "Chams", function()
+--RENDERSCREENSPACEEFFECTS | CHAMS
+hook.Add("RenderScreenspaceEffects", GetRandomString(), function()
     Chams()
 end)
 
-hook.Add("CalcView", "ThirdPerson", function(ply, pos, angles, fov)
+--CALCVIEW | FAKEVIEW, -CAM & THIRDPERSON
+hook.Add("CalcView", GetRandomString(), function(ply, pos, angles, fov)
     local angle = angles
     local f = (!fovConVar:GetBool() and fov) or fovConVar:GetInt() --fovConVar == 0 -> use normal
     if fakeView and antiAimConVar:GetBool() then angle = fakeView end
@@ -78,7 +89,8 @@ hook.Add("CalcView", "ThirdPerson", function(ply, pos, angles, fov)
 	return ThirdPerson(ply, pos, angle, f) --TODO: maybe return changed values here and then return the whole thing?
 end)
 
-hook.Add("OnPlayerChat", "OnChat", function( ply, strText, bTeam, bDead )
+--ONPLAYERCHAT | SPONGEMOCK
+hook.Add("OnPlayerChat", GetRandomString(), function( ply, strText, bTeam, bDead )
 	if (ply == LocalPlayer()) then 
         if string.StartWith(string.lower(strText), "/spongemock") then
             local text = SpongeMockify(string.sub(strText, 13))
@@ -100,14 +112,15 @@ hook.Add("OnPlayerChat", "OnChat", function( ply, strText, bTeam, bDead )
     end
 end)
 
-hook.Add("PreRender", "Fullbright", FullbrightPreRender)
+--FULLBRIGHT HOOKS
+hook.Add("PreRender", GetRandomString(), FullbrightPreRender)
 
-hook.Add("PostRender", "Fullbright", FullbrightDisable)
-hook.Add("PreDrawHUD", "Fullbright", FullbrightDisable)
+hook.Add("PostRender", GetRandomString(), FullbrightDisable)
+hook.Add("PreDrawHUD", GetRandomString(), FullbrightDisable)
 
 --EVENTS
 gameevent.Listen("player_hurt")
-hook.Add("player_hurt", "PlayerHurt", function(data)
+hook.Add("player_hurt", GetRandomString(), function(data)
     local ply = Player(data.userid)
     if !ply then
         return 
@@ -121,7 +134,7 @@ hook.Add("player_hurt", "PlayerHurt", function(data)
 end)
 
 gameevent.Listen("entity_killed")
-hook.Add("entity_killed", "EntityKill", function(data)
+hook.Add("entity_killed", GetRandomString(), function(data)
     local killed = Entity(data.entindex_killed)
     if !killed then
         return 
@@ -139,14 +152,14 @@ hook.Add("entity_killed", "EntityKill", function(data)
 end)
 
 gameevent.Listen("server_cvar")
-hook.Add("server_cvar", "ServerCVar", function(data)
+hook.Add("server_cvar", GetRandomString(), function(data)
     local name = data.cvarname
     local value = data.cvarvalue
     Log("The ConVar " .. name .. " was changed to " .. value ..".", icons.shieldIcon)
 end)
 
 gameevent.Listen("player_connect")
-hook.Add("player_connect", "playerConnect", function(data)
+hook.Add("player_connect", GetRandomString(), function(data)
 	local name = data.name
 	local steamid = data.networkid
 	local ip = data.address
@@ -162,7 +175,7 @@ hook.Add("player_connect", "playerConnect", function(data)
 end)
 
 gameevent.Listen( "player_disconnect" )
-hook.Add("player_disconnect", "playerDisconnect", function(data)
+hook.Add("player_disconnect", GetRandomString(), function(data)
 	local name = data.name
 	local steamid = data.networkid
 	local id = data.userid
@@ -177,14 +190,16 @@ hook.Add("player_disconnect", "playerDisconnect", function(data)
 end)
 --END EVENTS
 
-hook.Add("OnEntityCreated", "TTTCorpseDetector", function(entity)
+--ONENTITYCREATED | TTT CORPSE DETECTOR
+hook.Add("OnEntityCreated", GetRandomString(), function(entity)
     TTTCorpseDetector(entity)
 end)
 
-hook.Add("TTTPrepareRound", "TTTPrepareRound", function()
+--TTTPREPAREROUND & TTTBEGINROUND
+hook.Add("TTTPrepareRound", GetRandomString(), function()
     ResetTTTTables()
 end)
 
-hook.Add("TTTBeginRound", "TTTBeginRound", function()
+hook.Add("TTTBeginRound", GetRandomString(), function()
     ResetTTTTables()
 end)

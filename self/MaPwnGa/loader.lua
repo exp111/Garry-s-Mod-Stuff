@@ -13,6 +13,11 @@ local function includeFile(filePath)
     end
 end
 
+--HELPERS
+includeFile("helpers/math.lua")
+includeFile("helpers/utils.lua")
+includeFile("helpers/draw.lua")
+
 --MAIN or smth
 includeFile("init.lua")
 includeFile("convars.lua")
@@ -24,11 +29,6 @@ includeFile("features/esp.lua")
 includeFile("features/hvh.lua")
 includeFile("features/misc.lua")
 includeFile("features/trigger.lua")
-
---HELPERS
-includeFile("helpers/math.lua")
-includeFile("helpers/utils.lua")
-includeFile("helpers/draw.lua")
 
 --UI
 includeFile("UI/main/tabs/firstPanel.lua")
