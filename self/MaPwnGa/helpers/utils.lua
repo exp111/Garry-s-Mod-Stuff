@@ -84,10 +84,10 @@ function RainbowColor()
 end
 
 function GetRandomString(seed, length)
-    local seeed = seed
     if !seed then
         seed = math.random(0, os.time())
     end
+    local seeed = seed
 
     local l = length
     if !length then

@@ -8,13 +8,9 @@ hook.Add("RenderScreenspaceEffects", "chams", function()
     if !input.IsKeyDown(KEY_E) then return end
 
     local trace = localPlayer:GetEyeTrace()
-
     if !trace.Hit then return end
 
     local ent = trace.Entity
-
-    PrintTable(trace)
-
     if !ent then return end
 
     local color = Color(243, 156, 18) --orange
